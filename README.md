@@ -119,13 +119,34 @@ Previews what each mode *would* do without writing any files. Composes with ever
 - **Read-only network calls deliberately happen** for accurate previews — Pass 1 manifest fetches and `--refresh-metadata` per-video `yt-dlp --dump-json` calls still run. Downloads do not. `--dry-run --upgrade` makes no network calls and trusts the recorded `upgrade_available`.
 - **Per-creator and final summary** lines printed to stdout. Exit code is always `0`.
 
+### `--audit` — check archive consistency
+
+```sh
+uv run archive.py --audit
+uv run archive.py --audit --creator creator-slug
+uv run archive.py --audit --repair                 # prune orphan-in-archive entries
+uv run archive.py --audit --dry-run --repair       # preview the prune
+```
+
+Read-only health check that cross-references `archive.txt` against on-disk state per creator and reports five discrepancy classes, in operational-priority order:
+
+- **Class A — Orphan in archive.txt.** ID listed in `archive.txt` but the video folder, canonical media file, or non-zero size is missing. The next normal sync would skip re-downloading because `archive.txt` says "done", so this video is silently lost. *Primary concern; target of `--repair`.*
+- **Class B — Orphan on disk.** Video folder exists with media present, but the ID isn't in `archive.txt`. Likely a partial run or manual addition.
+- **Class C — Incomplete folder.** Folder is in a mid-state (`info.json` missing, or `.part` resume marker alongside complete media).
+- **Class D — Invalid `metadata.json`.** Missing, unparseable, wrong `schema_version`, or `video_id` field doesn't match the folder name. Report-only — these self-heal during a normal sync via PRD 4's rebuild path.
+- **Class E — Malformed `archive.txt` line.** Non-empty, non-comment line that doesn't match `youtube <11-char-video-id>`. Reported with line number.
+
+`--audit` makes no network calls. Output goes to stdout (and `data/<slug>/logs/audit.log`).
+
+`--audit --repair` is the only writable action: for each Class A entry, it copies `archive.txt` to `data/<slug>/archive.txt.pre-repair-<YYYYMMDDTHHMMSSZ>` (preserving mtime), then atomically rewrites `archive.txt` excluding the orphan IDs. Class B/C/D/E are never auto-fixed. `--repair` without `--audit` exits 2 with `error: --repair requires --audit`.
+
 ### `--help`
 
 ```sh
 uv run archive.py --help
 ```
 
-Lists all supported flags. The full set is `--creator`, `--manifests-only`, `--refresh-metadata`, `--upgrade`, `--audit`, `--repair`, `--dry-run`. Of those, only `--audit` and `--repair` are not yet wired up — they're accepted so command lines stay stable, but their behavior arrives in PRD 8.
+Lists all supported flags. The full set is `--creator`, `--manifests-only`, `--refresh-metadata`, `--upgrade`, `--audit`, `--repair`, `--dry-run` — all wired up.
 
 ## Output layout
 
@@ -135,6 +156,7 @@ For each creator with slug `<slug>`:
 data/<slug>/
 ├── creator.json                            # curated channel-level snapshot
 ├── archive.txt                             # yt-dlp's "already downloaded" log (one line per video)
+├── archive.txt.pre-repair-YYYYMMDDTHHMMSSZ # backup written by --audit --repair (one per repair run; not auto-pruned)
 ├── manifests/
 │   ├── channel/
 │   │   ├── playlists_index_latest.json     # raw yt-dlp output: channel /playlists
@@ -156,6 +178,7 @@ data/<slug>/
     ├── download.log                        # Pass 2 + metadata pass activity (yt-dlp output during --upgrade also streams here)
     ├── refresh.log                         # --refresh-metadata activity
     ├── upgrade.log                         # --upgrade activity (startup recovery, per-video outcomes)
+    ├── audit.log                           # --audit / --repair activity
     └── errors.log                          # any error, scoped to this creator
 ```
 
@@ -230,13 +253,13 @@ The tool is being built in PRD-sized increments. See `.agents/prd/` for the full
 | 5 | `--refresh-metadata` + upgrade detection | ✅ Implemented |
 | 6 | `--upgrade` — execute pending upgrades | ✅ Implemented |
 | 7 | `--dry-run` — preview without side effects | ✅ Implemented |
-| 8 | `--audit` / `--repair` — archive consistency check | ⏳ Not yet implemented |
+| 8 | `--audit` / `--repair` — archive consistency check | ✅ Implemented |
 
-The `--audit` and `--repair` flags are parseable today but do not yet have behavior wired up.
+All PRDs from the original roadmap are implemented.
 
 ## Design notes
 
-- **Stdlib-only package.** `archive.py` is the CLI entrypoint; per-PRD logic lives in the `youtube_archive/` package (`config.py`, `logging_setup.py`, `process.py`, `errors.py`, `utils.py`, `manifests.py`, `downloads.py`, `metadata.py`, `refresh.py`, `upgrade.py`, `dry_run.py`). Stdlib only — `tomllib`, `argparse`, `logging`, `subprocess`, `pathlib`, `hashlib`, `json`, `urllib.parse`. No `pip install` step. The project started as a single file and grew into a package once it crossed five PRDs of complexity.
+- **Stdlib-only package.** `archive.py` is the CLI entrypoint; per-PRD logic lives in the `youtube_archive/` package (`config.py`, `logging_setup.py`, `process.py`, `errors.py`, `utils.py`, `manifests.py`, `downloads.py`, `metadata.py`, `refresh.py`, `upgrade.py`, `dry_run.py`, `audit.py`). Stdlib only — `tomllib`, `argparse`, `logging`, `subprocess`, `pathlib`, `hashlib`, `json`, `urllib.parse`. No `pip install` step. The project started as a single file and grew into a package once it crossed five PRDs of complexity.
 - **yt-dlp via subprocess.** The script invokes the `yt-dlp` CLI rather than `import yt_dlp` — the CLI surface is more stable across releases.
 - **Serial downloads.** One yt-dlp invocation completes before the next starts. Slower than parallel but produces linear logs and avoids hitting YouTube rate limits.
 - **`archive.txt` is the source of truth.** Only yt-dlp writes to it (via `--download-archive`). The script reads it for filtering but never mutates it directly — that's what guarantees a failed download is naturally re-attempted on the next run.
@@ -259,7 +282,8 @@ The `--audit` and `--repair` flags are parseable today but do not yet have behav
 │   ├── metadata.py         # PRD-04: pass 4 (normalized metadata)
 │   ├── refresh.py          # PRD-05: --refresh-metadata + upgrade detection
 │   ├── upgrade.py          # PRD-06: --upgrade execution + .pre-upgrade rollback
-│   └── dry_run.py          # PRD-07: --dry-run preview orchestration
+│   ├── dry_run.py          # PRD-07: --dry-run preview orchestration
+│   └── audit.py            # PRD-08: --audit consistency check + --repair
 ├── config.example.toml     # documented sample config (committed)
 ├── config.toml             # your config (gitignored)
 ├── pyproject.toml          # uv project metadata (stdlib only; no dependencies)
