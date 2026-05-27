@@ -22,17 +22,26 @@ def iso_timestamp(value: datetime.datetime) -> str:
     return value.astimezone(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-def write_json_atomic(path: pathlib.Path, obj: dict[str, Any]) -> None:
+def write_json_atomic(
+    path: pathlib.Path,
+    obj: dict[str, Any],
+    *,
+    dry_run: bool = False,
+) -> None:
+    if dry_run:
+        return
     data = json.dumps(
         obj,
         indent=2,
         ensure_ascii=False,
         sort_keys=False,
     ).encode("utf-8")
-    atomic_write_bytes(path, data + b"\n")
+    atomic_write_bytes(path, data + b"\n", dry_run=dry_run)
 
 
-def atomic_write_bytes(path: pathlib.Path, data: bytes) -> None:
+def atomic_write_bytes(path: pathlib.Path, data: bytes, *, dry_run: bool = False) -> None:
+    if dry_run:
+        return
     path.parent.mkdir(parents=True, exist_ok=True)
     tmp_path = path.with_name(f"{path.name}.tmp")
     with tmp_path.open("wb") as tmp_file:

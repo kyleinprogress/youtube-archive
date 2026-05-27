@@ -22,20 +22,34 @@ LOG_FORMATTER = UTCFormatter(
 
 def get_creator_loggers(
     slug: str,
+    dry_run: bool = False,
 ) -> tuple[logging.Logger, logging.Logger, logging.Logger, logging.Logger, logging.Logger]:
     return (
-        _configure_creator_logger(slug, "download"),
-        _configure_creator_logger(slug, "manifests"),
-        _configure_creator_logger(slug, "errors"),
-        _configure_creator_logger(slug, "refresh"),
-        _configure_creator_logger(slug, "upgrade"),
+        _configure_creator_logger(slug, "download", dry_run=dry_run),
+        _configure_creator_logger(slug, "manifests", dry_run=dry_run),
+        _configure_creator_logger(slug, "errors", dry_run=dry_run),
+        _configure_creator_logger(slug, "refresh", dry_run=dry_run),
+        _configure_creator_logger(slug, "upgrade", dry_run=dry_run),
     )
 
 
-def _configure_creator_logger(slug: str, kind: str) -> logging.Logger:
-    logger = logging.getLogger(f"archive.{slug}.{kind}")
+def _configure_creator_logger(
+    slug: str,
+    kind: str,
+    *,
+    dry_run: bool = False,
+) -> logging.Logger:
+    logger_name = f"archive.{slug}.{kind}"
+    if dry_run:
+        logger_name = f"{logger_name}.dry_run"
+    logger = logging.getLogger(logger_name)
     logger.setLevel(logging.INFO)
     logger.propagate = False
+
+    if dry_run:
+        if not any(isinstance(handler, logging.NullHandler) for handler in logger.handlers):
+            logger.addHandler(logging.NullHandler())
+        return logger
 
     log_path = DATA_DIR / slug / "logs" / f"{kind}.log"
     log_path.parent.mkdir(parents=True, exist_ok=True)

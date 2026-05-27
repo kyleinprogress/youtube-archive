@@ -27,6 +27,8 @@ def log_channel_level_failure(
     exc: ChannelLevelFailure,
     manifests_log: logging.Logger,
     errors_log: logging.Logger,
+    *,
+    dry_run: bool = False,
 ) -> None:
     detail = log_safe_detail(exc.stderr or str(exc))
     manifests_log.error(
@@ -39,11 +41,12 @@ def log_channel_level_failure(
         exc.phase,
         detail,
     )
-    print(
-        f"error: {slug}: channel-level failure during {exc.phase} — see "
-        f"data/{slug}/logs/errors.log",
-        file=sys.stderr,
-    )
+    if not dry_run:
+        print(
+            f"error: {slug}: channel-level failure during {exc.phase} — see "
+            f"data/{slug}/logs/errors.log",
+            file=sys.stderr,
+        )
 
 
 def log_safe_detail(detail: str) -> str:
@@ -56,14 +59,18 @@ def last_five_lines(text: str) -> list[str]:
 
 
 @contextlib.contextmanager
-def creator_scope(slug: str) -> Iterator[None]:
+def creator_scope(slug: str, *, dry_run: bool = False) -> Iterator[None]:
     try:
         yield
     except Exception as exc:
-        _handle_creator_failure(slug, exc)
+        _handle_creator_failure(slug, exc, dry_run=dry_run)
 
 
-def _handle_creator_failure(slug: str, exc: Exception) -> None:
+def _handle_creator_failure(slug: str, exc: Exception, *, dry_run: bool = False) -> None:
+    if dry_run:
+        print(f"[DRY RUN] error: {slug}: {exc}", file=sys.stderr)
+        return
+
     try:
         _, _, errors_log, _, _ = get_creator_loggers(slug)
     except Exception as logger_exc:

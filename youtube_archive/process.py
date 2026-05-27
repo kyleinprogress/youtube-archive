@@ -38,6 +38,7 @@ def run_subprocess_streaming(
     *,
     level: int = logging.INFO,
     stderr_level: int = logging.WARNING,
+    dry_run: bool = False,
 ) -> int:
     process = subprocess.Popen(
         cmd,
@@ -56,7 +57,7 @@ def run_subprocess_streaming(
             continue
         thread = threading.Thread(
             target=_pump_stream_to_logger,
-            args=(stream, logger, stream_level),
+            args=(stream, logger, stream_level, dry_run),
             daemon=True,
         )
         thread.start()
@@ -68,9 +69,14 @@ def run_subprocess_streaming(
     return return_code
 
 
-def _pump_stream_to_logger(stream: Any, logger: logging.Logger, level: int) -> None:
+def _pump_stream_to_logger(
+    stream: Any,
+    logger: logging.Logger,
+    level: int,
+    dry_run: bool,
+) -> None:
     with stream:
         for line in stream:
             message = line.rstrip("\n")
-            if message.strip():
+            if message.strip() and not dry_run:
                 logger.log(level, message)

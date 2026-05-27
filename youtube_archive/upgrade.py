@@ -61,22 +61,18 @@ class UpgradeFailure(Exception):
         self.tail_lines = tail_lines or []
 
 
-def run_upgrade_mode(creators: list[dict[str, Any]], *, dry_run: bool = False) -> None:
+def run_upgrade_mode(creators: list[dict[str, Any]]) -> None:
     recovery_skips_by_slug: dict[str, set[str]] = {}
     for creator in creators:
         slug = creator["slug"]
         with creator_scope(slug):
             setup_creator_environment(slug)
             _, _, errors_log, _, upgrade_log = get_creator_loggers(slug)
-            if dry_run:
-                upgrade_log.info("upgrade dry-run: startup recovery skipped")
-                recovery_skips_by_slug[slug] = set()
-            else:
-                recovery_skips_by_slug[slug] = recover_pre_upgrade_leftovers(
-                    creator,
-                    upgrade_log,
-                    errors_log,
-                )
+            recovery_skips_by_slug[slug] = recover_pre_upgrade_leftovers(
+                creator,
+                upgrade_log,
+                errors_log,
+            )
 
     total = UpgradeCounts()
     for creator in creators:
@@ -87,7 +83,6 @@ def run_upgrade_mode(creators: list[dict[str, Any]], *, dry_run: bool = False) -
             counts = run_upgrade(
                 creator,
                 recovery_skips=recovery_skips_by_slug.get(slug, set()),
-                dry_run=dry_run,
             )
             total.add(counts)
 
@@ -102,7 +97,6 @@ def run_upgrade(
     creator: dict[str, Any],
     *,
     recovery_skips: set[str],
-    dry_run: bool = False,
 ) -> UpgradeCounts:
     slug = creator["slug"]
     download_log, _, errors_log, _, upgrade_log = get_creator_loggers(slug)
@@ -114,10 +108,6 @@ def run_upgrade(
         return counts
 
     upgrade_log.info("upgrade pass starting (%s targets after filtering)", len(targets))
-    if dry_run:
-        upgrade_log.info("upgrade dry-run: would process %s targets", len(targets))
-        print_creator_summary(slug, counts)
-        return counts
 
     for target in targets:
         result = upgrade_one_video(creator, target, download_log, upgrade_log, errors_log)

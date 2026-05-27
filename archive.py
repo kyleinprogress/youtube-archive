@@ -11,6 +11,7 @@ from youtube_archive.config import (
     setup_creator_environment,
     validate_config,
 )
+from youtube_archive.dry_run import run_dry_run_mode
 from youtube_archive.downloads import run_pass_two
 from youtube_archive.errors import creator_scope
 from youtube_archive.manifests import run_pass_one
@@ -36,12 +37,16 @@ def main() -> None:
 
     check_ffmpeg()
 
+    if context.args.dry_run:
+        run_dry_run_mode(context.creators, context.args)
+        return
+
     if context.args.refresh_metadata:
         run_refresh_mode(context.creators)
         return
 
     if context.args.upgrade:
-        run_upgrade_mode(context.creators, dry_run=context.args.dry_run)
+        run_upgrade_mode(context.creators)
         return
 
     for creator in context.creators:

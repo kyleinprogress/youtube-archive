@@ -24,19 +24,25 @@ from youtube_archive.utils import (
 )
 
 
-def run_pass_one(creator: dict[str, Any]) -> dict[str, Any]:
+def run_pass_one(creator: dict[str, Any], *, dry_run: bool = False) -> dict[str, Any]:
     # Return a well-formed candidate set even when unexpected Pass 1 code fails.
     try:
-        return _run_pass_one(creator)
+        return _run_pass_one(creator, dry_run=dry_run)
     except Exception as exc:
         slug = creator["slug"]
-        _, manifests_log, errors_log, _, _ = get_creator_loggers(slug)
+        _, manifests_log, errors_log, _, _ = get_creator_loggers(slug, dry_run=dry_run)
         failure = ChannelLevelFailure(
             "unexpected",
             str(exc),
             "".join(traceback.format_exception(type(exc), exc, exc.__traceback__)),
         )
-        log_channel_level_failure(slug, failure, manifests_log, errors_log)
+        log_channel_level_failure(
+            slug,
+            failure,
+            manifests_log,
+            errors_log,
+            dry_run=dry_run,
+        )
         return {
             "slug": slug,
             "canonical_url": "",
@@ -44,12 +50,13 @@ def run_pass_one(creator: dict[str, Any]) -> dict[str, Any]:
             "channel_level_failed": True,
             "playlist_membership": {},
             "video_manifest_entries": {},
+            "pass_one_summary": empty_pass_one_summary(),
         }
 
 
-def _run_pass_one(creator: dict[str, Any]) -> dict[str, Any]:
+def _run_pass_one(creator: dict[str, Any], *, dry_run: bool = False) -> dict[str, Any]:
     slug = creator["slug"]
-    _, manifests_log, errors_log, _, _ = get_creator_loggers(slug)
+    _, manifests_log, errors_log, _, _ = get_creator_loggers(slug, dry_run=dry_run)
     manifests_log.info("Pass 1 starting")
 
     canonical_url = ""
@@ -59,19 +66,29 @@ def _run_pass_one(creator: dict[str, Any]) -> dict[str, Any]:
     video_manifest_entries: dict[str, dict[str, Any]] = {}
     channel_level_failed = False
     utc_date = utc_date_string()
+    summary = empty_pass_one_summary()
 
     try:
         resolution_payload = resolve_canonical_channel(creator["channel_url"])
         canonical_url = f"https://www.youtube.com/channel/{resolution_payload['channel_id']}"
+        summary["canonical_url"] = canonical_url
         manifests_log.info("canonical URL resolved: %s", canonical_url)
         write_creator_json(
             slug,
             creator["channel_url"],
             canonical_url,
             resolution_payload,
+            dry_run=dry_run,
         )
+        summary["manifest_writes"] += 1
     except ChannelLevelFailure as exc:
-        log_channel_level_failure(slug, exc, manifests_log, errors_log)
+        log_channel_level_failure(
+            slug,
+            exc,
+            manifests_log,
+            errors_log,
+            dry_run=dry_run,
+        )
         manifests_log.info("Pass 1 complete: 0 candidate video IDs")
         return {
             "slug": slug,
@@ -80,17 +97,31 @@ def _run_pass_one(creator: dict[str, Any]) -> dict[str, Any]:
             "channel_level_failed": True,
             "playlist_membership": playlist_membership,
             "video_manifest_entries": video_manifest_entries,
+            "pass_one_summary": summary,
         }
 
     discovered_playlist_ids: list[str] = []
     playlists_discovery_failed = False
     try:
-        discovered_playlist_ids = fetch_playlists_index(slug, canonical_url, utc_date)
+        discovered_playlist_ids = fetch_playlists_index(
+            slug,
+            canonical_url,
+            utc_date,
+            dry_run=dry_run,
+        )
+        summary["discovered_playlists"] = len(discovered_playlist_ids)
+        summary["manifest_writes"] += 2
         manifests_log.info("playlists discovered: %s", len(discovered_playlist_ids))
     except ChannelLevelFailure as exc:
         channel_level_failed = True
         playlists_discovery_failed = True
-        log_channel_level_failure(slug, exc, manifests_log, errors_log)
+        log_channel_level_failure(
+            slug,
+            exc,
+            manifests_log,
+            errors_log,
+            dry_run=dry_run,
+        )
 
     final_playlist_ids = compute_final_playlist_set(
         creator,
@@ -98,6 +129,9 @@ def _run_pass_one(creator: dict[str, Any]) -> dict[str, Any]:
         playlists_discovery_failed,
         manifests_log,
     )
+    summary["final_playlists"] = len(final_playlist_ids)
+    summary["extra_playlists"] = len(creator["extra_playlists"])
+    summary["excluded_playlists"] = len(creator["exclude_playlists"])
 
     for playlist_id in final_playlist_ids:
         try:
@@ -107,8 +141,10 @@ def _run_pass_one(creator: dict[str, Any]) -> dict[str, Any]:
                 utc_date,
                 playlist_membership,
                 video_manifest_entries,
+                dry_run=dry_run,
             )
         except PlaylistFetchFailure as exc:
+            summary["playlist_failures"] += 1
             one_line_error = str(exc).replace("\n", " ")
             manifests_log.warning(
                 "playlist fetch failed: %s — %s",
@@ -122,6 +158,9 @@ def _run_pass_one(creator: dict[str, Any]) -> dict[str, Any]:
             )
             continue
 
+        summary["playlist_successes"] += 1
+        summary["playlist_manifest_writes"] += 2
+        summary["manifest_writes"] += 2
         for video_id in playlist_video_ids:
             append_candidate_video_id(video_id, candidate_video_ids, seen_video_ids)
         manifests_log.info(
@@ -131,7 +170,14 @@ def _run_pass_one(creator: dict[str, Any]) -> dict[str, Any]:
         )
 
     try:
-        upload_video_ids = fetch_uploads_manifest(slug, canonical_url, utc_date)
+        upload_video_ids = fetch_uploads_manifest(
+            slug,
+            canonical_url,
+            utc_date,
+            dry_run=dry_run,
+        )
+        summary["uploads_count"] = len(upload_video_ids)
+        summary["manifest_writes"] += 2
         for video_id, entry in upload_video_ids:
             append_candidate_video_id(video_id, candidate_video_ids, seen_video_ids)
             playlist_membership.setdefault(video_id, [])
@@ -139,12 +185,19 @@ def _run_pass_one(creator: dict[str, Any]) -> dict[str, Any]:
         manifests_log.info("uploads manifest fetched: %s videos", len(upload_video_ids))
     except ChannelLevelFailure as exc:
         channel_level_failed = True
-        log_channel_level_failure(slug, exc, manifests_log, errors_log)
+        log_channel_level_failure(
+            slug,
+            exc,
+            manifests_log,
+            errors_log,
+            dry_run=dry_run,
+        )
 
     manifests_log.info(
         "Pass 1 complete: %s candidate video IDs",
         len(candidate_video_ids),
     )
+    summary["candidate_count"] = len(candidate_video_ids)
     return {
         "slug": slug,
         "canonical_url": canonical_url,
@@ -152,6 +205,23 @@ def _run_pass_one(creator: dict[str, Any]) -> dict[str, Any]:
         "channel_level_failed": channel_level_failed,
         "playlist_membership": playlist_membership,
         "video_manifest_entries": video_manifest_entries,
+        "pass_one_summary": summary,
+    }
+
+
+def empty_pass_one_summary() -> dict[str, Any]:
+    return {
+        "canonical_url": "",
+        "discovered_playlists": 0,
+        "final_playlists": 0,
+        "extra_playlists": 0,
+        "excluded_playlists": 0,
+        "playlist_successes": 0,
+        "playlist_failures": 0,
+        "playlist_manifest_writes": 0,
+        "uploads_count": 0,
+        "candidate_count": 0,
+        "manifest_writes": 0,
     }
 
 
@@ -216,8 +286,10 @@ def write_creator_json(
     config_channel_url: str,
     canonical_url: str,
     resolution_payload: dict[str, Any],
+    *,
+    dry_run: bool = False,
 ) -> None:
-    _, manifests_log, _, _, _ = get_creator_loggers(slug)
+    _, manifests_log, _, _, _ = get_creator_loggers(slug, dry_run=dry_run)
     creator_json_path = DATA_DIR / slug / "creator.json"
     previous_handle = read_existing_creator_handle(creator_json_path)
 
@@ -246,7 +318,7 @@ def write_creator_json(
             handle,
         )
 
-    write_json_atomic(creator_json_path, snapshot)
+    write_json_atomic(creator_json_path, snapshot, dry_run=dry_run)
 
 
 def read_existing_creator_handle(path: pathlib.Path) -> str | None:
@@ -300,7 +372,13 @@ def extract_banner_url(thumbnails: Any) -> str | None:
     return None
 
 
-def fetch_playlists_index(slug: str, canonical_url: str, utc_date: str) -> list[str]:
+def fetch_playlists_index(
+    slug: str,
+    canonical_url: str,
+    utc_date: str,
+    *,
+    dry_run: bool = False,
+) -> list[str]:
     result = run_yt_dlp_capture(
         [
             "yt-dlp",
@@ -330,10 +408,15 @@ def fetch_playlists_index(slug: str, canonical_url: str, utc_date: str) -> list[
         )
 
     channel_dir = DATA_DIR / slug / "manifests" / "channel"
-    atomic_write_bytes(channel_dir / "playlists_index_latest.json", result.stdout)
+    atomic_write_bytes(
+        channel_dir / "playlists_index_latest.json",
+        result.stdout,
+        dry_run=dry_run,
+    )
     atomic_write_bytes(
         channel_dir / f"playlists_index_{utc_date}.json",
         result.stdout,
+        dry_run=dry_run,
     )
 
     playlist_ids: list[str] = []
@@ -414,6 +497,8 @@ def fetch_playlist_manifest(
     utc_date: str,
     playlist_membership: dict[str, list[dict[str, Any]]],
     video_manifest_entries: dict[str, dict[str, Any]],
+    *,
+    dry_run: bool = False,
 ) -> list[str]:
     result = run_yt_dlp_capture(
         [
@@ -436,8 +521,16 @@ def fetch_playlist_manifest(
         raise PlaylistFetchFailure("missing entries array", result.stderr_text)
 
     playlists_dir = DATA_DIR / slug / "manifests" / "playlists"
-    atomic_write_bytes(playlists_dir / f"{playlist_id}_latest.json", result.stdout)
-    atomic_write_bytes(playlists_dir / f"{playlist_id}_{utc_date}.json", result.stdout)
+    atomic_write_bytes(
+        playlists_dir / f"{playlist_id}_latest.json",
+        result.stdout,
+        dry_run=dry_run,
+    )
+    atomic_write_bytes(
+        playlists_dir / f"{playlist_id}_{utc_date}.json",
+        result.stdout,
+        dry_run=dry_run,
+    )
 
     playlist_title = payload.get("title")
     if not isinstance(playlist_title, str):
@@ -467,6 +560,8 @@ def fetch_uploads_manifest(
     slug: str,
     canonical_url: str,
     utc_date: str,
+    *,
+    dry_run: bool = False,
 ) -> list[tuple[str, dict[str, Any]]]:
     result = run_yt_dlp_capture(
         [
@@ -489,8 +584,16 @@ def fetch_uploads_manifest(
         raise ChannelLevelFailure("uploads", "missing entries array", result.stderr_text)
 
     channel_dir = DATA_DIR / slug / "manifests" / "channel"
-    atomic_write_bytes(channel_dir / "uploads_latest.json", result.stdout)
-    atomic_write_bytes(channel_dir / f"uploads_{utc_date}.json", result.stdout)
+    atomic_write_bytes(
+        channel_dir / "uploads_latest.json",
+        result.stdout,
+        dry_run=dry_run,
+    )
+    atomic_write_bytes(
+        channel_dir / f"uploads_{utc_date}.json",
+        result.stdout,
+        dry_run=dry_run,
+    )
 
     video_entries: list[tuple[str, dict[str, Any]]] = []
     for entry in entries:

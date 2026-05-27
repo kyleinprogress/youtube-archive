@@ -226,7 +226,7 @@ def _ffmpeg_error() -> NoReturn:
     raise SystemExit(2)
 
 
-def setup_creator_environment(slug: str) -> None:
+def setup_creator_environment(slug: str, *, dry_run: bool = False) -> None:
     base = DATA_DIR / slug
     for directory in (
         base / "videos",
@@ -236,16 +236,17 @@ def setup_creator_environment(slug: str) -> None:
     ):
         directory.mkdir(parents=True, exist_ok=True)
 
-    for log_name in (
-        "download.log",
-        "manifests.log",
-        "errors.log",
-        "refresh.log",
-        "upgrade.log",
-    ):
-        log_path = base / "logs" / log_name
-        if not log_path.exists():
-            log_path.touch()
+    if not dry_run:
+        for log_name in (
+            "download.log",
+            "manifests.log",
+            "errors.log",
+            "refresh.log",
+            "upgrade.log",
+        ):
+            log_path = base / "logs" / log_name
+            if not log_path.exists():
+                log_path.touch()
 
     # Register handlers now so later PRDs can fetch loggers without path setup.
-    get_creator_loggers(slug)
+    get_creator_loggers(slug, dry_run=dry_run)

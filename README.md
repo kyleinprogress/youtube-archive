@@ -87,13 +87,45 @@ For every video in `archive.txt`, calls `yt-dlp --skip-download --dump-json` onc
 
 No media is downloaded in this mode. Cheap enough to run weekly.
 
+### `--upgrade` — re-download videos with a better format available
+
+```sh
+uv run archive.py --upgrade
+uv run archive.py --upgrade --creator creator-slug
+```
+
+For every video with a non-null `upgrade_available` (populated by a prior `--refresh-metadata` run), re-downloads the video at the current format settings and atomically replaces the on-disk media. Skips Pass 1, Pass 2, the metadata pass, and the refresh pass — `--upgrade` trusts the recorded `upgrade_available` state.
+
+- **`.pre-upgrade` rollback safety net.** Before invoking yt-dlp, every sidecar (media, `info.json`, thumbnail, subtitles) is renamed to `<filename>.pre-upgrade`. On success the `.pre-upgrade` files are deleted; on failure they're restored. The original media file is never lost.
+- **Startup recovery.** Before processing upgrade targets, the script sweeps each creator's `videos/` tree for `.pre-upgrade` leftovers from a prior interrupted run and restores them automatically.
+- **Identical-format no-op.** If yt-dlp picks the same `format_id` as what's already on disk (stale `upgrade_available` flag), the upgrade is recorded as a no-op: `upgrade_available` is cleared, `downloaded` stays untouched, no `history` entry is appended.
+- **Serial.** One yt-dlp invocation completes before the next starts.
+
+A successful upgrade replaces `metadata.json.downloaded` with the new format block, clears `upgrade_available`, and appends one `{type: "upgrade", observed_at, from, to}` entry to `history`. All other fields (`current.*`, `playlists`, `archived_at`, etc.) stay byte-identical.
+
+### `--dry-run` — preview without side effects
+
+```sh
+uv run archive.py --dry-run
+uv run archive.py --dry-run --manifests-only --creator creator-slug
+uv run archive.py --dry-run --refresh-metadata
+uv run archive.py --dry-run --upgrade
+```
+
+Previews what each mode *would* do without writing any files. Composes with every other mode flag. The only side effect is human-readable output to stdout:
+
+- **No writes** to `data/` — no `creator.json`, manifests, `metadata.json`, log files, `.pre-upgrade` renames, or media downloads.
+- **Directory creation is allowed** (empty directories are harmless) so missed write sites fail loudly with `FileNotFoundError` rather than silently no-op.
+- **Read-only network calls deliberately happen** for accurate previews — Pass 1 manifest fetches and `--refresh-metadata` per-video `yt-dlp --dump-json` calls still run. Downloads do not. `--dry-run --upgrade` makes no network calls and trusts the recorded `upgrade_available`.
+- **Per-creator and final summary** lines printed to stdout. Exit code is always `0`.
+
 ### `--help`
 
 ```sh
 uv run archive.py --help
 ```
 
-Lists all supported flags. The full set is `--creator`, `--manifests-only`, `--refresh-metadata`, `--upgrade`, `--audit`, `--repair`, `--dry-run`. Of those, only `--creator`, `--manifests-only`, and `--refresh-metadata` are wired up today — the others are accepted (so command lines stay stable) but their behavior arrives in later PRDs.
+Lists all supported flags. The full set is `--creator`, `--manifests-only`, `--refresh-metadata`, `--upgrade`, `--audit`, `--repair`, `--dry-run`. Of those, only `--audit` and `--repair` are not yet wired up — they're accepted so command lines stay stable, but their behavior arrives in PRD 8.
 
 ## Output layout
 
@@ -121,8 +153,9 @@ data/<slug>/
 │       └── metadata.json                   # normalized schema (see below)
 └── logs/
     ├── manifests.log                       # Pass 1 activity
-    ├── download.log                        # Pass 2 + metadata pass activity
+    ├── download.log                        # Pass 2 + metadata pass activity (yt-dlp output during --upgrade also streams here)
     ├── refresh.log                         # --refresh-metadata activity
+    ├── upgrade.log                         # --upgrade activity (startup recovery, per-video outcomes)
     └── errors.log                          # any error, scoped to this creator
 ```
 
@@ -163,7 +196,7 @@ Every archived video has a `metadata.json` with this shape:
 
 - `current.*` and `availability` are mutated by `--refresh-metadata`. Prior values land in `history`.
 - `playlists` is rewritten from Pass 1 manifests on every default run — historical playlist state lives in the timestamped manifest snapshots, not in `metadata.json`.
-- `upgrade_available` is populated by `--refresh-metadata` when a better format is now offered. `--upgrade` will consume it (not yet implemented).
+- `upgrade_available` is populated by `--refresh-metadata` when a better format is now offered. `--upgrade` consumes it: re-downloads the video, replaces `downloaded` with the new format block, clears `upgrade_available`, and appends a `{type: "upgrade", observed_at, from, to}` entry to `history`.
 
 ## Logging conventions
 
@@ -195,15 +228,15 @@ The tool is being built in PRD-sized increments. See `.agents/prd/` for the full
 | 3 | Pass 2 — media download pipeline | ✅ Implemented |
 | 4 | Normalized `metadata.json` layer | ✅ Implemented |
 | 5 | `--refresh-metadata` + upgrade detection | ✅ Implemented |
-| 6 | `--upgrade` — execute pending upgrades | ⏳ Not yet implemented |
-| 7 | `--dry-run` — preview without side effects | ⏳ Not yet implemented |
+| 6 | `--upgrade` — execute pending upgrades | ✅ Implemented |
+| 7 | `--dry-run` — preview without side effects | ✅ Implemented |
 | 8 | `--audit` / `--repair` — archive consistency check | ⏳ Not yet implemented |
 
-The `--upgrade`, `--audit`, `--repair`, and `--dry-run` flags are parseable today but do not yet have behavior wired up.
+The `--audit` and `--repair` flags are parseable today but do not yet have behavior wired up.
 
 ## Design notes
 
-- **Stdlib-only package.** `archive.py` is the CLI entrypoint; per-PRD logic lives in the `youtube_archive/` package (`config.py`, `logging_setup.py`, `process.py`, `errors.py`, `utils.py`, `manifests.py`, `downloads.py`, `metadata.py`, `refresh.py`). Stdlib only — `tomllib`, `argparse`, `logging`, `subprocess`, `pathlib`, `hashlib`, `json`, `urllib.parse`. No `pip install` step. The project started as a single file and grew into a package once it crossed five PRDs of complexity.
+- **Stdlib-only package.** `archive.py` is the CLI entrypoint; per-PRD logic lives in the `youtube_archive/` package (`config.py`, `logging_setup.py`, `process.py`, `errors.py`, `utils.py`, `manifests.py`, `downloads.py`, `metadata.py`, `refresh.py`, `upgrade.py`, `dry_run.py`). Stdlib only — `tomllib`, `argparse`, `logging`, `subprocess`, `pathlib`, `hashlib`, `json`, `urllib.parse`. No `pip install` step. The project started as a single file and grew into a package once it crossed five PRDs of complexity.
 - **yt-dlp via subprocess.** The script invokes the `yt-dlp` CLI rather than `import yt_dlp` — the CLI surface is more stable across releases.
 - **Serial downloads.** One yt-dlp invocation completes before the next starts. Slower than parallel but produces linear logs and avoids hitting YouTube rate limits.
 - **`archive.txt` is the source of truth.** Only yt-dlp writes to it (via `--download-archive`). The script reads it for filtering but never mutates it directly — that's what guarantees a failed download is naturally re-attempted on the next run.
@@ -224,7 +257,9 @@ The `--upgrade`, `--audit`, `--repair`, and `--dry-run` flags are parseable toda
 │   ├── manifests.py        # PRD-02: pass 1 (manifest discovery)
 │   ├── downloads.py        # PRD-03: pass 2 (media download)
 │   ├── metadata.py         # PRD-04: pass 4 (normalized metadata)
-│   └── refresh.py          # PRD-05: --refresh-metadata + upgrade detection
+│   ├── refresh.py          # PRD-05: --refresh-metadata + upgrade detection
+│   ├── upgrade.py          # PRD-06: --upgrade execution + .pre-upgrade rollback
+│   └── dry_run.py          # PRD-07: --dry-run preview orchestration
 ├── config.example.toml     # documented sample config (committed)
 ├── config.toml             # your config (gitignored)
 ├── pyproject.toml          # uv project metadata (stdlib only; no dependencies)
