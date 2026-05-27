@@ -62,9 +62,6 @@ def run_dry_run_mode(creators: list[dict[str, Any]], args: Any) -> None:
                 print_creator_header(creator["slug"], args)
                 counts = dry_run_upgrade(creator)
                 add_totals(totals, counts)
-            elif args.audit:
-                print_creator_header(creator["slug"], args)
-                print("Audit: not implemented in this codebase", flush=True)
             else:
                 print_creator_header(creator["slug"], args)
                 counts = dry_run_default_or_manifests(creator, manifests_only=args.manifests_only)
@@ -99,7 +96,7 @@ def dry_run_default_or_manifests(
         )
         return counts
 
-    null_log, _, _, _, _ = get_creator_loggers(creator["slug"], dry_run=True)
+    null_log, _, _, _, _, _ = get_creator_loggers(creator["slug"], dry_run=True)
     buckets = build_download_work_list(creator, candidate_set, null_log)
 
     print("Pass 2 (eligibility):", flush=True)
@@ -179,7 +176,7 @@ def gated_description(gated: GatedVideo, creator: dict[str, Any]) -> str:
 
 def count_metadata_touches(creator: dict[str, Any]) -> int:
     slug = creator["slug"]
-    null_log, _, _, _, _ = get_creator_loggers(slug, dry_run=True)
+    null_log, _, _, _, _, _ = get_creator_loggers(slug, dry_run=True)
     video_ids = read_archive_video_ids_for_metadata(slug, null_log)
     touches = 0
     for video_id in video_ids:
@@ -198,7 +195,7 @@ def count_metadata_touches(creator: dict[str, Any]) -> int:
 
 def dry_run_refresh(creator: dict[str, Any]) -> DryRunTotals:
     slug = creator["slug"]
-    null_log, _, _, _, _ = get_creator_loggers(slug, dry_run=True)
+    null_log, _, _, _, _, _ = get_creator_loggers(slug, dry_run=True)
     video_ids = read_archive_video_ids_for_metadata(slug, null_log)
     counts = DryRunTotals()
     no_changes = 0
@@ -299,7 +296,7 @@ def describe_refresh_changes(
 
 def dry_run_upgrade(creator: dict[str, Any]) -> DryRunTotals:
     slug = creator["slug"]
-    _, _, _, _, upgrade_log = get_creator_loggers(slug, dry_run=True)
+    _, _, _, _, upgrade_log, _ = get_creator_loggers(slug, dry_run=True)
     recovery_skips = dry_run_recovery(creator, upgrade_log)
     targets, skipped, unavailable_lines = collect_dry_upgrade_targets(
         creator,
@@ -442,8 +439,6 @@ def print_creator_header(slug: str, args: Any, *, only_upgrade: bool = False) ->
         suffixes.append("--upgrade")
     if args.manifests_only:
         suffixes.append("--manifests-only")
-    if args.audit:
-        suffixes.append("--audit")
     suffix = f" {' '.join(suffixes)}" if suffixes else ""
     print(f"==> {slug} (DRY RUN{suffix})", flush=True)
 
@@ -476,8 +471,6 @@ def print_total(total: DryRunTotals, args: Any, creator_count: int) -> None:
             f"{creator_count} creators",
             flush=True,
         )
-    elif args.audit:
-        print(f"Total: Audit N/A across {creator_count} creators", flush=True)
     else:
         print(
             f"Total: {total.would_download} would download, {total.gated} gated, "

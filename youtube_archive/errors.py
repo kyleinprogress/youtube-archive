@@ -72,7 +72,7 @@ def _handle_creator_failure(slug: str, exc: Exception, *, dry_run: bool = False)
         return
 
     try:
-        _, _, errors_log, _, _ = get_creator_loggers(slug)
+        _, _, errors_log, _, _, _ = get_creator_loggers(slug)
     except Exception as logger_exc:
         print(
             f"error: {slug}: {exc} (additionally, errors.log could not be written: {logger_exc})",

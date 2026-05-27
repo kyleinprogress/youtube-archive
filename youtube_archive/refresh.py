@@ -65,7 +65,7 @@ def run_refresh_mode(creators: list[dict[str, Any]]) -> None:
 
 def run_refresh(creator: dict[str, Any]) -> RefreshCounts:
     slug = creator["slug"]
-    _, _, errors_log, refresh_log, _ = get_creator_loggers(slug)
+    _, _, errors_log, refresh_log, _, _ = get_creator_loggers(slug)
     video_ids = read_archive_video_ids_for_metadata(slug, refresh_log)
     refresh_log.info("refresh starting (%s videos in archive.txt)", len(video_ids))
 

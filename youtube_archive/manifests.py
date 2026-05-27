@@ -30,7 +30,7 @@ def run_pass_one(creator: dict[str, Any], *, dry_run: bool = False) -> dict[str,
         return _run_pass_one(creator, dry_run=dry_run)
     except Exception as exc:
         slug = creator["slug"]
-        _, manifests_log, errors_log, _, _ = get_creator_loggers(slug, dry_run=dry_run)
+        _, manifests_log, errors_log, _, _, _ = get_creator_loggers(slug, dry_run=dry_run)
         failure = ChannelLevelFailure(
             "unexpected",
             str(exc),
@@ -56,7 +56,7 @@ def run_pass_one(creator: dict[str, Any], *, dry_run: bool = False) -> dict[str,
 
 def _run_pass_one(creator: dict[str, Any], *, dry_run: bool = False) -> dict[str, Any]:
     slug = creator["slug"]
-    _, manifests_log, errors_log, _, _ = get_creator_loggers(slug, dry_run=dry_run)
+    _, manifests_log, errors_log, _, _, _ = get_creator_loggers(slug, dry_run=dry_run)
     manifests_log.info("Pass 1 starting")
 
     canonical_url = ""
@@ -289,7 +289,7 @@ def write_creator_json(
     *,
     dry_run: bool = False,
 ) -> None:
-    _, manifests_log, _, _, _ = get_creator_loggers(slug, dry_run=dry_run)
+    _, manifests_log, _, _, _, _ = get_creator_loggers(slug, dry_run=dry_run)
     creator_json_path = DATA_DIR / slug / "creator.json"
     previous_handle = read_existing_creator_handle(creator_json_path)
 

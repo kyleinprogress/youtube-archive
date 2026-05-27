@@ -33,7 +33,7 @@ def should_run_metadata_pass(args: argparse.Namespace, candidate_set: dict[str, 
 
 def run_pass_four(creator: dict[str, Any], candidate_set: dict[str, Any]) -> None:
     slug = creator["slug"]
-    download_log, _, _, _, _ = get_creator_loggers(slug)
+    download_log, _, _, _, _, _ = get_creator_loggers(slug)
     download_log.info("PRD 4 metadata pass starting")
 
     created = 0

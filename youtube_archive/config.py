@@ -243,6 +243,7 @@ def setup_creator_environment(slug: str, *, dry_run: bool = False) -> None:
             "errors.log",
             "refresh.log",
             "upgrade.log",
+            "audit.log",
         ):
             log_path = base / "logs" / log_name
             if not log_path.exists():

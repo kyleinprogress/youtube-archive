@@ -52,7 +52,7 @@ class DownloadResult:
 
 def run_pass_two(creator: dict[str, Any], candidate_set: dict[str, Any]) -> None:
     slug = creator["slug"]
-    download_log, _, errors_log, _, _ = get_creator_loggers(slug)
+    download_log, _, errors_log, _, _, _ = get_creator_loggers(slug)
     candidate_set["downloaded_this_run"] = []
 
     if candidate_set["channel_level_failed"]:

@@ -23,13 +23,21 @@ LOG_FORMATTER = UTCFormatter(
 def get_creator_loggers(
     slug: str,
     dry_run: bool = False,
-) -> tuple[logging.Logger, logging.Logger, logging.Logger, logging.Logger, logging.Logger]:
+) -> tuple[
+    logging.Logger,
+    logging.Logger,
+    logging.Logger,
+    logging.Logger,
+    logging.Logger,
+    logging.Logger,
+]:
     return (
         _configure_creator_logger(slug, "download", dry_run=dry_run),
         _configure_creator_logger(slug, "manifests", dry_run=dry_run),
         _configure_creator_logger(slug, "errors", dry_run=dry_run),
         _configure_creator_logger(slug, "refresh", dry_run=dry_run),
         _configure_creator_logger(slug, "upgrade", dry_run=dry_run),
+        _configure_creator_logger(slug, "audit", dry_run=dry_run),
     )
 
 

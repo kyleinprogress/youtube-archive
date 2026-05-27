@@ -67,7 +67,7 @@ def run_upgrade_mode(creators: list[dict[str, Any]]) -> None:
         slug = creator["slug"]
         with creator_scope(slug):
             setup_creator_environment(slug)
-            _, _, errors_log, _, upgrade_log = get_creator_loggers(slug)
+            _, _, errors_log, _, upgrade_log, _ = get_creator_loggers(slug)
             recovery_skips_by_slug[slug] = recover_pre_upgrade_leftovers(
                 creator,
                 upgrade_log,
@@ -99,7 +99,7 @@ def run_upgrade(
     recovery_skips: set[str],
 ) -> UpgradeCounts:
     slug = creator["slug"]
-    download_log, _, errors_log, _, upgrade_log = get_creator_loggers(slug)
+    download_log, _, errors_log, _, upgrade_log, _ = get_creator_loggers(slug)
     targets, skipped = select_upgrade_targets(creator, recovery_skips, upgrade_log)
     counts = UpgradeCounts(targets=len(targets), skipped=skipped)
     if not targets:

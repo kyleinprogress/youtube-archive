@@ -62,14 +62,14 @@ Update the file after completing each sub-task, not just after completing an ent
   - [x] 3.5 For transient errors (PRD 5 §4.16), print one line per affected video: `<ID> — transient error: <one-line stderr>`
   - [x] 3.6 Print the per-creator summary line: `Summary: <C> checked, <M> metadata changes, <A> availability changes, <U_new> upgrade newly available, <U_cleared> upgrade cleared, <X> transient errors, <S> skipped`
 
-- [ ] 4.0 Implement dry-run for `--upgrade` and `--audit`
+- [x] 4.0 Implement dry-run for `--upgrade` and `--audit`
   - [x] 4.1 `--dry-run --upgrade`: print `==> <slug> (DRY RUN --upgrade)`; run PRD 6's startup recovery sweep in dry-run — identify `.pre-upgrade` leftovers and classify Case A / B / C, but do NOT restore or delete anything. Print what would happen, e.g., `startup recovery: 0 .pre-upgrade leftovers found` or `startup recovery: would restore <ID> from .pre-upgrade (Case A)` / `startup recovery: would skip <ID> (Case B ambiguous)`
   - [x] 4.2 Walk `metadata.json` files to find non-null `upgrade_available` targets; apply the availability filter; sort by `detected_at` ascending
   - [x] 4.3 For each target, print one indented line: `<VIDEO_ID> — would upgrade <from format_id>/<from height>p (<from vcodec>) -> <to format_id>/<to height>p (<to vcodec>); detected <YYYY-MM-DD>`. For unavailable-skipped: `<VIDEO_ID> — skipped (availability: <state>)`
   - [x] 4.4 Do NOT invoke yt-dlp. Do NOT rename any files to `.pre-upgrade`. No network calls (per Q3=A)
   - [x] 4.5 Print the per-creator summary: `Summary: <T> targets, would attempt upgrade on <N>, <K> skipped`
-  - [ ] 4.6 `--dry-run --audit`: PRD 8's audit is already read-only, so just additionally suppress the `audit.log` write (via the NullHandler swap from 1.0). Console output is unchanged from a real audit run
-  - [ ] 4.7 `--dry-run --audit --repair`: run the audit normally; in the `--repair` section print `[DRY RUN] would back up archive.txt to data/<slug>/archive.txt.pre-repair-<timestamp>`, `[DRY RUN] would prune from archive.txt: <ID1>, <ID2>`, `[DRY RUN] <N> entries would be removed`. Skip the actual `archive.txt` modification and backup write
+  - [x] 4.6 `--dry-run --audit`: PRD 8's audit is already read-only, so just additionally suppress the `audit.log` write (via the NullHandler swap from 1.0). Console output is unchanged from a real audit run
+  - [x] 4.7 `--dry-run --audit --repair`: run the audit normally; in the `--repair` section print `[DRY RUN] would back up archive.txt to data/<slug>/archive.txt.pre-repair-<timestamp>`, `[DRY RUN] would prune from archive.txt: <ID1>, <ID2>`, `[DRY RUN] <N> entries would be removed`. Skip the actual `archive.txt` modification and backup write
   - [x] 4.8 `--dry-run --refresh-metadata --upgrade` composition: run refresh's dry-run FIRST (showing what would change in `metadata.json`), then upgrade's dry-run reads the EXISTING (pre-refresh) `upgrade_available` from disk — matches real-run semantics where refresh runs first and upgrade reads what's on disk
 
 - [x] 5.0 Implement output formatting conventions

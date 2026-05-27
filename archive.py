@@ -4,6 +4,7 @@ import argparse
 from dataclasses import dataclass
 from typing import Any
 
+from youtube_archive.audit import run_audit_mode, validate_audit_args
 from youtube_archive.config import (
     check_ffmpeg,
     load_config,
@@ -35,7 +36,16 @@ def main() -> None:
     selected_creators = select_creators(creators, args.creator)
     context = RunContext(args=args, creators=selected_creators)
 
+    validate_audit_args(context.args)
     check_ffmpeg()
+
+    if context.args.audit:
+        run_audit_mode(
+            context.creators,
+            repair=context.args.repair,
+            dry_run=context.args.dry_run,
+        )
+        return
 
     if context.args.dry_run:
         run_dry_run_mode(context.creators, context.args)
