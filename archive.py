@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import collections
 import contextlib
 import datetime
 import json
@@ -49,6 +50,33 @@ class PlaylistFetchFailure(Exception):
         self.stderr = stderr
 
 
+@dataclass(frozen=True)
+class EligibleVideo:
+    video_id: str
+    timestamp: int | None
+
+
+@dataclass(frozen=True)
+class GatedVideo:
+    video_id: str
+    reason: str
+    value: str | int | None = None
+
+
+@dataclass(frozen=True)
+class WorkBuckets:
+    already_archived: list[str]
+    eligible_sorted: list[EligibleVideo]
+    gated_live_or_premiere: list[GatedVideo]
+    gated_too_recent: list[GatedVideo]
+
+
+@dataclass(frozen=True)
+class DownloadResult:
+    returncode: int
+    tail_lines: list[str]
+
+
 class UTCFormatter(logging.Formatter):
     converter = time.gmtime
 
@@ -77,7 +105,7 @@ def main() -> None:
             setup_creator_environment(slug)
             candidate_set = run_pass_one(creator)
             if not context.args.manifests_only:
-                run_pass_two(candidate_set)
+                run_pass_two(creator, candidate_set)
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -351,6 +379,7 @@ def run_pass_one(creator: dict[str, Any]) -> dict[str, Any]:
             "candidate_video_ids": [],
             "channel_level_failed": True,
             "playlist_membership": {},
+            "video_manifest_entries": {},
         }
 
 
@@ -363,6 +392,7 @@ def _run_pass_one(creator: dict[str, Any]) -> dict[str, Any]:
     candidate_video_ids: list[str] = []
     seen_video_ids: set[str] = set()
     playlist_membership: dict[str, list[dict[str, Any]]] = {}
+    video_manifest_entries: dict[str, dict[str, Any]] = {}
     channel_level_failed = False
     utc_date = utc_date_string()
 
@@ -385,6 +415,7 @@ def _run_pass_one(creator: dict[str, Any]) -> dict[str, Any]:
             "candidate_video_ids": candidate_video_ids,
             "channel_level_failed": True,
             "playlist_membership": playlist_membership,
+            "video_manifest_entries": video_manifest_entries,
         }
 
     discovered_playlist_ids: list[str] = []
@@ -411,6 +442,7 @@ def _run_pass_one(creator: dict[str, Any]) -> dict[str, Any]:
                 playlist_id,
                 utc_date,
                 playlist_membership,
+                video_manifest_entries,
             )
         except PlaylistFetchFailure as exc:
             one_line_error = str(exc).replace("\n", " ")
@@ -436,9 +468,10 @@ def _run_pass_one(creator: dict[str, Any]) -> dict[str, Any]:
 
     try:
         upload_video_ids = fetch_uploads_manifest(slug, canonical_url, utc_date)
-        for video_id in upload_video_ids:
+        for video_id, entry in upload_video_ids:
             append_candidate_video_id(video_id, candidate_video_ids, seen_video_ids)
             playlist_membership.setdefault(video_id, [])
+            merge_manifest_entry(video_id, entry, video_manifest_entries)
         manifests_log.info("uploads manifest fetched: %s videos", len(upload_video_ids))
     except ChannelLevelFailure as exc:
         channel_level_failed = True
@@ -454,11 +487,290 @@ def _run_pass_one(creator: dict[str, Any]) -> dict[str, Any]:
         "candidate_video_ids": candidate_video_ids,
         "channel_level_failed": channel_level_failed,
         "playlist_membership": playlist_membership,
+        "video_manifest_entries": video_manifest_entries,
     }
 
 
-def run_pass_two(candidate_set: dict[str, Any]) -> None:
+def run_pass_two(creator: dict[str, Any], candidate_set: dict[str, Any]) -> None:
+    slug = creator["slug"]
+    download_log, _, errors_log = get_creator_loggers(slug)
+
+    if candidate_set["channel_level_failed"]:
+        download_log.info("Pass 2 skipped: channel-level failure in Pass 1")
+        print(f"{slug}: skipping Pass 2 due to Pass 1 channel-level failure", file=sys.stderr)
+        return
+
+    total_candidates = len(candidate_set["candidate_video_ids"])
+    download_log.info("Pass 2 starting: %s", total_candidates)
+    buckets = build_download_work_list(creator, candidate_set, download_log)
+    gated_count = len(buckets.gated_live_or_premiere) + len(buckets.gated_too_recent)
+    download_log.info(
+        "Pass 2 filtering: %s already in archive.txt, %s eligible, %s gated (live/premiere), %s gated (too recent)",
+        len(buckets.already_archived),
+        len(buckets.eligible_sorted),
+        len(buckets.gated_live_or_premiere),
+        len(buckets.gated_too_recent),
+    )
+
+    for gated_video in buckets.gated_live_or_premiere + buckets.gated_too_recent:
+        log_gated_video(gated_video, creator["min_upload_age_hours"], download_log)
+
+    downloaded = 0
+    failed = 0
+    for eligible_video in buckets.eligible_sorted:
+        video_id = eligible_video.video_id
+        download_log.info("==> downloading %s", video_id)
+        command = build_download_command(creator, video_id)
+        result = run_download_subprocess(command, download_log)
+        if result.returncode == 0:
+            downloaded += 1
+            download_log.info("<-- done: %s", video_id)
+        else:
+            failed += 1
+            download_log.info("<-- FAILED: %s", video_id)
+            errors_log.error(
+                "download failed: %s — %s",
+                video_id,
+                log_safe_detail("\n".join(result.tail_lines)),
+            )
+
+    download_log.info(
+        "Pass 2 complete: %s downloaded, %s gated, %s failed",
+        downloaded,
+        gated_count,
+        failed,
+    )
+    print(
+        f"{slug}: Pass 2 — {downloaded} downloaded, {gated_count} gated, {failed} failed",
+        flush=True,
+    )
+
+
+def build_download_work_list(
+    creator: dict[str, Any],
+    candidate_set: dict[str, Any],
+    download_log: logging.Logger,
+) -> WorkBuckets:
+    slug = creator["slug"]
+    archive_ids = read_download_archive(slug, download_log)
+    already_archived: list[str] = []
+    eligible: list[EligibleVideo] = []
+    gated_live_or_premiere: list[GatedVideo] = []
+    gated_too_recent: list[GatedVideo] = []
+    entries = candidate_set.get("video_manifest_entries", {})
+    now = datetime.datetime.now(datetime.timezone.utc)
+
+    for video_id in candidate_set["candidate_video_ids"]:
+        if video_id in archive_ids:
+            already_archived.append(video_id)
+            continue
+
+        entry = entries.get(video_id, {})
+        if not isinstance(entry, dict):
+            entry = {}
+        metadata = extract_eligibility_metadata(entry)
+        if metadata["timestamp"] is None and metadata["live_status"] is None:
+            fallback = fetch_eligibility_metadata(video_id)
+            if fallback is None:
+                download_log.warning(
+                    "could not determine eligibility for %s, treating as eligible",
+                    video_id,
+                )
+            else:
+                metadata = fallback
+
+        gated = classify_video(video_id, metadata, creator["min_upload_age_hours"], now)
+        if gated is None:
+            eligible.append(EligibleVideo(video_id, metadata["timestamp"]))
+        elif gated.reason == "too_recent":
+            gated_too_recent.append(gated)
+        else:
+            gated_live_or_premiere.append(gated)
+
+    eligible.sort(
+        key=lambda item: (
+            item.timestamp is None,
+            item.timestamp if item.timestamp is not None else 0,
+        )
+    )
+    return WorkBuckets(
+        already_archived=already_archived,
+        eligible_sorted=eligible,
+        gated_live_or_premiere=gated_live_or_premiere,
+        gated_too_recent=gated_too_recent,
+    )
+
+
+def read_download_archive(slug: str, download_log: logging.Logger) -> set[str]:
+    archive_path = DATA_DIR / slug / "archive.txt"
+    if not archive_path.exists():
+        return set()
+
+    archived_ids: set[str] = set()
+    try:
+        lines = archive_path.read_text(encoding="utf-8").splitlines()
+    except OSError as exc:
+        download_log.warning("archive.txt exists but is unreadable: %s", exc)
+        raise
+
+    for line in lines:
+        parts = line.split()
+        if len(parts) == 2 and parts[0] == "youtube" and parts[1]:
+            archived_ids.add(parts[1])
+    return archived_ids
+
+
+def extract_eligibility_metadata(entry: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "timestamp": optional_int_value(entry.get("timestamp")),
+        "live_status": optional_string_value(entry.get("live_status")),
+        "release_timestamp": optional_int_value(entry.get("release_timestamp")),
+    }
+
+
+def fetch_eligibility_metadata(video_id: str) -> dict[str, Any] | None:
+    result = run_yt_dlp_capture(
+        [
+            "yt-dlp",
+            "--skip-download",
+            "--no-warnings",
+            "--print",
+            "%(timestamp)s|%(live_status)s|%(release_timestamp)s",
+            f"https://www.youtube.com/watch?v={video_id}",
+        ]
+    )
+    if result.returncode != 0:
+        return None
+
+    line = result.stdout.decode("utf-8", errors="replace").strip().splitlines()
+    if not line:
+        return None
+    parts = line[-1].split("|")
+    if len(parts) != 3:
+        return None
+    timestamp, live_status, release_timestamp = parts
+    return {
+        "timestamp": parse_printed_int(timestamp),
+        "live_status": optional_string_value(live_status),
+        "release_timestamp": parse_printed_int(release_timestamp),
+    }
+
+
+def classify_video(
+    video_id: str,
+    metadata: dict[str, Any],
+    min_upload_age_hours: int,
+    now: datetime.datetime,
+) -> GatedVideo | None:
+    release_timestamp = metadata["release_timestamp"]
+    if release_timestamp is not None:
+        release_time = datetime.datetime.fromtimestamp(
+            release_timestamp,
+            datetime.timezone.utc,
+        )
+        if release_time > now:
+            return GatedVideo(video_id, "future_release", iso_timestamp(release_time))
+
+    live_status = metadata["live_status"]
+    if live_status == "is_live":
+        return GatedVideo(video_id, "is_live")
+    if live_status == "is_upcoming":
+        return GatedVideo(video_id, "is_upcoming")
+
+    upload_timestamp = metadata["timestamp"]
+    if upload_timestamp is None:
+        upload_timestamp = release_timestamp
+    if min_upload_age_hours > 0 and upload_timestamp is not None:
+        upload_time = datetime.datetime.fromtimestamp(
+            upload_timestamp,
+            datetime.timezone.utc,
+        )
+        age_hours = (now - upload_time).total_seconds() / 3600
+        if age_hours < min_upload_age_hours:
+            return GatedVideo(video_id, "too_recent", int(age_hours))
+
     return None
+
+
+def log_gated_video(
+    gated_video: GatedVideo,
+    min_upload_age_hours: int,
+    download_log: logging.Logger,
+) -> None:
+    if gated_video.reason == "is_live":
+        download_log.warning("gated (live stream in progress): %s", gated_video.video_id)
+    elif gated_video.reason == "is_upcoming":
+        download_log.warning("gated (upcoming premiere): %s", gated_video.video_id)
+    elif gated_video.reason == "future_release":
+        download_log.warning(
+            "gated (future release: %s): %s",
+            gated_video.value,
+            gated_video.video_id,
+        )
+    elif gated_video.reason == "too_recent":
+        download_log.warning(
+            "gated (upload age %sh < min_upload_age_hours=%s): %s",
+            gated_video.value,
+            min_upload_age_hours,
+            gated_video.video_id,
+        )
+
+
+def build_download_command(creator: dict[str, Any], video_id: str) -> list[str]:
+    command = [
+        "yt-dlp",
+        "-f",
+        creator["format"],
+    ]
+    if creator["format_sort"]:
+        command.extend(["-S", ",".join(creator["format_sort"])])
+    command.extend(
+        [
+            "--merge-output-format",
+            creator["merge_output_format"],
+            "--download-archive",
+            str(DATA_DIR / creator["slug"] / "archive.txt"),
+            "--write-info-json",
+            "--write-thumbnail",
+            "--write-subs",
+            "--write-auto-subs",
+            "--sub-langs",
+            "en.*,en",
+            "--convert-thumbnails",
+            "webp",
+            "--embed-metadata",
+            "--embed-thumbnail",
+            "--no-progress",
+            "-o",
+            str(DATA_DIR / creator["slug"] / "videos" / "%(id)s" / "%(id)s.%(ext)s"),
+            f"https://www.youtube.com/watch?v={video_id}",
+        ]
+    )
+    return command
+
+
+def run_download_subprocess(cmd: list[str], logger: logging.Logger) -> DownloadResult:
+    process = subprocess.Popen(
+        cmd,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        text=True,
+        bufsize=1,
+    )
+
+    tail_lines: collections.deque[str] = collections.deque(maxlen=5)
+    if process.stdout is not None:
+        with process.stdout:
+            for line in process.stdout:
+                message = line.rstrip("\n")
+                if message.strip():
+                    if message.startswith(("WARNING:", "ERROR:")):
+                        logger.warning(message)
+                    else:
+                        logger.info(message)
+                    tail_lines.append(message)
+
+    return DownloadResult(process.wait(), list(tail_lines))
 
 
 def resolve_canonical_channel(config_channel_url: str) -> dict[str, Any]:
@@ -719,6 +1031,7 @@ def fetch_playlist_manifest(
     playlist_id: str,
     utc_date: str,
     playlist_membership: dict[str, list[dict[str, Any]]],
+    video_manifest_entries: dict[str, dict[str, Any]],
 ) -> list[str]:
     result = run_yt_dlp_capture(
         [
@@ -760,6 +1073,7 @@ def fetch_playlist_manifest(
         if isinstance(entry_index, int) and not isinstance(entry_index, bool):
             index = entry_index
         video_ids.append(video_id)
+        merge_manifest_entry(video_id, entry, video_manifest_entries)
         playlist_membership.setdefault(video_id, []).append(
             {"id": playlist_id, "title": playlist_title, "index": index}
         )
@@ -767,7 +1081,11 @@ def fetch_playlist_manifest(
     return video_ids
 
 
-def fetch_uploads_manifest(slug: str, canonical_url: str, utc_date: str) -> list[str]:
+def fetch_uploads_manifest(
+    slug: str,
+    canonical_url: str,
+    utc_date: str,
+) -> list[tuple[str, dict[str, Any]]]:
     result = run_yt_dlp_capture(
         [
             "yt-dlp",
@@ -792,14 +1110,14 @@ def fetch_uploads_manifest(slug: str, canonical_url: str, utc_date: str) -> list
     atomic_write_bytes(channel_dir / "uploads_latest.json", result.stdout)
     atomic_write_bytes(channel_dir / f"uploads_{utc_date}.json", result.stdout)
 
-    video_ids: list[str] = []
+    video_entries: list[tuple[str, dict[str, Any]]] = []
     for entry in entries:
         if not isinstance(entry, dict):
             continue
         video_id = entry.get("id")
         if isinstance(video_id, str) and video_id:
-            video_ids.append(video_id)
-    return video_ids
+            video_entries.append((video_id, entry))
+    return video_entries
 
 
 def parse_json_bytes_or_channel_failure(
@@ -867,6 +1185,43 @@ def log_channel_level_failure(
 
 def log_safe_detail(detail: str) -> str:
     return detail.replace("\r", "\\r").replace("\n", "\\n")
+
+
+def optional_int_value(value: Any) -> int | None:
+    if isinstance(value, bool):
+        return None
+    if isinstance(value, int):
+        return value
+    if isinstance(value, str) and value.isdigit():
+        return int(value)
+    return None
+
+
+def optional_string_value(value: Any) -> str | None:
+    return value if isinstance(value, str) and value != "NA" else None
+
+
+def parse_printed_int(value: str) -> int | None:
+    return optional_int_value(None if value == "NA" else value)
+
+
+def iso_timestamp(value: datetime.datetime) -> str:
+    return value.astimezone(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
+def merge_manifest_entry(
+    video_id: str,
+    entry: dict[str, Any],
+    video_manifest_entries: dict[str, dict[str, Any]],
+) -> None:
+    current_entry = video_manifest_entries.get(video_id)
+    if current_entry is None:
+        video_manifest_entries[video_id] = dict(entry)
+        return
+
+    for key in ("timestamp", "live_status", "release_timestamp"):
+        if current_entry.get(key) is None and entry.get(key) is not None:
+            current_entry[key] = entry[key]
 
 
 def append_candidate_video_id(

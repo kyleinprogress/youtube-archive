@@ -1,5 +1,8 @@
 [defaults]
 format = "bv*+ba/b"
+# Sort keys rank available streams; they do not cap resolution. To cap
+# resolution, put a constraint in format itself, such as
+# format = "bv*[height<=1080]+ba/b[height<=1080]"
 format_sort = ["res:1080", "codec:av01", "acodec:opus"]
 merge_output_format = "mkv"
 min_upload_age_hours = 48

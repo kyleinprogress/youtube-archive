@@ -33,47 +33,47 @@ Update the file after completing each sub-task, not just after completing an ent
 
 ## Tasks
 
-- [ ] 0.0 Create feature branch
-  - [ ] 0.1 Confirm the PRD 02 feature branch has been merged into `main` (or is otherwise reflected there) before starting; resolve any outstanding state first
-  - [ ] 0.2 Create and checkout a new branch: `git checkout -b feature/media-download-pipeline`
+- [x] 0.0 Create feature branch
+  - [x] 0.1 Confirm the PRD 02 feature branch has been merged into `main` (or is otherwise reflected there) before starting; resolve any outstanding state first
+  - [x] 0.2 Create and checkout a new branch: `git checkout -b feature/media-download-pipeline`
 
-- [ ] 1.0 Wire Pass 2 into the default run flow with the channel-level failure gate
-  - [ ] 1.1 Implement `run_pass_two(creator, candidate_set)` and invoke it inside the PRD 1 `creator_scope(slug)` context manager so any uncaught exception is logged to that creator's `errors.log` and the run moves to the next creator
-  - [ ] 1.2 As the first step inside `run_pass_two`, check `candidate_set["channel_level_failed"]`; if `True`, emit `INFO Pass 2 skipped: channel-level failure in Pass 1` to `download.log`, print `<slug>: skipping Pass 2 due to Pass 1 channel-level failure` to stderr, and return early — no yt-dlp invocations
-  - [ ] 1.3 In the main loop, after Pass 1 returns the candidate-set structure for a creator and `--manifests-only` is NOT set, call `run_pass_two(creator, candidate_set)`
-  - [ ] 1.4 Process creators sequentially in the order they appear in `config.toml`; the existing `==> <slug>` console header from PRD 1 precedes both passes so the user can see exactly where the run is
-  - [ ] 1.5 Ensure unexpected exceptions inside `run_pass_two` propagate to `creator_scope` (do not swallow them with a bare `except Exception` here); successful runs return exit code `0`
+- [x] 1.0 Wire Pass 2 into the default run flow with the channel-level failure gate
+  - [x] 1.1 Implement `run_pass_two(creator, candidate_set)` and invoke it inside the PRD 1 `creator_scope(slug)` context manager so any uncaught exception is logged to that creator's `errors.log` and the run moves to the next creator
+  - [x] 1.2 As the first step inside `run_pass_two`, check `candidate_set["channel_level_failed"]`; if `True`, emit `INFO Pass 2 skipped: channel-level failure in Pass 1` to `download.log`, print `<slug>: skipping Pass 2 due to Pass 1 channel-level failure` to stderr, and return early — no yt-dlp invocations
+  - [x] 1.3 In the main loop, after Pass 1 returns the candidate-set structure for a creator and `--manifests-only` is NOT set, call `run_pass_two(creator, candidate_set)`
+  - [x] 1.4 Process creators sequentially in the order they appear in `config.toml`; the existing `==> <slug>` console header from PRD 1 precedes both passes so the user can see exactly where the run is
+  - [x] 1.5 Ensure unexpected exceptions inside `run_pass_two` propagate to `creator_scope` (do not swallow them with a bare `except Exception` here); successful runs return exit code `0`
 
-- [ ] 2.0 Build the eligible work list (archive.txt filter + live/age classification + oldest-first sort)
-  - [ ] 2.1 Read `data/<slug>/archive.txt` once at the start of Pass 2 into an in-memory set: parse each line as `youtube <VIDEO_ID>` and collect the IDs. Treat a missing file as an empty set
-  - [ ] 2.2 Partition the candidate video IDs: any ID already in the archive set is "already-archived" and skipped (it never reaches classification or yt-dlp); the rest continue to step 2.3
-  - [ ] 2.3 Classify each remaining candidate by reading `live_status` from its manifest entry: `"is_live"` → gated (live in progress); `"is_upcoming"` → gated (upcoming premiere); `"was_live"`, `"not_live"`, `None`, or missing → continue to 2.4
-  - [ ] 2.4 If the manifest entry has a `release_timestamp` and it is in the future relative to `datetime.now(timezone.utc)`, classify as gated (future release) regardless of `live_status`. Capture the ISO 8601 release timestamp for the logging line
-  - [ ] 2.5 Compute upload age from the manifest's `timestamp` (preferred) or `release_timestamp` (fallback). If `(now - upload_time).total_seconds() / 3600 < min_upload_age_hours`, classify as gated (too recent) and record the actual age in hours. When `min_upload_age_hours == 0`, skip the age check entirely
-  - [ ] 2.6 Implement the fallback fetch path: if the manifest entry lacks BOTH `timestamp` and `live_status`, run `yt-dlp --skip-download --no-warnings --print "%(timestamp)s|%(live_status)s|%(release_timestamp)s" "https://www.youtube.com/watch?v=<ID>"` once, parse the three pipe-delimited values (missing values come back as the literal string `NA`), and feed them back into 2.3–2.5
-  - [ ] 2.7 On fallback-fetch failure (non-zero exit, unparseable output), emit `WARN could not determine eligibility for <ID>, treating as eligible` to `download.log` and classify as eligible — the user's goal is to archive, so err on the side of attempting
-  - [ ] 2.8 Sort the eligible list **ascending by `timestamp`** (oldest first); entries with missing/unparseable timestamps sort to the end of the list
-  - [ ] 2.9 Return four buckets to the caller: `already_archived`, `eligible_sorted`, `gated_live_or_premiere`, `gated_too_recent`. Gated entries should carry the specific reason + relevant value (release timestamp, age in hours) so step 4.3 can emit the documented WARN lines verbatim
+- [x] 2.0 Build the eligible work list (archive.txt filter + live/age classification + oldest-first sort)
+  - [x] 2.1 Read `data/<slug>/archive.txt` once at the start of Pass 2 into an in-memory set: parse each line as `youtube <VIDEO_ID>` and collect the IDs. Treat a missing file as an empty set
+  - [x] 2.2 Partition the candidate video IDs: any ID already in the archive set is "already-archived" and skipped (it never reaches classification or yt-dlp); the rest continue to step 2.3
+  - [x] 2.3 Classify each remaining candidate by reading `live_status` from its manifest entry: `"is_live"` → gated (live in progress); `"is_upcoming"` → gated (upcoming premiere); `"was_live"`, `"not_live"`, `None`, or missing → continue to 2.4
+  - [x] 2.4 If the manifest entry has a `release_timestamp` and it is in the future relative to `datetime.now(timezone.utc)`, classify as gated (future release) regardless of `live_status`. Capture the ISO 8601 release timestamp for the logging line
+  - [x] 2.5 Compute upload age from the manifest's `timestamp` (preferred) or `release_timestamp` (fallback). If `(now - upload_time).total_seconds() / 3600 < min_upload_age_hours`, classify as gated (too recent) and record the actual age in hours. When `min_upload_age_hours == 0`, skip the age check entirely
+  - [x] 2.6 Implement the fallback fetch path: if the manifest entry lacks BOTH `timestamp` and `live_status`, run `yt-dlp --skip-download --no-warnings --print "%(timestamp)s|%(live_status)s|%(release_timestamp)s" "https://www.youtube.com/watch?v=<ID>"` once, parse the three pipe-delimited values (missing values come back as the literal string `NA`), and feed them back into 2.3–2.5
+  - [x] 2.7 On fallback-fetch failure (non-zero exit, unparseable output), emit `WARN could not determine eligibility for <ID>, treating as eligible` to `download.log` and classify as eligible — the user's goal is to archive, so err on the side of attempting
+  - [x] 2.8 Sort the eligible list **ascending by `timestamp`** (oldest first); entries with missing/unparseable timestamps sort to the end of the list
+  - [x] 2.9 Return four buckets to the caller: `already_archived`, `eligible_sorted`, `gated_live_or_premiere`, `gated_too_recent`. Gated entries should carry the specific reason + relevant value (release timestamp, age in hours) so step 4.3 can emit the documented WARN lines verbatim
 
-- [ ] 3.0 Resolve format settings and invoke yt-dlp serially per eligible video
-  - [ ] 3.1 Resolve effective per-creator settings by overlaying per-creator overrides on top of `[defaults]` for `format`, `format_sort`, `merge_output_format`, and `min_upload_age_hours`. Override semantics: if a key is present in the `[[creator]]` block — even as an empty list or `0` — it shadows the `[defaults]` value entirely; no list-merging
-  - [ ] 3.2 Build the yt-dlp command as a Python list of args (NOT a shell string) with the documented args: `-f <format>`, `--merge-output-format <merge_output_format>`, `--download-archive data/<slug>/archive.txt`, `--write-info-json`, `--write-thumbnail`, `--write-subs`, `--write-auto-subs`, `--sub-langs "en.*,en"`, `--convert-thumbnails webp`, `--embed-metadata`, `--embed-thumbnail`, `--no-progress`, `-o "data/<slug>/videos/%(id)s/%(id)s.%(ext)s"`, and the watch URL `"https://www.youtube.com/watch?v=<VIDEO_ID>"`
-  - [ ] 3.3 Insert `-S "<comma-joined keys>"` into the args **only if** the resolved `format_sort` is a non-empty list; if empty or unset, omit `-S` entirely so yt-dlp uses its built-in default sort
-  - [ ] 3.4 For each eligible video in the sorted order from 2.8, invoke the command via `subprocess.Popen` with `stdout=PIPE, stderr=STDOUT` and stream raw yt-dlp output verbatim to `download.log` using the PRD 1 streaming helper
-  - [ ] 3.5 Run downloads strictly serially — one invocation must reach an exit code before the next is started. No threading, no `asyncio`, no `--max-downloads`
-  - [ ] 3.6 Rely on yt-dlp's default `--continue` for `.part` resume; do not add any custom partial-file handling
-  - [ ] 3.7 Never write to `archive.txt` from Python — yt-dlp updates it natively via `--download-archive` and only on successful downloads. This is what makes a failed download naturally retry on the next run
-  - [ ] 3.8 Update `config.example.toml` to document the `format` vs. `format_sort` distinction: `format_sort` keys *rank* available streams, they do not *cap* resolution; to cap, use `[height<=1080]` inside the `format` selector itself
+- [x] 3.0 Resolve format settings and invoke yt-dlp serially per eligible video
+  - [x] 3.1 Resolve effective per-creator settings by overlaying per-creator overrides on top of `[defaults]` for `format`, `format_sort`, `merge_output_format`, and `min_upload_age_hours`. Override semantics: if a key is present in the `[[creator]]` block — even as an empty list or `0` — it shadows the `[defaults]` value entirely; no list-merging
+  - [x] 3.2 Build the yt-dlp command as a Python list of args (NOT a shell string) with the documented args: `-f <format>`, `--merge-output-format <merge_output_format>`, `--download-archive data/<slug>/archive.txt`, `--write-info-json`, `--write-thumbnail`, `--write-subs`, `--write-auto-subs`, `--sub-langs "en.*,en"`, `--convert-thumbnails webp`, `--embed-metadata`, `--embed-thumbnail`, `--no-progress`, `-o "data/<slug>/videos/%(id)s/%(id)s.%(ext)s"`, and the watch URL `"https://www.youtube.com/watch?v=<VIDEO_ID>"`
+  - [x] 3.3 Insert `-S "<comma-joined keys>"` into the args **only if** the resolved `format_sort` is a non-empty list; if empty or unset, omit `-S` entirely so yt-dlp uses its built-in default sort
+  - [x] 3.4 For each eligible video in the sorted order from 2.8, invoke the command via `subprocess.Popen` with `stdout=PIPE, stderr=STDOUT` and stream raw yt-dlp output verbatim to `download.log` using the PRD 1 streaming helper
+  - [x] 3.5 Run downloads strictly serially — one invocation must reach an exit code before the next is started. No threading, no `asyncio`, no `--max-downloads`
+  - [x] 3.6 Rely on yt-dlp's default `--continue` for `.part` resume; do not add any custom partial-file handling
+  - [x] 3.7 Never write to `archive.txt` from Python — yt-dlp updates it natively via `--download-archive` and only on successful downloads. This is what makes a failed download naturally retry on the next run
+  - [x] 3.8 Update `config.example.toml` to document the `format` vs. `format_sort` distinction: `format_sort` keys *rank* available streams, they do not *cap* resolution; to cap, use `[height<=1080]` inside the `format` selector itself
 
-- [ ] 4.0 Implement Pass 2 logging, per-video failure routing, and per-creator console summary
-  - [ ] 4.1 At the start of Pass 2 (after the channel-level gate passes), emit `INFO Pass 2 starting: <total candidate count>` to `download.log`
-  - [ ] 4.2 After classification, emit `INFO Pass 2 filtering: <already_archived> already in archive.txt, <eligible> eligible, <gated_live> gated (live/premiere), <gated_age> gated (too recent)` to `download.log`
-  - [ ] 4.3 For each gated video, emit exactly one WARN line to `download.log` matching the bucket: `WARN gated (live stream in progress): <ID>`, `WARN gated (upcoming premiere): <ID>`, `WARN gated (future release: <ISO timestamp>): <ID>`, or `WARN gated (upload age <N>h < min_upload_age_hours=<M>): <ID>`
-  - [ ] 4.4 For each eligible video, write `INFO ==> downloading <ID>` to `download.log` before invoking yt-dlp, and `INFO <-- done: <ID>` (exit 0) or `INFO <-- FAILED: <ID>` (non-zero exit) immediately after
-  - [ ] 4.5 On non-zero yt-dlp exit, additionally append `ERROR download failed: <ID> — <last 5 lines of yt-dlp stderr>` to `errors.log`; do NOT add the ID to `archive.txt` (yt-dlp already enforces this natively); continue to the next eligible video
-  - [ ] 4.6 At the end of Pass 2 for a creator, emit `INFO Pass 2 complete: <downloaded> downloaded, <gated> gated, <failed> failed` to `download.log`
-  - [ ] 4.7 Print exactly one console summary line per creator at the end of Pass 2: `<slug>: Pass 2 — <downloaded> downloaded, <gated> gated, <failed> failed`. Always print this line — even when all counts are zero (per the resolved open question in PRD §9.5). Same convention applies to future per-creator summary lines in PRDs 5–8
-  - [ ] 4.8 Keep per-video activity confined to `download.log` — do not echo per-video progress to stdout; the console gets only the existing `==> <slug>` header (from PRD 1) and the single end-of-Pass-2 summary line
+- [x] 4.0 Implement Pass 2 logging, per-video failure routing, and per-creator console summary
+  - [x] 4.1 At the start of Pass 2 (after the channel-level gate passes), emit `INFO Pass 2 starting: <total candidate count>` to `download.log`
+  - [x] 4.2 After classification, emit `INFO Pass 2 filtering: <already_archived> already in archive.txt, <eligible> eligible, <gated_live> gated (live/premiere), <gated_age> gated (too recent)` to `download.log`
+  - [x] 4.3 For each gated video, emit exactly one WARN line to `download.log` matching the bucket: `WARN gated (live stream in progress): <ID>`, `WARN gated (upcoming premiere): <ID>`, `WARN gated (future release: <ISO timestamp>): <ID>`, or `WARN gated (upload age <N>h < min_upload_age_hours=<M>): <ID>`
+  - [x] 4.4 For each eligible video, write `INFO ==> downloading <ID>` to `download.log` before invoking yt-dlp, and `INFO <-- done: <ID>` (exit 0) or `INFO <-- FAILED: <ID>` (non-zero exit) immediately after
+  - [x] 4.5 On non-zero yt-dlp exit, additionally append `ERROR download failed: <ID> — <last 5 lines of yt-dlp stderr>` to `errors.log`; do NOT add the ID to `archive.txt` (yt-dlp already enforces this natively); continue to the next eligible video
+  - [x] 4.6 At the end of Pass 2 for a creator, emit `INFO Pass 2 complete: <downloaded> downloaded, <gated> gated, <failed> failed` to `download.log`
+  - [x] 4.7 Print exactly one console summary line per creator at the end of Pass 2: `<slug>: Pass 2 — <downloaded> downloaded, <gated> gated, <failed> failed`. Always print this line — even when all counts are zero (per the resolved open question in PRD §9.5). Same convention applies to future per-creator summary lines in PRDs 5–8
+  - [x] 4.8 Keep per-video activity confined to `download.log` — do not echo per-video progress to stdout; the console gets only the existing `==> <slug>` header (from PRD 1) and the single end-of-Pass-2 summary line
 
 - [ ] 5.0 Verify against PRD success metrics
   - [ ] 5.1 End-to-end smoke run: pick a creator with one short playlist (5–10 videos) and run `uv run archive.py --creator <slug>`. Confirm every eligible video downloaded; `archive.txt` has one `youtube <ID>` line per download; each `data/<slug>/videos/<ID>/` contains `<ID>.mkv`, `<ID>.info.json`, `<ID>.webp`, and a `.vtt` file if subtitles exist
