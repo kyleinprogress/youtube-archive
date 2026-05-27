@@ -28,56 +28,56 @@ Update the file after completing each sub-task, not just after completing an ent
 
 ## Tasks
 
-- [ ] 0.0 Create feature branch
-  - [ ] 0.1 Confirm the PRD 04 feature branch has been merged into `main` (or is otherwise reflected there); resolve any outstanding state first
-  - [ ] 0.2 Create and checkout a new branch: `git checkout -b feature/metadata-refresh-and-upgrade-detection`
+- [x] 0.0 Create feature branch
+  - [x] 0.1 Confirm the PRD 04 feature branch has been merged into `main` (or is otherwise reflected there); resolve any outstanding state first
+  - [x] 0.2 Create and checkout a new branch: `git checkout -b feature/metadata-refresh-and-upgrade-detection`
 
-- [ ] 1.0 Wire `--refresh-metadata` as a standalone code path and add the fourth per-creator log file
-  - [ ] 1.1 Extend PRD 1's `get_creator_loggers(slug)` to return a fourth logger backed by `data/<slug>/logs/refresh.log`; also extend PRD 1's directory-setup step to touch `refresh.log` so it exists as an empty file after the first PRD 5 run
-  - [ ] 1.2 Add `--refresh-metadata` handling to the main CLI dispatcher so it skips Pass 1 (PRD 2), Pass 2 (PRD 3), and PRD 4 entirely — no manifest discovery, no downloads, no playlist refresh
-  - [ ] 1.3 Allow composition with `--creator <slug>` to scope the refresh to one creator; without `--creator`, iterate all creators in `config.toml` order
-  - [ ] 1.4 Implement `run_refresh(creator)` invoked inside `creator_scope(slug)` so unexpected exceptions log to `errors.log` and the run moves to the next creator
-  - [ ] 1.5 At the top of each creator's refresh, emit `INFO refresh starting (<N> videos in archive.txt)` to `refresh.log` where `<N>` is the count of IDs parsed from `archive.txt`
+- [x] 1.0 Wire `--refresh-metadata` as a standalone code path and add the fourth per-creator log file
+  - [x] 1.1 Extend PRD 1's `get_creator_loggers(slug)` to return a fourth logger backed by `data/<slug>/logs/refresh.log`; also extend PRD 1's directory-setup step to touch `refresh.log` so it exists as an empty file after the first PRD 5 run
+  - [x] 1.2 Add `--refresh-metadata` handling to the main CLI dispatcher so it skips Pass 1 (PRD 2), Pass 2 (PRD 3), and PRD 4 entirely — no manifest discovery, no downloads, no playlist refresh
+  - [x] 1.3 Allow composition with `--creator <slug>` to scope the refresh to one creator; without `--creator`, iterate all creators in `config.toml` order
+  - [x] 1.4 Implement `run_refresh(creator)` invoked inside `creator_scope(slug)` so unexpected exceptions log to `errors.log` and the run moves to the next creator
+  - [x] 1.5 At the top of each creator's refresh, emit `INFO refresh starting (<N> videos in archive.txt)` to `refresh.log` where `<N>` is the count of IDs parsed from `archive.txt`
 
-- [ ] 2.0 Implement the per-video yt-dlp refresh call and outcome classification
-  - [ ] 2.1 Read `data/<slug>/archive.txt` once into a list of video IDs (in archive.txt order; no sort) and walk them serially
-  - [ ] 2.2 Resolve the effective per-creator format settings (`format`, `format_sort`) using the same precedence as PRD 3 §4.5; reuse the helper
-  - [ ] 2.3 For each ID, invoke `yt-dlp --skip-download --no-warnings -f "<format>" [-S "<format_sort joined by commas>"] --dump-json "https://www.youtube.com/watch?v=<ID>"`; omit `-S` entirely when the resolved `format_sort` is empty
-  - [ ] 2.4 Capture stdout + stderr via `subprocess.run(..., capture_output=True, text=True, timeout=60)`; treat `TimeoutExpired` as a transient error
-  - [ ] 2.5 Classify the outcome based on exit code and stderr substring matching: **available** (exit 0 + parseable JSON); **removed** (non-zero + stderr contains `"Video unavailable"`, `"This video has been removed"`, `"This video is no longer available"`, or `"has been terminated"`); **private** (non-zero + `"Private video"` or `"This video is private"`); **members_only** (non-zero + `"members-only"`, `"members only"`, or `"requires a Channel Membership"`); **age_restricted** (non-zero + `"Sign in to confirm your age"` or `"age-restricted"`); **transient_error** (non-zero + none of the above, OR exit 0 with unparseable JSON)
-  - [ ] 2.6 Handle orphan / corruption cases before invocation: if `data/<slug>/videos/<ID>/` does not exist, skip silently (no log line); if the folder exists but `metadata.json` is missing, log `WARN refresh skipped: <ID> (no metadata.json; run a normal sync first)` to `refresh.log` and skip
-  - [ ] 2.7 On `transient_error`: log `ERROR refresh failed: <ID> — <last 5 lines of stderr>` to `errors.log`; log `WARN refresh transient error: <ID>` to `refresh.log`; leave `availability`, `removed_detected_at`, `current.*`, `upgrade_available`, AND `last_metadata_check` ALL unchanged; continue to the next video
-  - [ ] 2.8 The media file on disk MUST NOT be touched in any availability-change scenario — the archive's purpose is to preserve files YouTube no longer serves
+- [x] 2.0 Implement the per-video yt-dlp refresh call and outcome classification
+  - [x] 2.1 Read `data/<slug>/archive.txt` once into a list of video IDs (in archive.txt order; no sort) and walk them serially
+  - [x] 2.2 Resolve the effective per-creator format settings (`format`, `format_sort`) using the same precedence as PRD 3 §4.5; reuse the helper
+  - [x] 2.3 For each ID, invoke `yt-dlp --skip-download --no-warnings -f "<format>" [-S "<format_sort joined by commas>"] --dump-json "https://www.youtube.com/watch?v=<ID>"`; omit `-S` entirely when the resolved `format_sort` is empty
+  - [x] 2.4 Capture stdout + stderr via `subprocess.run(..., capture_output=True, text=True, timeout=60)`; treat `TimeoutExpired` as a transient error
+  - [x] 2.5 Classify the outcome based on exit code and stderr substring matching: **available** (exit 0 + parseable JSON); **removed** (non-zero + stderr contains `"Video unavailable"`, `"This video has been removed"`, `"This video is no longer available"`, or `"has been terminated"`); **private** (non-zero + `"Private video"` or `"This video is private"`); **members_only** (non-zero + `"members-only"`, `"members only"`, or `"requires a Channel Membership"`); **age_restricted** (non-zero + `"Sign in to confirm your age"` or `"age-restricted"`); **transient_error** (non-zero + none of the above, OR exit 0 with unparseable JSON)
+  - [x] 2.6 Handle orphan / corruption cases before invocation: if `data/<slug>/videos/<ID>/` does not exist, skip silently (no log line); if the folder exists but `metadata.json` is missing, log `WARN refresh skipped: <ID> (no metadata.json; run a normal sync first)` to `refresh.log` and skip
+  - [x] 2.7 On `transient_error`: log `ERROR refresh failed: <ID> — <last 5 lines of stderr>` to `errors.log`; log `WARN refresh transient error: <ID>` to `refresh.log`; leave `availability`, `removed_detected_at`, `current.*`, `upgrade_available`, AND `last_metadata_check` ALL unchanged; continue to the next video
+  - [x] 2.8 The media file on disk MUST NOT be touched in any availability-change scenario — the archive's purpose is to preserve files YouTube no longer serves
 
-- [ ] 3.0 Implement metadata-drift detection and `history` writes
-  - [ ] 3.1 On a successful (available) refresh, compute the candidate new `current` block: `title` from parsed JSON's `title`, `thumbnail_url` from parsed JSON's `thumbnail` (top-level), `description_hash` via the existing PRD 4 `description_hash(...)` helper applied to parsed JSON's `description`
-  - [ ] 3.2 Compute `changed_fields` as the alphabetically-sorted subset of `{"title", "thumbnail_url", "description_hash"}` whose new value differs from the existing `metadata.json.current` value
-  - [ ] 3.3 If `changed_fields` is non-empty, append ONE entry to `metadata.json.history` with the documented schema: `{"type": "metadata_change", "previous_observed_until": <existing last_metadata_check>, "changed_fields": [...], "previous": {"title": ..., "thumbnail_url": ..., "description_hash": ...}}`. `previous` carries the FULL prior `current` block even when only one field changed
-  - [ ] 3.4 Replace `metadata.json.current` with the new values (all three fields together)
-  - [ ] 3.5 Bundle correlated changes: if multiple fields changed in the same refresh, emit ONE history entry listing all of them in `changed_fields` — NOT one entry per field
-  - [ ] 3.6 If `changed_fields` is empty (nothing changed), do NOT append a history entry and do NOT modify `current`
-  - [ ] 3.7 Log `INFO metadata_change: <ID> (changed: <comma-joined field names>)` to `refresh.log` only when `changed_fields` is non-empty
-  - [ ] 3.8 Skip §3.0 entirely when the new availability state is anything other than `"available"` (yt-dlp gave us no payload to diff against)
+- [x] 3.0 Implement metadata-drift detection and `history` writes
+  - [x] 3.1 On a successful (available) refresh, compute the candidate new `current` block: `title` from parsed JSON's `title`, `thumbnail_url` from parsed JSON's `thumbnail` (top-level), `description_hash` via the existing PRD 4 `description_hash(...)` helper applied to parsed JSON's `description`
+  - [x] 3.2 Compute `changed_fields` as the alphabetically-sorted subset of `{"title", "thumbnail_url", "description_hash"}` whose new value differs from the existing `metadata.json.current` value
+  - [x] 3.3 If `changed_fields` is non-empty, append ONE entry to `metadata.json.history` with the documented schema: `{"type": "metadata_change", "previous_observed_until": <existing last_metadata_check>, "changed_fields": [...], "previous": {"title": ..., "thumbnail_url": ..., "description_hash": ...}}`. `previous` carries the FULL prior `current` block even when only one field changed
+  - [x] 3.4 Replace `metadata.json.current` with the new values (all three fields together)
+  - [x] 3.5 Bundle correlated changes: if multiple fields changed in the same refresh, emit ONE history entry listing all of them in `changed_fields` — NOT one entry per field
+  - [x] 3.6 If `changed_fields` is empty (nothing changed), do NOT append a history entry and do NOT modify `current`
+  - [x] 3.7 Log `INFO metadata_change: <ID> (changed: <comma-joined field names>)` to `refresh.log` only when `changed_fields` is non-empty
+  - [x] 3.8 Skip §3.0 entirely when the new availability state is anything other than `"available"` (yt-dlp gave us no payload to diff against)
 
-- [ ] 4.0 Implement availability tracking
-  - [ ] 4.1 Capture the prior `availability` value from the existing `metadata.json` before applying changes
-  - [ ] 4.2 Set new `availability` to the classified value from 2.5 (one of `available`, `removed`, `private`, `members_only`, `age_restricted`)
-  - [ ] 4.3 If new state is NOT `"available"` AND `removed_detected_at` is currently `null`, set `removed_detected_at` to the current UTC ISO 8601 timestamp; if it's already populated, leave it (preserves the original detection time)
-  - [ ] 4.4 If new state IS `"available"` AND prior state was not `"available"` (a resurrection), set `removed_detected_at` back to `null`
-  - [ ] 4.5 If new state differs from prior state, append one entry to `history`: `{"type": "availability_change", "previous_observed_until": <existing last_metadata_check>, "previous": <prior availability value>}`
-  - [ ] 4.6 Log `INFO availability_change: <ID> (<prior> -> <new>)` to `refresh.log` only on a real transition
+- [x] 4.0 Implement availability tracking
+  - [x] 4.1 Capture the prior `availability` value from the existing `metadata.json` before applying changes
+  - [x] 4.2 Set new `availability` to the classified value from 2.5 (one of `available`, `removed`, `private`, `members_only`, `age_restricted`)
+  - [x] 4.3 If new state is NOT `"available"` AND `removed_detected_at` is currently `null`, set `removed_detected_at` to the current UTC ISO 8601 timestamp; if it's already populated, leave it (preserves the original detection time)
+  - [x] 4.4 If new state IS `"available"` AND prior state was not `"available"` (a resurrection), set `removed_detected_at` back to `null`
+  - [x] 4.5 If new state differs from prior state, append one entry to `history`: `{"type": "availability_change", "previous_observed_until": <existing last_metadata_check>, "previous": <prior availability value>}`
+  - [x] 4.6 Log `INFO availability_change: <ID> (<prior> -> <new>)` to `refresh.log` only on a real transition
 
-- [ ] 5.0 Implement upgrade detection, last_metadata_check, atomic writes, and console summary
-  - [ ] 5.1 When availability is `"available"`, read yt-dlp's selected format from the parsed JSON's top-level fields (`format_id`, `height`, `vcodec`, `acodec`, `filesize` with `filesize_approx` fallback) — these reflect the `-f` / `-S` selection that was applied on the command line
-  - [ ] 5.2 Compute the upgrade rule: an upgrade is available if `parsed.format_id != metadata.downloaded.format_id`. If so, populate `upgrade_available = {"detected_at": <now UTC ISO>, "format_id": ..., "height": ..., "vcodec": ..., "acodec": ..., "filesize": ...}`; always overwrite the prior `upgrade_available` value
-  - [ ] 5.3 If `parsed.format_id == metadata.downloaded.format_id`, set `upgrade_available = null` (this clears any stale upgrade flag that's no longer applicable)
-  - [ ] 5.4 Log `INFO upgrade_available: <ID> (height <old> -> <new>)` to `refresh.log` only on a transition from `null` to populated; log `INFO upgrade_cleared: <ID>` only on a transition from populated to `null`
-  - [ ] 5.5 Do NOT append a history entry for upgrade-detection state changes — `upgrade_available` is a current-state pointer; PRD 6 writes the `{type: "upgrade", ...}` history entry when an upgrade is actually executed
-  - [ ] 5.6 Update `last_metadata_check` to `datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')` on every **successful** refresh (any of the real-state classifications). MUST NOT update on a transient_error — `last_metadata_check` semantically means "last time we successfully observed this video's state"
-  - [ ] 5.7 Write `metadata.json` via PRD 4's `write_json_atomic(...)`; preserve the documented field order; preserve `playlists`, `downloaded.*`, `archived_at`, `schema_version`, `video_id`, `source_creator` byte-identically; new `history` entry's field order is `type`, then the timestamp field, then payload fields
-  - [ ] 5.8 At the end of each creator's refresh, emit `INFO refresh complete: <C> checked, <M> metadata changes, <A> availability changes, <U> upgrades available, <X> transient errors, <S> skipped` to `refresh.log`
-  - [ ] 5.9 Print one console line per creator: `<slug>: refresh — <C> checked, <M> metadata changes, <A> availability changes, <U> upgrades available, <X> transient errors, <S> skipped`. Always print, even on zero work
-  - [ ] 5.10 After all creators complete, print one final summary line: `Total: <M> metadata changes, <A> availability changes, <U> upgrades available, <X> transient errors across <N> creators` (where `<U>` is the cross-creator total of videos currently in the upgrade_available state, not just newly-flagged). If `--creator` was used, `<N>` is `1`
+- [x] 5.0 Implement upgrade detection, last_metadata_check, atomic writes, and console summary
+  - [x] 5.1 When availability is `"available"`, read yt-dlp's selected format from the parsed JSON's top-level fields (`format_id`, `height`, `vcodec`, `acodec`, `filesize` with `filesize_approx` fallback) — these reflect the `-f` / `-S` selection that was applied on the command line
+  - [x] 5.2 Compute the upgrade rule: an upgrade is available if `parsed.format_id != metadata.downloaded.format_id`. If so, populate `upgrade_available = {"detected_at": <now UTC ISO>, "format_id": ..., "height": ..., "vcodec": ..., "acodec": ..., "filesize": ...}`; always overwrite the prior `upgrade_available` value
+  - [x] 5.3 If `parsed.format_id == metadata.downloaded.format_id`, set `upgrade_available = null` (this clears any stale upgrade flag that's no longer applicable)
+  - [x] 5.4 Log `INFO upgrade_available: <ID> (height <old> -> <new>)` to `refresh.log` only on a transition from `null` to populated; log `INFO upgrade_cleared: <ID>` only on a transition from populated to `null`
+  - [x] 5.5 Do NOT append a history entry for upgrade-detection state changes — `upgrade_available` is a current-state pointer; PRD 6 writes the `{type: "upgrade", ...}` history entry when an upgrade is actually executed
+  - [x] 5.6 Update `last_metadata_check` to `datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')` on every **successful** refresh (any of the real-state classifications). MUST NOT update on a transient_error — `last_metadata_check` semantically means "last time we successfully observed this video's state"
+  - [x] 5.7 Write `metadata.json` via PRD 4's `write_json_atomic(...)`; preserve the documented field order; preserve `playlists`, `downloaded.*`, `archived_at`, `schema_version`, `video_id`, `source_creator` byte-identically; new `history` entry's field order is `type`, then the timestamp field, then payload fields
+  - [x] 5.8 At the end of each creator's refresh, emit `INFO refresh complete: <C> checked, <M> metadata changes, <A> availability changes, <U> upgrades available, <X> transient errors, <S> skipped` to `refresh.log`
+  - [x] 5.9 Print one console line per creator: `<slug>: refresh — <C> checked, <M> metadata changes, <A> availability changes, <U> upgrades available, <X> transient errors, <S> skipped`. Always print, even on zero work
+  - [x] 5.10 After all creators complete, print one final summary line: `Total: <M> metadata changes, <A> availability changes, <U> upgrades available, <X> transient errors across <N> creators` (where `<U>` is the cross-creator total of videos currently in the upgrade_available state, not just newly-flagged). If `--creator` was used, `<N>` is `1`
 
 - [ ] 6.0 Verify against PRD success metrics
   - [ ] 6.1 Title-change history: edit one video's `metadata.json.current.title` to a wrong value (e.g., `"WRONG"`), run `--refresh-metadata`, confirm `current.title` is restored to YouTube's actual title, one new `metadata_change` entry exists in `history` with `changed_fields: ["title"]` and `previous.title == "WRONG"`, and `last_metadata_check` is updated
