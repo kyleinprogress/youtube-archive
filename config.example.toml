@@ -1,0 +1,21 @@
+[defaults]
+format = "bv*+ba/b"
+format_sort = ["res:1080", "codec:av01", "acodec:opus"]
+merge_output_format = "mkv"
+min_upload_age_hours = 48
+
+[[creator]]
+slug = "example-creator" # Filesystem-safe directory name under data/.
+name = "Example Creator" # Human-readable display name for logs and reports.
+channel_url = "https://www.youtube.com/@example" # YouTube channel URL to archive.
+
+# [[creator]]
+# slug = "another-creator"
+# name = "Another Creator"
+# channel_url = "https://www.youtube.com/@another"
+# format = "bv*+ba/b"
+# format_sort = ["res:720", "codec:av01", "acodec:opus"]
+# merge_output_format = "mkv"
+# min_upload_age_hours = 24
+# exclude_playlists = ["PLxxxxxxxxxxxxxxxx"]
+# extra_playlists = ["https://www.youtube.com/playlist?list=PLyyyyyyyyyyyyyyyy"]
