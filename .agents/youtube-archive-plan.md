@@ -15,7 +15,7 @@ Decisions confirmed:
 
 ## Approach
 
-Single-file Python orchestrator (`archive.py`) that shells out to the `yt-dlp` CLI as a subprocess. The CLI is more stable and easier to debug than the `yt_dlp` library API. Stdlib only — `tomllib` is built into Python 3.14, so no Python dependencies are needed.
+Python orchestrator that shells out to the `yt-dlp` CLI as a subprocess. The CLI is more stable and easier to debug than the `yt_dlp` library API. Stdlib only — `tomllib` is built into Python 3.14, so no Python dependencies are needed. `archive.py` is the CLI entrypoint; per-PRD logic lives in the `youtube_archive/` package. (The project began as a single file when scope was ~100–200 lines; it was split into a package once it crossed five PRDs and ~2000 lines.)
 
 ### Directory layout (built by the script)
 

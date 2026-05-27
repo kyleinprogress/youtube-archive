@@ -1,11 +1,20 @@
 [defaults]
-format = "bv*+ba/b"
+# Note: use `bv+ba/b` (not `bv*+ba/b`) so video-only DASH formats are preferred
+# for the merge step. With `bv*`, HLS combined formats can win the sort and
+# defeat the merge, producing .mp4 instead of .mkv.
+format = "bv+ba/b"
 # Sort keys rank available streams; they do not cap resolution. To cap
 # resolution, put a constraint in format itself, such as
-# format = "bv*[height<=1080]+ba/b[height<=1080]"
+# format = "bv[height<=1080]+ba/b[height<=1080]"
 format_sort = ["res:1080", "codec:av01", "acodec:opus"]
 merge_output_format = "mkv"
 min_upload_age_hours = 48
+# Subtitle language preferences, tried in order. Each entry is a glob pattern
+# matched against the video's available subtitle language tags (e.g. "en",
+# "en-*", "en*", "*"). The first preference that matches any available tag wins;
+# only one subtitle file is downloaded per video. Manual subtitles win over
+# auto-generated for the same preference. Set to [] to skip subtitles entirely.
+subtitle_preferences = ["en-en-US", "en-US", "en-*", "en"]
 
 [[creator]]
 slug = "example-creator" # Filesystem-safe directory name under data/.
@@ -16,9 +25,10 @@ channel_url = "https://www.youtube.com/@example" # YouTube channel URL to archiv
 # slug = "another-creator"
 # name = "Another Creator"
 # channel_url = "https://www.youtube.com/@another"
-# format = "bv*+ba/b"
+# format = "bv+ba/b"
 # format_sort = ["res:720", "codec:av01", "acodec:opus"]
 # merge_output_format = "mkv"
 # min_upload_age_hours = 24
+# subtitle_preferences = ["en"]
 # exclude_playlists = ["PLxxxxxxxxxxxxxxxx"]
 # extra_playlists = ["https://www.youtube.com/playlist?list=PLyyyyyyyyyyyyyyyy"]

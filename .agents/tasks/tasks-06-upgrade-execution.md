@@ -30,57 +30,57 @@ Update the file after completing each sub-task, not just after completing an ent
 
 ## Tasks
 
-- [ ] 0.0 Create feature branch
-  - [ ] 0.1 Confirm the PRD 05 feature branch has been merged into `main` (or is otherwise reflected there); resolve any outstanding state first
-  - [ ] 0.2 Create and checkout a new branch: `git checkout -b feature/upgrade-execution`
+- [x] 0.0 Create feature branch
+  - [x] 0.1 Confirm the PRD 05 feature branch has been merged into `main` (or is otherwise reflected there); resolve any outstanding state first
+  - [x] 0.2 Create and checkout a new branch: `git checkout -b feature/upgrade-execution`
 
-- [ ] 1.0 Wire `--upgrade` as a standalone code path and add the fifth per-creator log file
-  - [ ] 1.1 Extend PRD 1's `get_creator_loggers(slug)` to return a fifth logger backed by `data/<slug>/logs/upgrade.log`; touch the file in PRD 1's directory-setup step so it exists empty after the first PRD 6 run
-  - [ ] 1.2 Add `--upgrade` handling to the main CLI dispatcher so it skips Pass 1 (PRD 2), Pass 2 (PRD 3), PRD 4, and PRD 5 entirely
-  - [ ] 1.3 Allow composition with `--creator <slug>` to scope to one creator; allow composition with `--dry-run` (PRD 7 territory; ensure `--upgrade` checks the flag)
-  - [ ] 1.4 `--upgrade` MUST NOT pre-flight a `--refresh-metadata` — trust the existing `upgrade_available` state. If the user wants fresh state, they run `--refresh-metadata` first
-  - [ ] 1.5 Wrap each creator's upgrade work in `creator_scope(slug)` so uncaught exceptions log to `errors.log` and the run moves on to the next creator
+- [x] 1.0 Wire `--upgrade` as a standalone code path and add the fifth per-creator log file
+  - [x] 1.1 Extend PRD 1's `get_creator_loggers(slug)` to return a fifth logger backed by `data/<slug>/logs/upgrade.log`; touch the file in PRD 1's directory-setup step so it exists empty after the first PRD 6 run
+  - [x] 1.2 Add `--upgrade` handling to the main CLI dispatcher so it skips Pass 1 (PRD 2), Pass 2 (PRD 3), PRD 4, and PRD 5 entirely
+  - [x] 1.3 Allow composition with `--creator <slug>` to scope to one creator; allow composition with `--dry-run` (PRD 7 territory; ensure `--upgrade` checks the flag)
+  - [x] 1.4 `--upgrade` MUST NOT pre-flight a `--refresh-metadata` — trust the existing `upgrade_available` state. If the user wants fresh state, they run `--refresh-metadata` first
+  - [x] 1.5 Wrap each creator's upgrade work in `creator_scope(slug)` so uncaught exceptions log to `errors.log` and the run moves on to the next creator
 
-- [ ] 2.0 Implement the startup recovery sweep for `.pre-upgrade` leftovers
-  - [ ] 2.1 BEFORE processing any upgrade targets, sweep each selected creator's `data/<slug>/videos/` tree for any folder containing one or more `*.pre-upgrade` files
-  - [ ] 2.2 For each such folder, classify per PRD 6 §4.2 #7: **Case A (incomplete upgrade)** = canonical media file (e.g., `<ID>.<resolved merge_output_format>`) does not exist OR exists with size 0; **Case B (completed but cleanup interrupted)** = canonical media file exists with non-zero size AND fresh `<ID>.info.json` exists alongside; **Case C (orphan .pre-upgrade only)** = `.pre-upgrade` files exist but the parent folder's video ID isn't in `archive.txt`
-  - [ ] 2.3 Case A action: restore every `<filename>.pre-upgrade` → `<filename>` via `os.rename`; delete any leftover `<ID>.<ext>.part` files; log `INFO startup recovery: restored <ID> from .pre-upgrade (canonical media missing)` to `upgrade.log`
-  - [ ] 2.4 Case B action: log `WARN startup recovery: ambiguous .pre-upgrade leftovers for <ID> — both old and new media present. Skipping this video; manually delete either the .pre-upgrade files or the new files before re-running --upgrade.` to BOTH `upgrade.log` AND `errors.log`; skip this video in the current run; do NOT delete or restore anything
-  - [ ] 2.5 Case C action: log a `WARN` to `upgrade.log` and leave the files alone — outside `--upgrade`'s scope to clean up arbitrary orphans (PRD 8 territory)
-  - [ ] 2.6 The recovery sweep MUST complete for all selected creators before any new upgrade work begins
+- [x] 2.0 Implement the startup recovery sweep for `.pre-upgrade` leftovers
+  - [x] 2.1 BEFORE processing any upgrade targets, sweep each selected creator's `data/<slug>/videos/` tree for any folder containing one or more `*.pre-upgrade` files
+  - [x] 2.2 For each such folder, classify per PRD 6 §4.2 #7: **Case A (incomplete upgrade)** = canonical media file (e.g., `<ID>.<resolved merge_output_format>`) does not exist OR exists with size 0; **Case B (completed but cleanup interrupted)** = canonical media file exists with non-zero size AND fresh `<ID>.info.json` exists alongside; **Case C (orphan .pre-upgrade only)** = `.pre-upgrade` files exist but the parent folder's video ID isn't in `archive.txt`
+  - [x] 2.3 Case A action: restore every `<filename>.pre-upgrade` → `<filename>` via `os.rename`; delete any leftover `<ID>.<ext>.part` files; log `INFO startup recovery: restored <ID> from .pre-upgrade (canonical media missing)` to `upgrade.log`
+  - [x] 2.4 Case B action: log `WARN startup recovery: ambiguous .pre-upgrade leftovers for <ID> — both old and new media present. Skipping this video; manually delete either the .pre-upgrade files or the new files before re-running --upgrade.` to BOTH `upgrade.log` AND `errors.log`; skip this video in the current run; do NOT delete or restore anything
+  - [x] 2.5 Case C action: log a `WARN` to `upgrade.log` and leave the files alone — outside `--upgrade`'s scope to clean up arbitrary orphans (PRD 8 territory)
+  - [x] 2.6 The recovery sweep MUST complete for all selected creators before any new upgrade work begins
 
-- [ ] 3.0 Implement target selection
-  - [ ] 3.1 After recovery, walk every `data/<slug>/videos/<ID>/metadata.json` for each selected creator; parse JSON
-  - [ ] 3.2 A video is an upgrade target if `metadata.json.upgrade_available` is non-null AND `metadata.json.availability == "available"` AND the canonical media file exists on disk
-  - [ ] 3.3 For targets with `availability != "available"` (removed, private, members_only, age_restricted), log `INFO upgrade skipped: <ID> (availability: <state>)` to `upgrade.log` and skip — yt-dlp can't re-download them anyway
-  - [ ] 3.4 Sort the eligible target list ascending by `upgrade_available.detected_at` (oldest detection first); ties broken by video ID for determinism
-  - [ ] 3.5 If zero targets remain after filtering for a creator, log `INFO upgrade: 0 targets` to `upgrade.log` and emit the per-creator console summary with all zeros; proceed to the next creator
-  - [ ] 3.6 At the start of the upgrade pass for a creator, emit `INFO upgrade pass starting (<T> targets after filtering)` to `upgrade.log`
+- [x] 3.0 Implement target selection
+  - [x] 3.1 After recovery, walk every `data/<slug>/videos/<ID>/metadata.json` for each selected creator; parse JSON
+  - [x] 3.2 A video is an upgrade target if `metadata.json.upgrade_available` is non-null AND `metadata.json.availability == "available"` AND the canonical media file exists on disk
+  - [x] 3.3 For targets with `availability != "available"` (removed, private, members_only, age_restricted), log `INFO upgrade skipped: <ID> (availability: <state>)` to `upgrade.log` and skip — yt-dlp can't re-download them anyway
+  - [x] 3.4 Sort the eligible target list ascending by `upgrade_available.detected_at` (oldest detection first); ties broken by video ID for determinism
+  - [x] 3.5 If zero targets remain after filtering for a creator, log `INFO upgrade: 0 targets` to `upgrade.log` and emit the per-creator console summary with all zeros; proceed to the next creator
+  - [x] 3.6 At the start of the upgrade pass for a creator, emit `INFO upgrade pass starting (<T> targets after filtering)` to `upgrade.log`
 
-- [ ] 4.0 Implement the per-video upgrade flow
-  - [ ] 4.1 For each target in detected_at order, capture state: read the existing `metadata.json` into memory; snapshot the current `downloaded` block as `from_downloaded` and the current `upgrade_available` value
-  - [ ] 4.2 Move sidecars to `.pre-upgrade`: enumerate every file in the video's folder EXCEPT `metadata.json`, `metadata.json.tmp`, and any existing `*.pre-upgrade`; rename each `<filename>` → `<filename>.pre-upgrade` via `os.rename`. If any rename fails, restore any already-renamed files in this video and treat the whole video as failed (rollback path 5.0)
-  - [ ] 4.3 Invoke yt-dlp with the same command shape as PRD 3 §4.16 (`-f`, `-S`, `--merge-output-format`, sidecar flags, `--no-progress`, `-o "data/<slug>/videos/%(id)s/%(id)s.%(ext)s"`, watch URL) but DELIBERATELY **omit `--download-archive`** (worth a code comment when constructing the command). Resolve format settings the same way PRD 3 does — per-creator overrides shadow `[defaults]`
-  - [ ] 4.4 Stream yt-dlp stdout/stderr verbatim to `download.log` via the PRD 1 streaming helper, framed by `INFO ==> upgrading <ID>` before and `INFO <-- done: <ID>` (exit 0) or `INFO <-- FAILED: <ID>` (non-zero exit) after
-  - [ ] 4.5 On yt-dlp success, verify the canonical media file exists post-merge AND the fresh `<ID>.info.json` exists; if either is missing, treat as a failure and go to the rollback path
-  - [ ] 4.6 Read the fresh `<ID>.info.json` and build a `new_downloaded` block using PRD 4 §4.2's field mapping (`format_id`, `height`, `vcodec`, `acodec`, `filesize` with the three-step fallback chain)
-  - [ ] 4.7 **Identical-format check** (no-op upgrade): if `new_downloaded.format_id == from_downloaded.format_id`, treat as a stale-upgrade-flag scenario — do NOT append a history entry, set `upgrade_available = null`, leave `downloaded` exactly as it was, delete the `.pre-upgrade` files, log `INFO upgrade no-op: <ID> (format_id unchanged: <format_id>; upgrade_available cleared)` to `upgrade.log`, count this as a no-op in the summary, continue to next target
-  - [ ] 4.8 On a real upgrade (format_id changed): atomically rewrite `metadata.json` via PRD 4's `write_json_atomic(...)` with `downloaded` replaced by `new_downloaded`, `upgrade_available` set to `null`, and one new entry appended to `history`: `{"type": "upgrade", "observed_at": <now UTC ISO>, "from": <from_downloaded full block>, "to": <new_downloaded full block>}`. Field order in the history entry: `type`, `observed_at`, `from`, `to`. Preserve every other field byte-identically — `current.*`, `last_metadata_check`, `availability`, `removed_detected_at`, `playlists`, `archived_at`, `video_id`, `source_creator`, `schema_version`
-  - [ ] 4.9 Delete every `<filename>.pre-upgrade` in the video's folder via `os.unlink`
-  - [ ] 4.10 Log `INFO upgrade succeeded: <ID> (<old format_id> -> <new format_id>, height <old> -> <new>)` to `upgrade.log`
-  - [ ] 4.11 Concurrency: strictly serial — one yt-dlp invocation completes (success, no-op, or failure) before the next starts
+- [x] 4.0 Implement the per-video upgrade flow
+  - [x] 4.1 For each target in detected_at order, capture state: read the existing `metadata.json` into memory; snapshot the current `downloaded` block as `from_downloaded` and the current `upgrade_available` value
+  - [x] 4.2 Move sidecars to `.pre-upgrade`: enumerate every file in the video's folder EXCEPT `metadata.json`, `metadata.json.tmp`, and any existing `*.pre-upgrade`; rename each `<filename>` → `<filename>.pre-upgrade` via `os.rename`. If any rename fails, restore any already-renamed files in this video and treat the whole video as failed (rollback path 5.0)
+  - [x] 4.3 Invoke yt-dlp with the same command shape as PRD 3 §4.16 (`-f`, `-S`, `--merge-output-format`, sidecar flags, `--no-progress`, `-o "data/<slug>/videos/%(id)s/%(id)s.%(ext)s"`, watch URL) but DELIBERATELY **omit `--download-archive`** (worth a code comment when constructing the command). Resolve format settings the same way PRD 3 does — per-creator overrides shadow `[defaults]`
+  - [x] 4.4 Stream yt-dlp stdout/stderr verbatim to `download.log` via the PRD 1 streaming helper, framed by `INFO ==> upgrading <ID>` before and `INFO <-- done: <ID>` (exit 0) or `INFO <-- FAILED: <ID>` (non-zero exit) after
+  - [x] 4.5 On yt-dlp success, verify the canonical media file exists post-merge AND the fresh `<ID>.info.json` exists; if either is missing, treat as a failure and go to the rollback path
+  - [x] 4.6 Read the fresh `<ID>.info.json` and build a `new_downloaded` block using PRD 4 §4.2's field mapping (`format_id`, `height`, `vcodec`, `acodec`, `filesize` with the three-step fallback chain)
+  - [x] 4.7 **Identical-format check** (no-op upgrade): if `new_downloaded.format_id == from_downloaded.format_id`, treat as a stale-upgrade-flag scenario — do NOT append a history entry, set `upgrade_available = null`, leave `downloaded` exactly as it was, delete the `.pre-upgrade` files, log `INFO upgrade no-op: <ID> (format_id unchanged: <format_id>; upgrade_available cleared)` to `upgrade.log`, count this as a no-op in the summary, continue to next target
+  - [x] 4.8 On a real upgrade (format_id changed): atomically rewrite `metadata.json` via PRD 4's `write_json_atomic(...)` with `downloaded` replaced by `new_downloaded`, `upgrade_available` set to `null`, and one new entry appended to `history`: `{"type": "upgrade", "observed_at": <now UTC ISO>, "from": <from_downloaded full block>, "to": <new_downloaded full block>}`. Field order in the history entry: `type`, `observed_at`, `from`, `to`. Preserve every other field byte-identically — `current.*`, `last_metadata_check`, `availability`, `removed_detected_at`, `playlists`, `archived_at`, `video_id`, `source_creator`, `schema_version`
+  - [x] 4.9 Delete every `<filename>.pre-upgrade` in the video's folder via `os.unlink`
+  - [x] 4.10 Log `INFO upgrade succeeded: <ID> (<old format_id> -> <new format_id>, height <old> -> <new>)` to `upgrade.log`
+  - [x] 4.11 Concurrency: strictly serial — one yt-dlp invocation completes (success, no-op, or failure) before the next starts
 
-- [ ] 5.0 Implement failure handling, rollback, and console summary
-  - [ ] 5.1 Detect per-video failures: yt-dlp exit non-zero; OR exit 0 but canonical media file missing post-run; OR exit 0 but fresh `<ID>.info.json` missing; OR the atomic `metadata.json` write itself raises; OR sidecar restoration during rollback raises
-  - [ ] 5.2 On failure, restore sidecars: for each `<filename>.pre-upgrade` present, rename back to `<filename>` via `os.rename`. If the destination exists (yt-dlp wrote a partial new file), delete the partial first, then restore. Also delete any `<ID>.<ext>.part` files yt-dlp left behind
-  - [ ] 5.3 Leave `metadata.json` untouched on failure — don't write anything; `upgrade_available` stays populated so the next `--upgrade` retries naturally
-  - [ ] 5.4 Log `WARN upgrade failed: <ID> — <one-line reason>; rollback completed` to `upgrade.log`; log `ERROR upgrade failed: <ID> — <last 5 lines of yt-dlp stderr if available>` to `errors.log`; continue to the next target
-  - [ ] 5.5 On a rollback that itself fails (corrupted `.pre-upgrade` files, disk full, etc.): log `ERROR upgrade rollback FAILED: <ID> — manual intervention required; check <folder path>` to `errors.log`; do NOT modify `metadata.json`; continue to the next target
-  - [ ] 5.6 The `creator_scope` boundary catches any uncaught exception during a creator's `--upgrade` work, logs to `errors.log`, and continues with the next creator
-  - [ ] 5.7 At end-of-pass for a creator, log `INFO upgrade complete: <S> succeeded, <N> no-op, <F> failed, <K> skipped` to `upgrade.log`
-  - [ ] 5.8 Print one console line per creator: `<slug>: upgrade — <T> targets, <S> succeeded, <N> no-op, <F> failed, <K> skipped`. Always print, even with all zeros
-  - [ ] 5.9 After all creators complete, print one final summary line: `Total: <S> succeeded, <N> no-op, <F> failed, <K> skipped across <C> creators`. If `--creator` was used, `<C>` is `1`
-  - [ ] 5.10 Per-video console output during the run is silent; details go to `upgrade.log` and `download.log`
+- [x] 5.0 Implement failure handling, rollback, and console summary
+  - [x] 5.1 Detect per-video failures: yt-dlp exit non-zero; OR exit 0 but canonical media file missing post-run; OR exit 0 but fresh `<ID>.info.json` missing; OR the atomic `metadata.json` write itself raises; OR sidecar restoration during rollback raises
+  - [x] 5.2 On failure, restore sidecars: for each `<filename>.pre-upgrade` present, rename back to `<filename>` via `os.rename`. If the destination exists (yt-dlp wrote a partial new file), delete the partial first, then restore. Also delete any `<ID>.<ext>.part` files yt-dlp left behind
+  - [x] 5.3 Leave `metadata.json` untouched on failure — don't write anything; `upgrade_available` stays populated so the next `--upgrade` retries naturally
+  - [x] 5.4 Log `WARN upgrade failed: <ID> — <one-line reason>; rollback completed` to `upgrade.log`; log `ERROR upgrade failed: <ID> — <last 5 lines of yt-dlp stderr if available>` to `errors.log`; continue to the next target
+  - [x] 5.5 On a rollback that itself fails (corrupted `.pre-upgrade` files, disk full, etc.): log `ERROR upgrade rollback FAILED: <ID> — manual intervention required; check <folder path>` to `errors.log`; do NOT modify `metadata.json`; continue to the next target
+  - [x] 5.6 The `creator_scope` boundary catches any uncaught exception during a creator's `--upgrade` work, logs to `errors.log`, and continues with the next creator
+  - [x] 5.7 At end-of-pass for a creator, log `INFO upgrade complete: <S> succeeded, <N> no-op, <F> failed, <K> skipped` to `upgrade.log`
+  - [x] 5.8 Print one console line per creator: `<slug>: upgrade — <T> targets, <S> succeeded, <N> no-op, <F> failed, <K> skipped`. Always print, even with all zeros
+  - [x] 5.9 After all creators complete, print one final summary line: `Total: <S> succeeded, <N> no-op, <F> failed, <K> skipped across <C> creators`. If `--creator` was used, `<C>` is `1`
+  - [x] 5.10 Per-video console output during the run is silent; details go to `upgrade.log` and `download.log`
 
 - [ ] 6.0 Verify against PRD success metrics
   - [ ] 6.1 Successful upgrade: archive a video at 1080p; manually edit its `metadata.json.upgrade_available` to a 4K format descriptor (or set `format_sort = ["res:2160"]` and run `--refresh-metadata` first); run `--upgrade --creator <slug>`; confirm the on-disk media file is now 4K (`ffprobe` shows `height=2160`), `metadata.json.downloaded.height == 2160`, `upgrade_available == null`, one new `history` entry with `type: "upgrade"`, `from.height: 1080`, `to.height: 2160`, no `.pre-upgrade` files remain, `current.*` fields unchanged
