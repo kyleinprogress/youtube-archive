@@ -1,6 +1,6 @@
 # YouTube Archive
 
-A single-file Python orchestrator that archives YouTube creators using `yt-dlp`. Each creator gets a self-contained directory tree containing the media files, raw `info.json` from yt-dlp, normalized `metadata.json` files, and timestamped manifest snapshots that preserve the channel's playlist structure over time.
+A stdlib-only Python orchestrator that archives YouTube creators using `yt-dlp`. Each creator gets a self-contained directory tree containing the media files, raw `info.json` from yt-dlp, normalized `metadata.json` files, and timestamped manifest snapshots that preserve the channel's playlist structure over time.
 
 The central design point: **playlist membership is derived from per-playlist manifests, not from per-video `info.json`**. A video that appears in three of a creator's playlists exists as one media file with one `metadata.json` whose `playlists` array has three entries — never as duplicated downloads.
 
