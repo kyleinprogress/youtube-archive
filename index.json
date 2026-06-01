@@ -1,0 +1,3336 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-05-28T02:43:52Z",
+  "creators": [
+    {
+      "slug": "christine-payton",
+      "name": "Christine Payton",
+      "channel_url": "https://www.youtube.com/channel/UCuB2UlI2Bo9-Otvz4C9p8Ng",
+      "avatar_url": "https://yt3.googleusercontent.com/VGklxJcJMS2L9JSk4Gck95JUOV5Nk8PJHO-0c5FU2Vi0nHaF41s6OS0ruxtqliPi6YKfCHXr=w1060-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj",
+      "handle": "@bi-ome",
+      "description": "This channel is about low-code / no-code (or AI) development for reporting and automation. \n\nHave a question about something? Ask in the video comments! I try to answer all questions there, even if they’re a bit off-topic, it’s fine.\n\nIf you'd like to support this channel, you can \"join\" as a member or check out my course here: https://christine-payton.com/course/\n",
+      "snapshot_taken_at": "2026-05-27T14:02:25Z",
+      "video_count": 109,
+      "playlist_count": 12,
+      "playlists": [
+        {
+          "id": "PLVWnQj3YS9wtaCJz7wI4kTJ-iFVk10Vhy",
+          "title": "✅ Microsoft Lists",
+          "count": 4
+        },
+        {
+          "id": "PLVWnQj3YS9wvw5DE_va5nWxnsF9xHWkW6",
+          "title": "DIY Planner Series with Microsoft Lists",
+          "count": 7
+        },
+        {
+          "id": "PLVWnQj3YS9wvrm2_hhAqLAfUa9PGkYpyW",
+          "title": "💡 Work Smarter Not Harder",
+          "count": 10
+        },
+        {
+          "id": "PLVWnQj3YS9wucZfTk_krb0VUNsnJtFmOx",
+          "title": "🪺 Working with File Sources in Power BI",
+          "count": 6
+        },
+        {
+          "id": "PLVWnQj3YS9wvQjvINiLEzFSn1ZuwJruAJ",
+          "title": "⭐Featured",
+          "count": 10
+        },
+        {
+          "id": "PLVWnQj3YS9wvbJves79UWCQLTMNXcviy_",
+          "title": "✔️Get & Visualize Project & Task Data",
+          "count": 14
+        },
+        {
+          "id": "PLVWnQj3YS9wtKomJCj5xfL0WoJXv1L0YL",
+          "title": "SharePoint",
+          "count": 10
+        },
+        {
+          "id": "PLVWnQj3YS9wu3xPuOOjQHlHgBW9oD-UbP",
+          "title": "🥪Better Together in Microsoft 365",
+          "count": 20
+        },
+        {
+          "id": "PLVWnQj3YS9wuCbVH0Z9aWP451IFFH6xYd",
+          "title": "🪼Power Automate",
+          "count": 17
+        },
+        {
+          "id": "PLVWnQj3YS9wskIjrlmH4Zyzbrbo-WpH99",
+          "title": "SharePoint Online",
+          "count": 11
+        },
+        {
+          "id": "PLVWnQj3YS9wtdTCVbKJ3xlLw2p_dlO0-L",
+          "title": "Field Parameter & Boomkark Tricks (Power BI)",
+          "count": 6
+        },
+        {
+          "id": "PLVWnQj3YS9wuWCFv7DCBRpRK62Bhy7VQA",
+          "title": "🎨Design in Power BI",
+          "count": 24
+        }
+      ],
+      "videos": [
+        {
+          "id": "c3BKdD3QrBU",
+          "title": "How far can you get with AI in Power BI? Here's a real example.",
+          "upload_date": "2026-05-25",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "12:21",
+          "duration_seconds": 741,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1080,
+            "vcodec_short": "avc1",
+            "acodec": "opus",
+            "filesize_human": "59 MB",
+            "filesize_bytes": 62387470
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=c3BKdD3QrBU",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wvrm2_hhAqLAfUa9PGkYpyW",
+              "title": "💡 Work Smarter Not Harder",
+              "index": 10
+            }
+          ],
+          "media_path": "data/christine-payton/videos/c3BKdD3QrBU/c3BKdD3QrBU.mkv",
+          "thumbnail_path": "data/christine-payton/videos/c3BKdD3QrBU/c3BKdD3QrBU.webp"
+        },
+        {
+          "id": "U-Bq73tmuBo",
+          "title": "How to use Figma with Power BI: Blurred Glass Tutorial",
+          "upload_date": "2025-08-19",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "9:47",
+          "duration_seconds": 587,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "43 MB",
+            "filesize_bytes": 45268431
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=U-Bq73tmuBo",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wuWCFv7DCBRpRK62Bhy7VQA",
+              "title": "🎨Design in Power BI",
+              "index": 24
+            }
+          ],
+          "media_path": "data/christine-payton/videos/U-Bq73tmuBo/U-Bq73tmuBo.mkv",
+          "thumbnail_path": "data/christine-payton/videos/U-Bq73tmuBo/U-Bq73tmuBo.webp"
+        },
+        {
+          "id": "VB68aY71bTI",
+          "title": "How to install and run Claude Code in a Container (Windows, Mac, or Linux)",
+          "upload_date": "2025-07-22",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "10:38",
+          "duration_seconds": 638,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "62 MB",
+            "filesize_bytes": 65128510
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=VB68aY71bTI",
+          "playlists": [],
+          "media_path": "data/christine-payton/videos/VB68aY71bTI/VB68aY71bTI.mkv",
+          "thumbnail_path": "data/christine-payton/videos/VB68aY71bTI/VB68aY71bTI.webp"
+        },
+        {
+          "id": "-k-HQV3wbi4",
+          "title": "AI in VSCode: Walkthrough of GitHub Copilot, Cline & Roo Code",
+          "upload_date": "2025-07-09",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "16:30",
+          "duration_seconds": 990,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "107 MB",
+            "filesize_bytes": 112132982
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=-k-HQV3wbi4",
+          "playlists": [],
+          "media_path": "data/christine-payton/videos/-k-HQV3wbi4/-k-HQV3wbi4.mkv",
+          "thumbnail_path": "data/christine-payton/videos/-k-HQV3wbi4/-k-HQV3wbi4.webp"
+        },
+        {
+          "id": "eBkjrWLPjrw",
+          "title": "Free Image Background Removal in Windows",
+          "upload_date": "2025-07-07",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "1:56",
+          "duration_seconds": 116,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "11 MB",
+            "filesize_bytes": 11819977
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=eBkjrWLPjrw",
+          "playlists": [],
+          "media_path": "data/christine-payton/videos/eBkjrWLPjrw/eBkjrWLPjrw.mkv",
+          "thumbnail_path": "data/christine-payton/videos/eBkjrWLPjrw/eBkjrWLPjrw.webp"
+        },
+        {
+          "id": "2_TObZzssBk",
+          "title": "How to make a Power BI Dashboard - Project Tutorial + Files",
+          "upload_date": "2025-06-25",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "51:58",
+          "duration_seconds": 3118,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "324 MB",
+            "filesize_bytes": 339737696
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=2_TObZzssBk",
+          "playlists": [],
+          "media_path": "data/christine-payton/videos/2_TObZzssBk/2_TObZzssBk.mkv",
+          "thumbnail_path": "data/christine-payton/videos/2_TObZzssBk/2_TObZzssBk.webp"
+        },
+        {
+          "id": "dniWn1plRtU",
+          "title": "How to Make a Feedback Form Button in Power BI",
+          "upload_date": "2025-06-10",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "14:59",
+          "duration_seconds": 899,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "74 MB",
+            "filesize_bytes": 77471998
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=dniWn1plRtU",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wuWCFv7DCBRpRK62Bhy7VQA",
+              "title": "🎨Design in Power BI",
+              "index": 23
+            }
+          ],
+          "media_path": "data/christine-payton/videos/dniWn1plRtU/dniWn1plRtU.mkv",
+          "thumbnail_path": "data/christine-payton/videos/dniWn1plRtU/dniWn1plRtU.webp"
+        },
+        {
+          "id": "m4fBo2-f1Dc",
+          "title": "How to make a KPI Card in Power BI",
+          "upload_date": "2025-05-27",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "20:52",
+          "duration_seconds": 1252,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "92 MB",
+            "filesize_bytes": 96337520
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=m4fBo2-f1Dc",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wuWCFv7DCBRpRK62Bhy7VQA",
+              "title": "🎨Design in Power BI",
+              "index": 22
+            }
+          ],
+          "media_path": "data/christine-payton/videos/m4fBo2-f1Dc/m4fBo2-f1Dc.mkv",
+          "thumbnail_path": "data/christine-payton/videos/m4fBo2-f1Dc/m4fBo2-f1Dc.webp"
+        },
+        {
+          "id": "fdv9hD2ng68",
+          "title": "How to Update SharePoint Multi-Value Choice or Person Fields in Power Automate",
+          "upload_date": "2025-05-20",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "14:07",
+          "duration_seconds": 847,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "77 MB",
+            "filesize_bytes": 80617836
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=fdv9hD2ng68",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wuCbVH0Z9aWP451IFFH6xYd",
+              "title": "🪼Power Automate",
+              "index": 17
+            }
+          ],
+          "media_path": "data/christine-payton/videos/fdv9hD2ng68/fdv9hD2ng68.mkv",
+          "thumbnail_path": "data/christine-payton/videos/fdv9hD2ng68/fdv9hD2ng68.webp"
+        },
+        {
+          "id": "SZ5WOFYHVu4",
+          "title": "How to use AI Vision on IMAGES in SharePoint with Power Automate",
+          "upload_date": "2025-05-06",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "26:32",
+          "duration_seconds": 1592,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "138 MB",
+            "filesize_bytes": 144627447
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=SZ5WOFYHVu4",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wuCbVH0Z9aWP451IFFH6xYd",
+              "title": "🪼Power Automate",
+              "index": 16
+            }
+          ],
+          "media_path": "data/christine-payton/videos/SZ5WOFYHVu4/SZ5WOFYHVu4.mkv",
+          "thumbnail_path": "data/christine-payton/videos/SZ5WOFYHVu4/SZ5WOFYHVu4.webp"
+        },
+        {
+          "id": "CwLQAGVgjek",
+          "title": "Microsoft Forms data no longer syncing? Here's a workaround for Power BI.",
+          "upload_date": "2025-04-29",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "13:28",
+          "duration_seconds": 808,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "71 MB",
+            "filesize_bytes": 74925219
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=CwLQAGVgjek",
+          "playlists": [],
+          "media_path": "data/christine-payton/videos/CwLQAGVgjek/CwLQAGVgjek.mkv",
+          "thumbnail_path": "data/christine-payton/videos/CwLQAGVgjek/CwLQAGVgjek.webp"
+        },
+        {
+          "id": "uAsuHz6vTcg",
+          "title": "Conditionally Format \"Top\" Categories in Power BI",
+          "upload_date": "2025-04-22",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "6:13",
+          "duration_seconds": 373,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "38 MB",
+            "filesize_bytes": 39487203
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=uAsuHz6vTcg",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wuWCFv7DCBRpRK62Bhy7VQA",
+              "title": "🎨Design in Power BI",
+              "index": 21
+            }
+          ],
+          "media_path": "data/christine-payton/videos/uAsuHz6vTcg/uAsuHz6vTcg.mkv",
+          "thumbnail_path": "data/christine-payton/videos/uAsuHz6vTcg/uAsuHz6vTcg.webp"
+        },
+        {
+          "id": "Fjv0CUFguJM",
+          "title": "Managed Metadata Tags in SharePoint",
+          "upload_date": "2025-04-15",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "15:16",
+          "duration_seconds": 916,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "80 MB",
+            "filesize_bytes": 83668874
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=Fjv0CUFguJM",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wtKomJCj5xfL0WoJXv1L0YL",
+              "title": "SharePoint",
+              "index": 10
+            }
+          ],
+          "media_path": "data/christine-payton/videos/Fjv0CUFguJM/Fjv0CUFguJM.mkv",
+          "thumbnail_path": "data/christine-payton/videos/Fjv0CUFguJM/Fjv0CUFguJM.webp"
+        },
+        {
+          "id": "sj4-MguzzPg",
+          "title": "Annotate Power BI Embeds in PowerPoint!",
+          "upload_date": "2025-04-07",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "3:30",
+          "duration_seconds": 210,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "24 MB",
+            "filesize_bytes": 24785767
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=sj4-MguzzPg",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wu3xPuOOjQHlHgBW9oD-UbP",
+              "title": "🥪Better Together in Microsoft 365",
+              "index": 19
+            }
+          ],
+          "media_path": "data/christine-payton/videos/sj4-MguzzPg/sj4-MguzzPg.mkv",
+          "thumbnail_path": "data/christine-payton/videos/sj4-MguzzPg/sj4-MguzzPg.webp"
+        },
+        {
+          "id": "6YLN-zy7BQc",
+          "title": "What you should know about Azure Maps 🗺️",
+          "upload_date": "2025-04-01",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "5:04",
+          "duration_seconds": 304,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "56 MB",
+            "filesize_bytes": 59209399
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=6YLN-zy7BQc",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wuWCFv7DCBRpRK62Bhy7VQA",
+              "title": "🎨Design in Power BI",
+              "index": 20
+            }
+          ],
+          "media_path": "data/christine-payton/videos/6YLN-zy7BQc/6YLN-zy7BQc.mkv",
+          "thumbnail_path": "data/christine-payton/videos/6YLN-zy7BQc/6YLN-zy7BQc.webp"
+        },
+        {
+          "id": "q5uuzotMEUQ",
+          "title": "What you need to know about using IMAGES as BACKGROUNDS in Power BI",
+          "upload_date": "2025-03-25",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "3:32",
+          "duration_seconds": 212,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "32 MB",
+            "filesize_bytes": 33822005
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=q5uuzotMEUQ",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wuWCFv7DCBRpRK62Bhy7VQA",
+              "title": "🎨Design in Power BI",
+              "index": 19
+            }
+          ],
+          "media_path": "data/christine-payton/videos/q5uuzotMEUQ/q5uuzotMEUQ.mkv",
+          "thumbnail_path": "data/christine-payton/videos/q5uuzotMEUQ/q5uuzotMEUQ.webp"
+        },
+        {
+          "id": "fVEOjUzoo4s",
+          "title": "Can AI write your DAX for you? Try it with TMDL!",
+          "upload_date": "2025-03-18",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "9:12",
+          "duration_seconds": 552,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "73 MB",
+            "filesize_bytes": 76729483
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=fVEOjUzoo4s",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wvrm2_hhAqLAfUa9PGkYpyW",
+              "title": "💡 Work Smarter Not Harder",
+              "index": 9
+            }
+          ],
+          "media_path": "data/christine-payton/videos/fVEOjUzoo4s/fVEOjUzoo4s.mkv",
+          "thumbnail_path": "data/christine-payton/videos/fVEOjUzoo4s/fVEOjUzoo4s.webp"
+        },
+        {
+          "id": "HplXwFMCXqQ",
+          "title": "Workaround for Lack of Custom Templates in Planner",
+          "upload_date": "2025-03-12",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "3:19",
+          "duration_seconds": 199,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "13 MB",
+            "filesize_bytes": 13219245
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=HplXwFMCXqQ",
+          "playlists": [],
+          "media_path": "data/christine-payton/videos/HplXwFMCXqQ/HplXwFMCXqQ.mkv",
+          "thumbnail_path": "data/christine-payton/videos/HplXwFMCXqQ/HplXwFMCXqQ.webp"
+        },
+        {
+          "id": "7vIwgSE8qmQ",
+          "title": "If you’re not using TMDL in Power BI, you’re missing out! 🔥",
+          "upload_date": "2025-03-04",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "11:26",
+          "duration_seconds": 686,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "129 MB",
+            "filesize_bytes": 134998637
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=7vIwgSE8qmQ",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wvrm2_hhAqLAfUa9PGkYpyW",
+              "title": "💡 Work Smarter Not Harder",
+              "index": 8
+            },
+            {
+              "id": "PLVWnQj3YS9wvQjvINiLEzFSn1ZuwJruAJ",
+              "title": "⭐Featured",
+              "index": 10
+            }
+          ],
+          "media_path": "data/christine-payton/videos/7vIwgSE8qmQ/7vIwgSE8qmQ.mkv",
+          "thumbnail_path": "data/christine-payton/videos/7vIwgSE8qmQ/7vIwgSE8qmQ.webp"
+        },
+        {
+          "id": "epbMpfRZXC4",
+          "title": "How to Make a Project Management Dashboard in Power BI",
+          "upload_date": "2025-02-25",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "25:03",
+          "duration_seconds": 1503,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "187 MB",
+            "filesize_bytes": 195779747
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=epbMpfRZXC4",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wvw5DE_va5nWxnsF9xHWkW6",
+              "title": "DIY Planner Series with Microsoft Lists",
+              "index": 7
+            },
+            {
+              "id": "PLVWnQj3YS9wvQjvINiLEzFSn1ZuwJruAJ",
+              "title": "⭐Featured",
+              "index": 1
+            },
+            {
+              "id": "PLVWnQj3YS9wuWCFv7DCBRpRK62Bhy7VQA",
+              "title": "🎨Design in Power BI",
+              "index": 18
+            }
+          ],
+          "media_path": "data/christine-payton/videos/epbMpfRZXC4/epbMpfRZXC4.mkv",
+          "thumbnail_path": "data/christine-payton/videos/epbMpfRZXC4/epbMpfRZXC4.webp"
+        },
+        {
+          "id": "UvWtMCIhnxQ",
+          "title": "The FASTEST Cumulative Sum in Power BI",
+          "upload_date": "2025-02-18",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "9:53",
+          "duration_seconds": 593,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "79 MB",
+            "filesize_bytes": 83315747
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=UvWtMCIhnxQ",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wvw5DE_va5nWxnsF9xHWkW6",
+              "title": "DIY Planner Series with Microsoft Lists",
+              "index": 6
+            }
+          ],
+          "media_path": "data/christine-payton/videos/UvWtMCIhnxQ/UvWtMCIhnxQ.mkv",
+          "thumbnail_path": "data/christine-payton/videos/UvWtMCIhnxQ/UvWtMCIhnxQ.webp"
+        },
+        {
+          "id": "EsS2xdKgtsA",
+          "title": "How to COMBINE Tables in Power BI",
+          "upload_date": "2025-02-11",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "12:41",
+          "duration_seconds": 761,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "92 MB",
+            "filesize_bytes": 96849339
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=EsS2xdKgtsA",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wvw5DE_va5nWxnsF9xHWkW6",
+              "title": "DIY Planner Series with Microsoft Lists",
+              "index": 5
+            }
+          ],
+          "media_path": "data/christine-payton/videos/EsS2xdKgtsA/EsS2xdKgtsA.mkv",
+          "thumbnail_path": "data/christine-payton/videos/EsS2xdKgtsA/EsS2xdKgtsA.webp"
+        },
+        {
+          "id": "nT591_D-tyA",
+          "title": "Conditional Branching is here for Lists! 🎉 Here's how to use it.",
+          "upload_date": "2025-02-04",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "4:30",
+          "duration_seconds": 270,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "25 MB",
+            "filesize_bytes": 25835348
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=nT591_D-tyA",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wtaCJz7wI4kTJ-iFVk10Vhy",
+              "title": "✅ Microsoft Lists",
+              "index": 1
+            }
+          ],
+          "media_path": "data/christine-payton/videos/nT591_D-tyA/nT591_D-tyA.mkv",
+          "thumbnail_path": "data/christine-payton/videos/nT591_D-tyA/nT591_D-tyA.webp"
+        },
+        {
+          "id": "ofQFAZ7jrbc",
+          "title": "How to use Microsoft Lists in Power BI - including multi-value fields! (2025) ✅",
+          "upload_date": "2025-01-28",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "32:38",
+          "duration_seconds": 1958,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "216 MB",
+            "filesize_bytes": 226827116
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=ofQFAZ7jrbc",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wtaCJz7wI4kTJ-iFVk10Vhy",
+              "title": "✅ Microsoft Lists",
+              "index": 3
+            },
+            {
+              "id": "PLVWnQj3YS9wvw5DE_va5nWxnsF9xHWkW6",
+              "title": "DIY Planner Series with Microsoft Lists",
+              "index": 4
+            },
+            {
+              "id": "PLVWnQj3YS9wvQjvINiLEzFSn1ZuwJruAJ",
+              "title": "⭐Featured",
+              "index": 2
+            },
+            {
+              "id": "PLVWnQj3YS9wu3xPuOOjQHlHgBW9oD-UbP",
+              "title": "🥪Better Together in Microsoft 365",
+              "index": 18
+            }
+          ],
+          "media_path": "data/christine-payton/videos/ofQFAZ7jrbc/ofQFAZ7jrbc.mkv",
+          "thumbnail_path": "data/christine-payton/videos/ofQFAZ7jrbc/ofQFAZ7jrbc.webp"
+        },
+        {
+          "id": "TqL_fqZjfm4",
+          "title": "SharePoint Lists 2.0 vs 1.0 Connector in Power BI",
+          "upload_date": "2025-01-27",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "4:52",
+          "duration_seconds": 292,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "37 MB",
+            "filesize_bytes": 38381182
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=TqL_fqZjfm4",
+          "playlists": [],
+          "media_path": "data/christine-payton/videos/TqL_fqZjfm4/TqL_fqZjfm4.mkv",
+          "thumbnail_path": "data/christine-payton/videos/TqL_fqZjfm4/TqL_fqZjfm4.webp"
+        },
+        {
+          "id": "xRe3qGz2m_c",
+          "title": "Connect Microsoft Lists to Power BI (no desktop app!)",
+          "upload_date": "2025-01-21",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "18:04",
+          "duration_seconds": 1084,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "123 MB",
+            "filesize_bytes": 128878946
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=xRe3qGz2m_c",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wtaCJz7wI4kTJ-iFVk10Vhy",
+              "title": "✅ Microsoft Lists",
+              "index": 2
+            },
+            {
+              "id": "PLVWnQj3YS9wvw5DE_va5nWxnsF9xHWkW6",
+              "title": "DIY Planner Series with Microsoft Lists",
+              "index": 3
+            }
+          ],
+          "media_path": "data/christine-payton/videos/xRe3qGz2m_c/xRe3qGz2m_c.mkv",
+          "thumbnail_path": "data/christine-payton/videos/xRe3qGz2m_c/xRe3qGz2m_c.webp"
+        },
+        {
+          "id": "gIyCdZrNWHs",
+          "title": "How to DELETE a Plan in Planner - New 2025 UI",
+          "upload_date": "2025-01-20",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "1:20",
+          "duration_seconds": 80,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "6 MB",
+            "filesize_bytes": 5924683
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=gIyCdZrNWHs",
+          "playlists": [],
+          "media_path": "data/christine-payton/videos/gIyCdZrNWHs/gIyCdZrNWHs.mkv",
+          "thumbnail_path": "data/christine-payton/videos/gIyCdZrNWHs/gIyCdZrNWHs.webp"
+        },
+        {
+          "id": "HD92f_yo0G4",
+          "title": "Automate Actions when a FIELD CHANGES in Microsoft Lists with Power Automate",
+          "upload_date": "2025-01-14",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "13:46",
+          "duration_seconds": 826,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "85 MB",
+            "filesize_bytes": 89056285
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=HD92f_yo0G4",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wtaCJz7wI4kTJ-iFVk10Vhy",
+              "title": "✅ Microsoft Lists",
+              "index": 4
+            },
+            {
+              "id": "PLVWnQj3YS9wvw5DE_va5nWxnsF9xHWkW6",
+              "title": "DIY Planner Series with Microsoft Lists",
+              "index": 2
+            },
+            {
+              "id": "PLVWnQj3YS9wuCbVH0Z9aWP451IFFH6xYd",
+              "title": "🪼Power Automate",
+              "index": 3
+            }
+          ],
+          "media_path": "data/christine-payton/videos/HD92f_yo0G4/HD92f_yo0G4.mkv",
+          "thumbnail_path": "data/christine-payton/videos/HD92f_yo0G4/HD92f_yo0G4.webp"
+        },
+        {
+          "id": "gYwkfwyRIxI",
+          "title": "Build your own Task Board or Tracker!",
+          "upload_date": "2025-01-07",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "15:22",
+          "duration_seconds": 922,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "106 MB",
+            "filesize_bytes": 111458030
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=gYwkfwyRIxI",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wvw5DE_va5nWxnsF9xHWkW6",
+              "title": "DIY Planner Series with Microsoft Lists",
+              "index": 1
+            },
+            {
+              "id": "PLVWnQj3YS9wvbJves79UWCQLTMNXcviy_",
+              "title": "✔️Get & Visualize Project & Task Data",
+              "index": 14
+            }
+          ],
+          "media_path": "data/christine-payton/videos/gYwkfwyRIxI/gYwkfwyRIxI.mkv",
+          "thumbnail_path": "data/christine-payton/videos/gYwkfwyRIxI/gYwkfwyRIxI.webp"
+        },
+        {
+          "id": "kvBzPWMV3B0",
+          "title": "Automate Group Membership with DYNAMIC Membership Rules!",
+          "upload_date": "2024-12-03",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "9:32",
+          "duration_seconds": 572,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "78 MB",
+            "filesize_bytes": 81757571
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=kvBzPWMV3B0",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wvrm2_hhAqLAfUa9PGkYpyW",
+              "title": "💡 Work Smarter Not Harder",
+              "index": 1
+            }
+          ],
+          "media_path": "data/christine-payton/videos/kvBzPWMV3B0/kvBzPWMV3B0.mkv",
+          "thumbnail_path": "data/christine-payton/videos/kvBzPWMV3B0/kvBzPWMV3B0.webp"
+        },
+        {
+          "id": "iOl5epoYQMY",
+          "title": "The BEST (free) Date Table Template - and how to use it!",
+          "upload_date": "2024-11-20",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "15:03",
+          "duration_seconds": 903,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "121 MB",
+            "filesize_bytes": 126689416
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=iOl5epoYQMY",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wvrm2_hhAqLAfUa9PGkYpyW",
+              "title": "💡 Work Smarter Not Harder",
+              "index": 3
+            },
+            {
+              "id": "PLVWnQj3YS9wvQjvINiLEzFSn1ZuwJruAJ",
+              "title": "⭐Featured",
+              "index": 3
+            }
+          ],
+          "media_path": "data/christine-payton/videos/iOl5epoYQMY/iOl5epoYQMY.mkv",
+          "thumbnail_path": "data/christine-payton/videos/iOl5epoYQMY/iOl5epoYQMY.webp"
+        },
+        {
+          "id": "io4c0lYMIgk",
+          "title": "How to use Power BI with Excel",
+          "upload_date": "2024-11-12",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "16:41",
+          "duration_seconds": 1001,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "103 MB",
+            "filesize_bytes": 107546677
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=io4c0lYMIgk",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wvrm2_hhAqLAfUa9PGkYpyW",
+              "title": "💡 Work Smarter Not Harder",
+              "index": 7
+            },
+            {
+              "id": "PLVWnQj3YS9wucZfTk_krb0VUNsnJtFmOx",
+              "title": "🪺 Working with File Sources in Power BI",
+              "index": 1
+            }
+          ],
+          "media_path": "data/christine-payton/videos/io4c0lYMIgk/io4c0lYMIgk.mkv",
+          "thumbnail_path": "data/christine-payton/videos/io4c0lYMIgk/io4c0lYMIgk.webp"
+        },
+        {
+          "id": "PB6U4AgHQBA",
+          "title": "Tricks to handle & alert on errors in Power BI (without stopping refresh!)",
+          "upload_date": "2024-11-12",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "9:18",
+          "duration_seconds": 558,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "42 MB",
+            "filesize_bytes": 44209498
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=PB6U4AgHQBA",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wucZfTk_krb0VUNsnJtFmOx",
+              "title": "🪺 Working with File Sources in Power BI",
+              "index": 2
+            }
+          ],
+          "media_path": "data/christine-payton/videos/PB6U4AgHQBA/PB6U4AgHQBA.mkv",
+          "thumbnail_path": "data/christine-payton/videos/PB6U4AgHQBA/PB6U4AgHQBA.webp"
+        },
+        {
+          "id": "OmnSFKlobOI",
+          "title": "How to get your Power BI Matrix to do what you want it to!",
+          "upload_date": "2024-11-05",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "13:14",
+          "duration_seconds": 794,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "83 MB",
+            "filesize_bytes": 87295396
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=OmnSFKlobOI",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wvQjvINiLEzFSn1ZuwJruAJ",
+              "title": "⭐Featured",
+              "index": 5
+            },
+            {
+              "id": "PLVWnQj3YS9wvbJves79UWCQLTMNXcviy_",
+              "title": "✔️Get & Visualize Project & Task Data",
+              "index": 10
+            },
+            {
+              "id": "PLVWnQj3YS9wuWCFv7DCBRpRK62Bhy7VQA",
+              "title": "🎨Design in Power BI",
+              "index": 12
+            }
+          ],
+          "media_path": "data/christine-payton/videos/OmnSFKlobOI/OmnSFKlobOI.mkv",
+          "thumbnail_path": "data/christine-payton/videos/OmnSFKlobOI/OmnSFKlobOI.webp"
+        },
+        {
+          "id": "PGiXyvZ6u7s",
+          "title": "Multi-Camera Editing with Davinci Resolve + Gling",
+          "upload_date": "2024-10-22",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "7:23",
+          "duration_seconds": 443,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "67 MB",
+            "filesize_bytes": 70373203
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=PGiXyvZ6u7s",
+          "playlists": [],
+          "media_path": "data/christine-payton/videos/PGiXyvZ6u7s/PGiXyvZ6u7s.mkv",
+          "thumbnail_path": "data/christine-payton/videos/PGiXyvZ6u7s/PGiXyvZ6u7s.webp"
+        },
+        {
+          "id": "VPEQBYxbO5M",
+          "title": "Show Measures and Column  Descriptions in Power BI with MODEL.VIEW",
+          "upload_date": "2024-10-16",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "8:37",
+          "duration_seconds": 517,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "87 MB",
+            "filesize_bytes": 91426711
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=VPEQBYxbO5M",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wvrm2_hhAqLAfUa9PGkYpyW",
+              "title": "💡 Work Smarter Not Harder",
+              "index": 2
+            },
+            {
+              "id": "PLVWnQj3YS9wvQjvINiLEzFSn1ZuwJruAJ",
+              "title": "⭐Featured",
+              "index": 7
+            }
+          ],
+          "media_path": "data/christine-payton/videos/VPEQBYxbO5M/VPEQBYxbO5M.mkv",
+          "thumbnail_path": "data/christine-payton/videos/VPEQBYxbO5M/VPEQBYxbO5M.webp"
+        },
+        {
+          "id": "vq1qtHTS7as",
+          "title": "How to Make a Power Query Step NOT Case-Sensitive",
+          "upload_date": "2024-10-15",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "3:24",
+          "duration_seconds": 204,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "16 MB",
+            "filesize_bytes": 16544725
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=vq1qtHTS7as",
+          "playlists": [],
+          "media_path": "data/christine-payton/videos/vq1qtHTS7as/vq1qtHTS7as.mkv",
+          "thumbnail_path": "data/christine-payton/videos/vq1qtHTS7as/vq1qtHTS7as.webp"
+        },
+        {
+          "id": "q9hucnZ0Dk4",
+          "title": "Bulk Print to PDF with Power Automate Desktop (for free)",
+          "upload_date": "2024-10-15",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "11:26",
+          "duration_seconds": 686,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "55 MB",
+            "filesize_bytes": 57294114
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=q9hucnZ0Dk4",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wuCbVH0Z9aWP451IFFH6xYd",
+              "title": "🪼Power Automate",
+              "index": 15
+            }
+          ],
+          "media_path": "data/christine-payton/videos/q9hucnZ0Dk4/q9hucnZ0Dk4.mkv",
+          "thumbnail_path": "data/christine-payton/videos/q9hucnZ0Dk4/q9hucnZ0Dk4.webp"
+        },
+        {
+          "id": "DcpzFesRgiM",
+          "title": "How to use the new List Slicer visual in Power BI",
+          "upload_date": "2024-10-15",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "3:35",
+          "duration_seconds": 215,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "21 MB",
+            "filesize_bytes": 21564776
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=DcpzFesRgiM",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wuWCFv7DCBRpRK62Bhy7VQA",
+              "title": "🎨Design in Power BI",
+              "index": 7
+            }
+          ],
+          "media_path": "data/christine-payton/videos/DcpzFesRgiM/DcpzFesRgiM.mkv",
+          "thumbnail_path": "data/christine-payton/videos/DcpzFesRgiM/DcpzFesRgiM.webp"
+        },
+        {
+          "id": "onUa59x1J-E",
+          "title": "How to import tasks from basic Planner or Project Desktop to premium \"Planner for the Web\"",
+          "upload_date": "2024-10-01",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "4:12",
+          "duration_seconds": 252,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "29 MB",
+            "filesize_bytes": 30425202
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=onUa59x1J-E",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wvbJves79UWCQLTMNXcviy_",
+              "title": "✔️Get & Visualize Project & Task Data",
+              "index": 7
+            }
+          ],
+          "media_path": "data/christine-payton/videos/onUa59x1J-E/onUa59x1J-E.mkv",
+          "thumbnail_path": "data/christine-payton/videos/onUa59x1J-E/onUa59x1J-E.webp"
+        },
+        {
+          "id": "F-RrxxUC_Q4",
+          "title": "How to connect to & model premium \"Planner for the Web\" data in Power BI or Excel",
+          "upload_date": "2024-09-24",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "45:02",
+          "duration_seconds": 2702,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "360 MB",
+            "filesize_bytes": 377717722
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=F-RrxxUC_Q4",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wvbJves79UWCQLTMNXcviy_",
+              "title": "✔️Get & Visualize Project & Task Data",
+              "index": 5
+            }
+          ],
+          "media_path": "data/christine-payton/videos/F-RrxxUC_Q4/F-RrxxUC_Q4.mkv",
+          "thumbnail_path": "data/christine-payton/videos/F-RrxxUC_Q4/F-RrxxUC_Q4.webp"
+        },
+        {
+          "id": "X5VlzhvU5UI",
+          "title": "How to Export & Import Power Automate Desktop Flows",
+          "upload_date": "2024-09-17",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "4:23",
+          "duration_seconds": 263,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "27 MB",
+            "filesize_bytes": 28577240
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=X5VlzhvU5UI",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wuCbVH0Z9aWP451IFFH6xYd",
+              "title": "🪼Power Automate",
+              "index": 14
+            }
+          ],
+          "media_path": "data/christine-payton/videos/X5VlzhvU5UI/X5VlzhvU5UI.mkv",
+          "thumbnail_path": "data/christine-payton/videos/X5VlzhvU5UI/X5VlzhvU5UI.webp"
+        },
+        {
+          "id": "0NJwsdyWcqo",
+          "title": "How to set fields in Microsoft Forms via hyperlink!",
+          "upload_date": "2024-09-10",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "8:28",
+          "duration_seconds": 508,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "46 MB",
+            "filesize_bytes": 47873701
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=0NJwsdyWcqo",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wu3xPuOOjQHlHgBW9oD-UbP",
+              "title": "🥪Better Together in Microsoft 365",
+              "index": 16
+            }
+          ],
+          "media_path": "data/christine-payton/videos/0NJwsdyWcqo/0NJwsdyWcqo.mkv",
+          "thumbnail_path": "data/christine-payton/videos/0NJwsdyWcqo/0NJwsdyWcqo.webp"
+        },
+        {
+          "id": "ZVzX5fEFcj8",
+          "title": "How to install SQL Server and import sample data",
+          "upload_date": "2024-08-27",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "9:03",
+          "duration_seconds": 543,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "82 MB",
+            "filesize_bytes": 85579588
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=ZVzX5fEFcj8",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wvQjvINiLEzFSn1ZuwJruAJ",
+              "title": "⭐Featured",
+              "index": 9
+            }
+          ],
+          "media_path": "data/christine-payton/videos/ZVzX5fEFcj8/ZVzX5fEFcj8.mkv",
+          "thumbnail_path": "data/christine-payton/videos/ZVzX5fEFcj8/ZVzX5fEFcj8.webp"
+        },
+        {
+          "id": "ZBz-fH5R3PY",
+          "title": "How to Customize the Top Navigation Bar in Microsoft 365",
+          "upload_date": "2024-08-13",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "8:20",
+          "duration_seconds": 500,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "55 MB",
+            "filesize_bytes": 57950811
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=ZBz-fH5R3PY",
+          "playlists": [],
+          "media_path": "data/christine-payton/videos/ZBz-fH5R3PY/ZBz-fH5R3PY.mkv",
+          "thumbnail_path": "data/christine-payton/videos/ZBz-fH5R3PY/ZBz-fH5R3PY.webp"
+        },
+        {
+          "id": "wZ6sz7-6Sok",
+          "title": "fire in the hole | Geometry dash 2.2",
+          "upload_date": "2024-08-06",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "8:26",
+          "duration_seconds": 506,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1080,
+            "vcodec_short": "avc1",
+            "acodec": "opus",
+            "filesize_human": "250 MB",
+            "filesize_bytes": 261818900
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=wZ6sz7-6Sok",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wu3xPuOOjQHlHgBW9oD-UbP",
+              "title": "🥪Better Together in Microsoft 365",
+              "index": 20
+            }
+          ],
+          "media_path": "data/christine-payton/videos/wZ6sz7-6Sok/wZ6sz7-6Sok.mkv",
+          "thumbnail_path": "data/christine-payton/videos/wZ6sz7-6Sok/wZ6sz7-6Sok.webp"
+        },
+        {
+          "id": "1UfxETalb9E",
+          "title": "Get Planner data for a LIST of Plans in Power BI with Power Automate",
+          "upload_date": "2024-07-16",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "14:37",
+          "duration_seconds": 877,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "88 MB",
+            "filesize_bytes": 92531294
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=1UfxETalb9E",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wvbJves79UWCQLTMNXcviy_",
+              "title": "✔️Get & Visualize Project & Task Data",
+              "index": 4
+            },
+            {
+              "id": "PLVWnQj3YS9wu3xPuOOjQHlHgBW9oD-UbP",
+              "title": "🥪Better Together in Microsoft 365",
+              "index": 15
+            }
+          ],
+          "media_path": "data/christine-payton/videos/1UfxETalb9E/1UfxETalb9E.mkv",
+          "thumbnail_path": "data/christine-payton/videos/1UfxETalb9E/1UfxETalb9E.webp"
+        },
+        {
+          "id": "5w1tdoCvyPM",
+          "title": "Timeline Zoom & Planner Data in Davide Bacci’s free Gantt template!",
+          "upload_date": "2024-05-20",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "14:58",
+          "duration_seconds": 898,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "105 MB",
+            "filesize_bytes": 109904708
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=5w1tdoCvyPM",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wvbJves79UWCQLTMNXcviy_",
+              "title": "✔️Get & Visualize Project & Task Data",
+              "index": 8
+            }
+          ],
+          "media_path": "data/christine-payton/videos/5w1tdoCvyPM/5w1tdoCvyPM.mkv",
+          "thumbnail_path": "data/christine-payton/videos/5w1tdoCvyPM/5w1tdoCvyPM.webp"
+        },
+        {
+          "id": "PhTwhN7m6Lw",
+          "title": "What you need to know about Premium Planner (and where to find the data!)",
+          "upload_date": "2024-04-08",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "10:49",
+          "duration_seconds": 649,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "53 MB",
+            "filesize_bytes": 55803031
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=PhTwhN7m6Lw",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wvbJves79UWCQLTMNXcviy_",
+              "title": "✔️Get & Visualize Project & Task Data",
+              "index": 6
+            }
+          ],
+          "media_path": "data/christine-payton/videos/PhTwhN7m6Lw/PhTwhN7m6Lw.mkv",
+          "thumbnail_path": "data/christine-payton/videos/PhTwhN7m6Lw/PhTwhN7m6Lw.webp"
+        },
+        {
+          "id": "nyl2A8LWZwA",
+          "title": "Dark Theme Tutorial for Power BI",
+          "upload_date": "2024-03-25",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "23:31",
+          "duration_seconds": 1411,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "118 MB",
+            "filesize_bytes": 123695857
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=nyl2A8LWZwA",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wuWCFv7DCBRpRK62Bhy7VQA",
+              "title": "🎨Design in Power BI",
+              "index": 8
+            }
+          ],
+          "media_path": "data/christine-payton/videos/nyl2A8LWZwA/nyl2A8LWZwA.mkv",
+          "thumbnail_path": "data/christine-payton/videos/nyl2A8LWZwA/nyl2A8LWZwA.webp"
+        },
+        {
+          "id": "SJvcC4C_usQ",
+          "title": "How to Add Borders to Your Bars in Power BI",
+          "upload_date": "2024-03-19",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "3:09",
+          "duration_seconds": 189,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "18 MB",
+            "filesize_bytes": 18905102
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=SJvcC4C_usQ",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wuWCFv7DCBRpRK62Bhy7VQA",
+              "title": "🎨Design in Power BI",
+              "index": 14
+            }
+          ],
+          "media_path": "data/christine-payton/videos/SJvcC4C_usQ/SJvcC4C_usQ.mkv",
+          "thumbnail_path": "data/christine-payton/videos/SJvcC4C_usQ/SJvcC4C_usQ.webp"
+        },
+        {
+          "id": "omL20HXxXXc",
+          "title": "Get all your survey data in ONE visual!",
+          "upload_date": "2024-02-29",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "15:51",
+          "duration_seconds": 951,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "120 MB",
+            "filesize_bytes": 125936165
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=omL20HXxXXc",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wu3xPuOOjQHlHgBW9oD-UbP",
+              "title": "🥪Better Together in Microsoft 365",
+              "index": 13
+            }
+          ],
+          "media_path": "data/christine-payton/videos/omL20HXxXXc/omL20HXxXXc.mkv",
+          "thumbnail_path": "data/christine-payton/videos/omL20HXxXXc/omL20HXxXXc.webp"
+        },
+        {
+          "id": "MIPhM_2-TaI",
+          "title": "How to Review & Edit AI Outputs with APPROVALS in Power Automate",
+          "upload_date": "2024-02-12",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "20:41",
+          "duration_seconds": 1241,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "179 MB",
+            "filesize_bytes": 188218201
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=MIPhM_2-TaI",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wuCbVH0Z9aWP451IFFH6xYd",
+              "title": "🪼Power Automate",
+              "index": 6
+            }
+          ],
+          "media_path": "data/christine-payton/videos/MIPhM_2-TaI/MIPhM_2-TaI.mkv",
+          "thumbnail_path": "data/christine-payton/videos/MIPhM_2-TaI/MIPhM_2-TaI.webp"
+        },
+        {
+          "id": "8YnBotHynD0",
+          "title": "Send STYLED Lists or Tables from Power BI to EMAIL or Chat with Power Automate",
+          "upload_date": "2024-02-05",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "32:41",
+          "duration_seconds": 1961,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "259 MB",
+            "filesize_bytes": 272076710
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=8YnBotHynD0",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wvbJves79UWCQLTMNXcviy_",
+              "title": "✔️Get & Visualize Project & Task Data",
+              "index": 12
+            },
+            {
+              "id": "PLVWnQj3YS9wu3xPuOOjQHlHgBW9oD-UbP",
+              "title": "🥪Better Together in Microsoft 365",
+              "index": 12
+            },
+            {
+              "id": "PLVWnQj3YS9wuCbVH0Z9aWP451IFFH6xYd",
+              "title": "🪼Power Automate",
+              "index": 2
+            }
+          ],
+          "media_path": "data/christine-payton/videos/8YnBotHynD0/8YnBotHynD0.mkv",
+          "thumbnail_path": "data/christine-payton/videos/8YnBotHynD0/8YnBotHynD0.webp"
+        },
+        {
+          "id": "8p2uXihLWrs",
+          "title": "Use the Power Automate visual in Power BI to send notifications for SELECTED items",
+          "upload_date": "2024-01-24",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "16:27",
+          "duration_seconds": 987,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "96 MB",
+            "filesize_bytes": 100514863
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=8p2uXihLWrs",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wvbJves79UWCQLTMNXcviy_",
+              "title": "✔️Get & Visualize Project & Task Data",
+              "index": 13
+            },
+            {
+              "id": "PLVWnQj3YS9wu3xPuOOjQHlHgBW9oD-UbP",
+              "title": "🥪Better Together in Microsoft 365",
+              "index": 11
+            },
+            {
+              "id": "PLVWnQj3YS9wuCbVH0Z9aWP451IFFH6xYd",
+              "title": "🪼Power Automate",
+              "index": 11
+            }
+          ],
+          "media_path": "data/christine-payton/videos/8p2uXihLWrs/8p2uXihLWrs.mkv",
+          "thumbnail_path": "data/christine-payton/videos/8p2uXihLWrs/8p2uXihLWrs.webp"
+        },
+        {
+          "id": "mqGFbIGpCcw",
+          "title": "Get Planner Data for ALL your Plans in ALL your Groups with Power Automate!",
+          "upload_date": "2024-01-02",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "19:56",
+          "duration_seconds": 1196,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "111 MB",
+            "filesize_bytes": 116749599
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=mqGFbIGpCcw",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wvbJves79UWCQLTMNXcviy_",
+              "title": "✔️Get & Visualize Project & Task Data",
+              "index": 3
+            },
+            {
+              "id": "PLVWnQj3YS9wu3xPuOOjQHlHgBW9oD-UbP",
+              "title": "🥪Better Together in Microsoft 365",
+              "index": 10
+            },
+            {
+              "id": "PLVWnQj3YS9wuCbVH0Z9aWP451IFFH6xYd",
+              "title": "🪼Power Automate",
+              "index": 10
+            }
+          ],
+          "media_path": "data/christine-payton/videos/mqGFbIGpCcw/mqGFbIGpCcw.mkv",
+          "thumbnail_path": "data/christine-payton/videos/mqGFbIGpCcw/mqGFbIGpCcw.webp"
+        },
+        {
+          "id": "fuEoRySoSRQ",
+          "title": "How to Redirect Users after Submitting a List Form",
+          "upload_date": "2023-12-27",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "2:33",
+          "duration_seconds": 153,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "14 MB",
+            "filesize_bytes": 15078842
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=fuEoRySoSRQ",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wtKomJCj5xfL0WoJXv1L0YL",
+              "title": "SharePoint",
+              "index": 9
+            }
+          ],
+          "media_path": "data/christine-payton/videos/fuEoRySoSRQ/fuEoRySoSRQ.mkv",
+          "thumbnail_path": "data/christine-payton/videos/fuEoRySoSRQ/fuEoRySoSRQ.webp"
+        },
+        {
+          "id": "UNTtCPs8pQA",
+          "title": "How to let your VIEWERS \"change\" visual types!",
+          "upload_date": "2023-12-20",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "4:57",
+          "duration_seconds": 297,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "20 MB",
+            "filesize_bytes": 21154388
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=UNTtCPs8pQA",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wtdTCVbKJ3xlLw2p_dlO0-L",
+              "title": "Field Parameter & Boomkark Tricks (Power BI)",
+              "index": 6
+            },
+            {
+              "id": "PLVWnQj3YS9wuWCFv7DCBRpRK62Bhy7VQA",
+              "title": "🎨Design in Power BI",
+              "index": 11
+            }
+          ],
+          "media_path": "data/christine-payton/videos/UNTtCPs8pQA/UNTtCPs8pQA.mkv",
+          "thumbnail_path": "data/christine-payton/videos/UNTtCPs8pQA/UNTtCPs8pQA.webp"
+        },
+        {
+          "id": "q7bkWpVczz0",
+          "title": "Get Planner Task Details with Power Automate - Assignees, subtasks, buckets, dates!",
+          "upload_date": "2023-12-18",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "19:33",
+          "duration_seconds": 1173,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "105 MB",
+            "filesize_bytes": 110204074
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=q7bkWpVczz0",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wvbJves79UWCQLTMNXcviy_",
+              "title": "✔️Get & Visualize Project & Task Data",
+              "index": 1
+            },
+            {
+              "id": "PLVWnQj3YS9wu3xPuOOjQHlHgBW9oD-UbP",
+              "title": "🥪Better Together in Microsoft 365",
+              "index": 14
+            }
+          ],
+          "media_path": "data/christine-payton/videos/q7bkWpVczz0/q7bkWpVczz0.mkv",
+          "thumbnail_path": "data/christine-payton/videos/q7bkWpVczz0/q7bkWpVczz0.webp"
+        },
+        {
+          "id": "eEmpzueZfqY",
+          "title": "Report on Planner Data in Power BI",
+          "upload_date": "2023-12-18",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "20:49",
+          "duration_seconds": 1249,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "110 MB",
+            "filesize_bytes": 114840947
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=eEmpzueZfqY",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wvbJves79UWCQLTMNXcviy_",
+              "title": "✔️Get & Visualize Project & Task Data",
+              "index": 2
+            }
+          ],
+          "media_path": "data/christine-payton/videos/eEmpzueZfqY/eEmpzueZfqY.mkv",
+          "thumbnail_path": "data/christine-payton/videos/eEmpzueZfqY/eEmpzueZfqY.webp"
+        },
+        {
+          "id": "wlhgfpFf_-k",
+          "title": "How to Create a Best Practice Checklist for Power BI",
+          "upload_date": "2023-12-05",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "24:31",
+          "duration_seconds": 1471,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1440,
+            "vcodec_short": "vp9",
+            "acodec": "opus",
+            "filesize_human": "112 MB",
+            "filesize_bytes": 117415068
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=wlhgfpFf_-k",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wvrm2_hhAqLAfUa9PGkYpyW",
+              "title": "💡 Work Smarter Not Harder",
+              "index": 4
+            },
+            {
+              "id": "PLVWnQj3YS9wvQjvINiLEzFSn1ZuwJruAJ",
+              "title": "⭐Featured",
+              "index": 6
+            }
+          ],
+          "media_path": "data/christine-payton/videos/wlhgfpFf_-k/wlhgfpFf_-k.mkv",
+          "thumbnail_path": "data/christine-payton/videos/wlhgfpFf_-k/wlhgfpFf_-k.webp"
+        },
+        {
+          "id": "VDV4gS-C-NY",
+          "title": "Automate Saving Files to a Specific Folder with Power Automate Desktop",
+          "upload_date": "2023-11-15",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "22:23",
+          "duration_seconds": 1343,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1080,
+            "vcodec_short": "avc1",
+            "acodec": "opus",
+            "filesize_human": "111 MB",
+            "filesize_bytes": 116405077
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=VDV4gS-C-NY",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wuCbVH0Z9aWP451IFFH6xYd",
+              "title": "🪼Power Automate",
+              "index": 13
+            }
+          ],
+          "media_path": "data/christine-payton/videos/VDV4gS-C-NY/VDV4gS-C-NY.mkv",
+          "thumbnail_path": "data/christine-payton/videos/VDV4gS-C-NY/VDV4gS-C-NY.webp"
+        },
+        {
+          "id": "bF1j6kOVFtc",
+          "title": "Edit & Annotate PDFs in SharePoint Online",
+          "upload_date": "2023-11-13",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "1:27",
+          "duration_seconds": 87,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1080,
+            "vcodec_short": "avc1",
+            "acodec": "opus",
+            "filesize_human": "9 MB",
+            "filesize_bytes": 9240317
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=bF1j6kOVFtc",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wtKomJCj5xfL0WoJXv1L0YL",
+              "title": "SharePoint",
+              "index": 8
+            }
+          ],
+          "media_path": "data/christine-payton/videos/bF1j6kOVFtc/bF1j6kOVFtc.mkv",
+          "thumbnail_path": "data/christine-payton/videos/bF1j6kOVFtc/bF1j6kOVFtc.webp"
+        },
+        {
+          "id": "vm9C27DkacA",
+          "title": "Toggle this Power BI slicer setting to \"tone down\" the giant slider handles!",
+          "upload_date": "2023-11-02",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "0:59",
+          "duration_seconds": 59,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1080,
+            "vcodec_short": "avc1",
+            "acodec": "opus",
+            "filesize_human": "4 MB",
+            "filesize_bytes": 3758997
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=vm9C27DkacA",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wuWCFv7DCBRpRK62Bhy7VQA",
+              "title": "🎨Design in Power BI",
+              "index": 3
+            }
+          ],
+          "media_path": "data/christine-payton/videos/vm9C27DkacA/vm9C27DkacA.mkv",
+          "thumbnail_path": "data/christine-payton/videos/vm9C27DkacA/vm9C27DkacA.webp"
+        },
+        {
+          "id": "ba1Akv63GDQ",
+          "title": "How to Schedule REFRESH on File & Folder Sources in Power BI",
+          "upload_date": "2023-10-31",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "8:41",
+          "duration_seconds": 521,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1080,
+            "vcodec_short": "avc1",
+            "acodec": "opus",
+            "filesize_human": "29 MB",
+            "filesize_bytes": 30846384
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=ba1Akv63GDQ",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wucZfTk_krb0VUNsnJtFmOx",
+              "title": "🪺 Working with File Sources in Power BI",
+              "index": 3
+            },
+            {
+              "id": "PLVWnQj3YS9wu3xPuOOjQHlHgBW9oD-UbP",
+              "title": "🥪Better Together in Microsoft 365",
+              "index": 17
+            }
+          ],
+          "media_path": "data/christine-payton/videos/ba1Akv63GDQ/ba1Akv63GDQ.mkv",
+          "thumbnail_path": "data/christine-payton/videos/ba1Akv63GDQ/ba1Akv63GDQ.webp"
+        },
+        {
+          "id": "xO14-sK7_vM",
+          "title": "All the tricks to recreate an award-winning Tableau dashboard design in Power BI with core visuals",
+          "upload_date": "2023-10-23",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "28:16",
+          "duration_seconds": 1696,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1080,
+            "vcodec_short": "avc1",
+            "acodec": "opus",
+            "filesize_human": "203 MB",
+            "filesize_bytes": 213377798
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=xO14-sK7_vM",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wvQjvINiLEzFSn1ZuwJruAJ",
+              "title": "⭐Featured",
+              "index": 8
+            },
+            {
+              "id": "PLVWnQj3YS9wuWCFv7DCBRpRK62Bhy7VQA",
+              "title": "🎨Design in Power BI",
+              "index": 4
+            }
+          ],
+          "media_path": "data/christine-payton/videos/xO14-sK7_vM/xO14-sK7_vM.mkv",
+          "thumbnail_path": "data/christine-payton/videos/xO14-sK7_vM/xO14-sK7_vM.webp"
+        },
+        {
+          "id": "kW2D853JqQg",
+          "title": "Get Data from PDFs and Send to EXCEL with Power Automate Desktop (free tool!)",
+          "upload_date": "2023-10-10",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "18:51",
+          "duration_seconds": 1131,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1080,
+            "vcodec_short": "avc1",
+            "acodec": "opus",
+            "filesize_human": "106 MB",
+            "filesize_bytes": 111233178
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=kW2D853JqQg",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wuCbVH0Z9aWP451IFFH6xYd",
+              "title": "🪼Power Automate",
+              "index": 1
+            }
+          ],
+          "media_path": "data/christine-payton/videos/kW2D853JqQg/kW2D853JqQg.mkv",
+          "thumbnail_path": "data/christine-payton/videos/kW2D853JqQg/kW2D853JqQg.webp"
+        },
+        {
+          "id": "NdkIbJCkgOs",
+          "title": "Assignees, Buckets & Subtasks - How to get PLANNER Data into Power BI | Part 2",
+          "upload_date": "2023-10-06",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "17:26",
+          "duration_seconds": 1046,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1080,
+            "vcodec_short": "avc1",
+            "acodec": "opus",
+            "filesize_human": "73 MB",
+            "filesize_bytes": 76431642
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=NdkIbJCkgOs",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wu3xPuOOjQHlHgBW9oD-UbP",
+              "title": "🥪Better Together in Microsoft 365",
+              "index": 9
+            },
+            {
+              "id": "PLVWnQj3YS9wuCbVH0Z9aWP451IFFH6xYd",
+              "title": "🪼Power Automate",
+              "index": 9
+            }
+          ],
+          "media_path": "data/christine-payton/videos/NdkIbJCkgOs/NdkIbJCkgOs.mkv",
+          "thumbnail_path": "data/christine-payton/videos/NdkIbJCkgOs/NdkIbJCkgOs.webp"
+        },
+        {
+          "id": "Z0eeTTL7EhQ",
+          "title": "Dynamic Row-Level Security for Power BI",
+          "upload_date": "2023-10-05",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "8:16",
+          "duration_seconds": 496,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1080,
+            "vcodec_short": "avc1",
+            "acodec": "opus",
+            "filesize_human": "30 MB",
+            "filesize_bytes": 31553238
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=Z0eeTTL7EhQ",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wvrm2_hhAqLAfUa9PGkYpyW",
+              "title": "💡 Work Smarter Not Harder",
+              "index": 5
+            },
+            {
+              "id": "PLVWnQj3YS9wvQjvINiLEzFSn1ZuwJruAJ",
+              "title": "⭐Featured",
+              "index": 4
+            }
+          ],
+          "media_path": "data/christine-payton/videos/Z0eeTTL7EhQ/Z0eeTTL7EhQ.mkv",
+          "thumbnail_path": "data/christine-payton/videos/Z0eeTTL7EhQ/Z0eeTTL7EhQ.webp"
+        },
+        {
+          "id": "vLv5A_yEc7A",
+          "title": "Get ALL User Profile Data using Power Automate",
+          "upload_date": "2023-10-04",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "11:59",
+          "duration_seconds": 719,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1080,
+            "vcodec_short": "avc1",
+            "acodec": "opus",
+            "filesize_human": "50 MB",
+            "filesize_bytes": 52818540
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=vLv5A_yEc7A",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wuCbVH0Z9aWP451IFFH6xYd",
+              "title": "🪼Power Automate",
+              "index": 5
+            }
+          ],
+          "media_path": "data/christine-payton/videos/vLv5A_yEc7A/vLv5A_yEc7A.mkv",
+          "thumbnail_path": "data/christine-payton/videos/vLv5A_yEc7A/vLv5A_yEc7A.webp"
+        },
+        {
+          "id": "Qr1GKdQuM5g",
+          "title": "Get and visualize Group Members & Owners with Power Automate & Power BI",
+          "upload_date": "2023-10-02",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "26:52",
+          "duration_seconds": 1612,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1080,
+            "vcodec_short": "avc1",
+            "acodec": "opus",
+            "filesize_human": "160 MB",
+            "filesize_bytes": 167392774
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=Qr1GKdQuM5g",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wu3xPuOOjQHlHgBW9oD-UbP",
+              "title": "🥪Better Together in Microsoft 365",
+              "index": 8
+            }
+          ],
+          "media_path": "data/christine-payton/videos/Qr1GKdQuM5g/Qr1GKdQuM5g.mkv",
+          "thumbnail_path": "data/christine-payton/videos/Qr1GKdQuM5g/Qr1GKdQuM5g.webp"
+        },
+        {
+          "id": "qYhXdNDnyfI",
+          "title": "Get ALL SharePoint Sites & Subsites Metrics with Power BI",
+          "upload_date": "2023-09-27",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "22:08",
+          "duration_seconds": 1328,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1080,
+            "vcodec_short": "avc1",
+            "acodec": "opus",
+            "filesize_human": "143 MB",
+            "filesize_bytes": 150466099
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=qYhXdNDnyfI",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wskIjrlmH4Zyzbrbo-WpH99",
+              "title": "SharePoint Online",
+              "index": 9
+            }
+          ],
+          "media_path": "data/christine-payton/videos/qYhXdNDnyfI/qYhXdNDnyfI.mkv",
+          "thumbnail_path": "data/christine-payton/videos/qYhXdNDnyfI/qYhXdNDnyfI.webp"
+        },
+        {
+          "id": "_MHRH3EbSuk",
+          "title": "Get ALL SharePoint Lists and Libraries Analytics",
+          "upload_date": "2023-09-27",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "21:23",
+          "duration_seconds": 1283,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1080,
+            "vcodec_short": "avc1",
+            "acodec": "opus",
+            "filesize_human": "101 MB",
+            "filesize_bytes": 106126491
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=_MHRH3EbSuk",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wskIjrlmH4Zyzbrbo-WpH99",
+              "title": "SharePoint Online",
+              "index": 10
+            }
+          ],
+          "media_path": "data/christine-payton/videos/_MHRH3EbSuk/_MHRH3EbSuk.mkv",
+          "thumbnail_path": "data/christine-payton/videos/_MHRH3EbSuk/_MHRH3EbSuk.webp"
+        },
+        {
+          "id": "HiyynvYluos",
+          "title": "What are SharePoint Spaces?",
+          "upload_date": "2023-08-29",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "7:54",
+          "duration_seconds": 474,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 720,
+            "vcodec_short": "avc1",
+            "acodec": "opus",
+            "filesize_human": "37 MB",
+            "filesize_bytes": 38285156
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=HiyynvYluos",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wtKomJCj5xfL0WoJXv1L0YL",
+              "title": "SharePoint",
+              "index": 7
+            }
+          ],
+          "media_path": "data/christine-payton/videos/HiyynvYluos/HiyynvYluos.mkv",
+          "thumbnail_path": "data/christine-payton/videos/HiyynvYluos/HiyynvYluos.webp"
+        },
+        {
+          "id": "RbcrJbwoIOw",
+          "title": "Get PLANNER Data into Power BI with a 2-ACTION Power Automate Flow!",
+          "upload_date": "2023-08-28",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "9:10",
+          "duration_seconds": 550,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1080,
+            "vcodec_short": "avc1",
+            "acodec": "opus",
+            "filesize_human": "39 MB",
+            "filesize_bytes": 40636724
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=RbcrJbwoIOw",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wvbJves79UWCQLTMNXcviy_",
+              "title": "✔️Get & Visualize Project & Task Data",
+              "index": 11
+            },
+            {
+              "id": "PLVWnQj3YS9wu3xPuOOjQHlHgBW9oD-UbP",
+              "title": "🥪Better Together in Microsoft 365",
+              "index": 7
+            }
+          ],
+          "media_path": "data/christine-payton/videos/RbcrJbwoIOw/RbcrJbwoIOw.mkv",
+          "thumbnail_path": "data/christine-payton/videos/RbcrJbwoIOw/RbcrJbwoIOw.webp"
+        },
+        {
+          "id": "AwyLPZ7NOtE",
+          "title": "How to design an awesome SharePoint page in 60 seconds! #shorts #sharepoint",
+          "upload_date": "2023-08-24",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "0:59",
+          "duration_seconds": 59,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1920,
+            "vcodec_short": "avc1",
+            "acodec": "opus",
+            "filesize_human": "6 MB",
+            "filesize_bytes": 5845917
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=AwyLPZ7NOtE",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wtKomJCj5xfL0WoJXv1L0YL",
+              "title": "SharePoint",
+              "index": 2
+            }
+          ],
+          "media_path": "data/christine-payton/videos/AwyLPZ7NOtE/AwyLPZ7NOtE.mkv",
+          "thumbnail_path": "data/christine-payton/videos/AwyLPZ7NOtE/AwyLPZ7NOtE.webp"
+        },
+        {
+          "id": "uVnprEnsWoU",
+          "title": "How to use Power BI as a VIEWER",
+          "upload_date": "2023-08-23",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "17:00",
+          "duration_seconds": 1020,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1080,
+            "vcodec_short": "avc1",
+            "acodec": "opus",
+            "filesize_human": "69 MB",
+            "filesize_bytes": 72444269
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=uVnprEnsWoU",
+          "playlists": [],
+          "media_path": "data/christine-payton/videos/uVnprEnsWoU/uVnprEnsWoU.mkv",
+          "thumbnail_path": "data/christine-payton/videos/uVnprEnsWoU/uVnprEnsWoU.webp"
+        },
+        {
+          "id": "3jU2tqt3PRM",
+          "title": "How to make your reports ACCESSIBLE in Power BI",
+          "upload_date": "2023-08-18",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "22:02",
+          "duration_seconds": 1322,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1080,
+            "vcodec_short": "avc1",
+            "acodec": "opus",
+            "filesize_human": "123 MB",
+            "filesize_bytes": 129258960
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=3jU2tqt3PRM",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wuWCFv7DCBRpRK62Bhy7VQA",
+              "title": "🎨Design in Power BI",
+              "index": 15
+            }
+          ],
+          "media_path": "data/christine-payton/videos/3jU2tqt3PRM/3jU2tqt3PRM.mkv",
+          "thumbnail_path": "data/christine-payton/videos/3jU2tqt3PRM/3jU2tqt3PRM.webp"
+        },
+        {
+          "id": "PpKMM1jerdA",
+          "title": "How to create a CORRELATION MATRIX in Power BI using the Python Visual",
+          "upload_date": "2023-08-15",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "16:00",
+          "duration_seconds": 960,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1080,
+            "vcodec_short": "avc1",
+            "acodec": "opus",
+            "filesize_human": "104 MB",
+            "filesize_bytes": 108828112
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=PpKMM1jerdA",
+          "playlists": [],
+          "media_path": "data/christine-payton/videos/PpKMM1jerdA/PpKMM1jerdA.mkv",
+          "thumbnail_path": "data/christine-payton/videos/PpKMM1jerdA/PpKMM1jerdA.webp"
+        },
+        {
+          "id": "tOhAxulPAoc",
+          "title": "How to use David Bacci's Deneb template: Power BI Gantt w/ milestones, dependencies, and phases",
+          "upload_date": "2023-08-14",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "13:33",
+          "duration_seconds": 813,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1080,
+            "vcodec_short": "avc1",
+            "acodec": "opus",
+            "filesize_human": "95 MB",
+            "filesize_bytes": 99730110
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=tOhAxulPAoc",
+          "playlists": [],
+          "media_path": "data/christine-payton/videos/tOhAxulPAoc/tOhAxulPAoc.mkv",
+          "thumbnail_path": "data/christine-payton/videos/tOhAxulPAoc/tOhAxulPAoc.webp"
+        },
+        {
+          "id": "PrVd-f4-m0w",
+          "title": "How to send email from a SHARED mailbox with Power Automate",
+          "upload_date": "2023-08-09",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "4:23",
+          "duration_seconds": 263,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1080,
+            "vcodec_short": "avc1",
+            "acodec": "opus",
+            "filesize_human": "33 MB",
+            "filesize_bytes": 35000209
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=PrVd-f4-m0w",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wuCbVH0Z9aWP451IFFH6xYd",
+              "title": "🪼Power Automate",
+              "index": 4
+            }
+          ],
+          "media_path": "data/christine-payton/videos/PrVd-f4-m0w/PrVd-f4-m0w.mkv",
+          "thumbnail_path": "data/christine-payton/videos/PrVd-f4-m0w/PrVd-f4-m0w.webp"
+        },
+        {
+          "id": "PDlNQmdNt3Q",
+          "title": "Use a JSON Generator to Change your SharePoint Form Look & Feel",
+          "upload_date": "2023-08-07",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "4:51",
+          "duration_seconds": 291,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1080,
+            "vcodec_short": "avc1",
+            "acodec": "opus",
+            "filesize_human": "18 MB",
+            "filesize_bytes": 18592239
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=PDlNQmdNt3Q",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wtKomJCj5xfL0WoJXv1L0YL",
+              "title": "SharePoint",
+              "index": 3
+            }
+          ],
+          "media_path": "data/christine-payton/videos/PDlNQmdNt3Q/PDlNQmdNt3Q.mkv",
+          "thumbnail_path": "data/christine-payton/videos/PDlNQmdNt3Q/PDlNQmdNt3Q.webp"
+        },
+        {
+          "id": "krzq9vTTATM",
+          "title": "Create a \"Glass Effect\" Design with Figma for Power BI",
+          "upload_date": "2023-08-02",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "16:26",
+          "duration_seconds": 986,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1080,
+            "vcodec_short": "avc1",
+            "acodec": "opus",
+            "filesize_human": "59 MB",
+            "filesize_bytes": 61983502
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=krzq9vTTATM",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wuWCFv7DCBRpRK62Bhy7VQA",
+              "title": "🎨Design in Power BI",
+              "index": 13
+            }
+          ],
+          "media_path": "data/christine-payton/videos/krzq9vTTATM/krzq9vTTATM.mkv",
+          "thumbnail_path": "data/christine-payton/videos/krzq9vTTATM/krzq9vTTATM.webp"
+        },
+        {
+          "id": "2HZ8l23RXnc",
+          "title": "How to change a Power BI file source from local computer to SharePoint",
+          "upload_date": "2023-07-23",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "3:37",
+          "duration_seconds": 217,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1080,
+            "vcodec_short": "avc1",
+            "acodec": "opus",
+            "filesize_human": "20 MB",
+            "filesize_bytes": 20703531
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=2HZ8l23RXnc",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wucZfTk_krb0VUNsnJtFmOx",
+              "title": "🪺 Working with File Sources in Power BI",
+              "index": 4
+            },
+            {
+              "id": "PLVWnQj3YS9wu3xPuOOjQHlHgBW9oD-UbP",
+              "title": "🥪Better Together in Microsoft 365",
+              "index": 1
+            },
+            {
+              "id": "PLVWnQj3YS9wskIjrlmH4Zyzbrbo-WpH99",
+              "title": "SharePoint Online",
+              "index": 3
+            }
+          ],
+          "media_path": "data/christine-payton/videos/2HZ8l23RXnc/2HZ8l23RXnc.mkv",
+          "thumbnail_path": "data/christine-payton/videos/2HZ8l23RXnc/2HZ8l23RXnc.webp"
+        },
+        {
+          "id": "WGSq17leNBY",
+          "title": "How to quickly bulk import data from Excel to a SharePoint List",
+          "upload_date": "2023-06-28",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "3:10",
+          "duration_seconds": 190,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1080,
+            "vcodec_short": "avc1",
+            "acodec": "opus",
+            "filesize_human": "21 MB",
+            "filesize_bytes": 21726753
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=WGSq17leNBY",
+          "playlists": [],
+          "media_path": "data/christine-payton/videos/WGSq17leNBY/WGSq17leNBY.mkv",
+          "thumbnail_path": "data/christine-payton/videos/WGSq17leNBY/WGSq17leNBY.webp"
+        },
+        {
+          "id": "nNvz1NAn5XU",
+          "title": "Figma Basics Tutorial for Power BI",
+          "upload_date": "2023-06-26",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "20:21",
+          "duration_seconds": 1221,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1080,
+            "vcodec_short": "avc1",
+            "acodec": "opus",
+            "filesize_human": "98 MB",
+            "filesize_bytes": 102653316
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=nNvz1NAn5XU",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wuWCFv7DCBRpRK62Bhy7VQA",
+              "title": "🎨Design in Power BI",
+              "index": 2
+            }
+          ],
+          "media_path": "data/christine-payton/videos/nNvz1NAn5XU/nNvz1NAn5XU.mkv",
+          "thumbnail_path": "data/christine-payton/videos/nNvz1NAn5XU/nNvz1NAn5XU.webp"
+        },
+        {
+          "id": "5-0KH0IiDjU",
+          "title": "Embed a Table from Power BI in an Email with Power Automate",
+          "upload_date": "2023-06-12",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "19:20",
+          "duration_seconds": 1160,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1080,
+            "vcodec_short": "avc1",
+            "acodec": "opus",
+            "filesize_human": "67 MB",
+            "filesize_bytes": 70544403
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=5-0KH0IiDjU",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wuCbVH0Z9aWP451IFFH6xYd",
+              "title": "🪼Power Automate",
+              "index": 7
+            }
+          ],
+          "media_path": "data/christine-payton/videos/5-0KH0IiDjU/5-0KH0IiDjU.mkv",
+          "thumbnail_path": "data/christine-payton/videos/5-0KH0IiDjU/5-0KH0IiDjU.webp"
+        },
+        {
+          "id": "RBx-HbVpWTQ",
+          "title": "3-Action Flow to Snapshot a SharePoint List, then Combine Snapshots for Reporting",
+          "upload_date": "2023-06-05",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "16:28",
+          "duration_seconds": 988,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1080,
+            "vcodec_short": "avc1",
+            "acodec": "opus",
+            "filesize_human": "57 MB",
+            "filesize_bytes": 59366590
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=RBx-HbVpWTQ",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wtKomJCj5xfL0WoJXv1L0YL",
+              "title": "SharePoint",
+              "index": 4
+            },
+            {
+              "id": "PLVWnQj3YS9wuCbVH0Z9aWP451IFFH6xYd",
+              "title": "🪼Power Automate",
+              "index": 8
+            },
+            {
+              "id": "PLVWnQj3YS9wskIjrlmH4Zyzbrbo-WpH99",
+              "title": "SharePoint Online",
+              "index": 5
+            }
+          ],
+          "media_path": "data/christine-payton/videos/RBx-HbVpWTQ/RBx-HbVpWTQ.mkv",
+          "thumbnail_path": "data/christine-payton/videos/RBx-HbVpWTQ/RBx-HbVpWTQ.webp"
+        },
+        {
+          "id": "LYu3wqb2Nx4",
+          "title": "SharePoint List Data in Power BI (see pinned comment!)",
+          "upload_date": "2023-05-30",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "31:03",
+          "duration_seconds": 1863,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1080,
+            "vcodec_short": "avc1",
+            "acodec": "opus",
+            "filesize_human": "122 MB",
+            "filesize_bytes": 128423947
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=LYu3wqb2Nx4",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wtKomJCj5xfL0WoJXv1L0YL",
+              "title": "SharePoint",
+              "index": 5
+            }
+          ],
+          "media_path": "data/christine-payton/videos/LYu3wqb2Nx4/LYu3wqb2Nx4.mkv",
+          "thumbnail_path": "data/christine-payton/videos/LYu3wqb2Nx4/LYu3wqb2Nx4.webp"
+        },
+        {
+          "id": "icApDDxPLNM",
+          "title": "How to COPY SharePoint Pages & Templates",
+          "upload_date": "2023-05-15",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "17:20",
+          "duration_seconds": 1040,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1080,
+            "vcodec_short": "avc1",
+            "acodec": "opus",
+            "filesize_human": "66 MB",
+            "filesize_bytes": 69468980
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=icApDDxPLNM",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wu3xPuOOjQHlHgBW9oD-UbP",
+              "title": "🥪Better Together in Microsoft 365",
+              "index": 5
+            },
+            {
+              "id": "PLVWnQj3YS9wuCbVH0Z9aWP451IFFH6xYd",
+              "title": "🪼Power Automate",
+              "index": 12
+            },
+            {
+              "id": "PLVWnQj3YS9wskIjrlmH4Zyzbrbo-WpH99",
+              "title": "SharePoint Online",
+              "index": 8
+            }
+          ],
+          "media_path": "data/christine-payton/videos/icApDDxPLNM/icApDDxPLNM.mkv",
+          "thumbnail_path": "data/christine-payton/videos/icApDDxPLNM/icApDDxPLNM.webp"
+        },
+        {
+          "id": "CL5uHQ48o-k",
+          "title": "Set Visual SETTINGS (gridlines, axis toggles, more) with Power BI Themes!",
+          "upload_date": "2023-05-09",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "9:28",
+          "duration_seconds": 568,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1080,
+            "vcodec_short": "avc1",
+            "acodec": "opus",
+            "filesize_human": "47 MB",
+            "filesize_bytes": 48865246
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=CL5uHQ48o-k",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wuWCFv7DCBRpRK62Bhy7VQA",
+              "title": "🎨Design in Power BI",
+              "index": 17
+            }
+          ],
+          "media_path": "data/christine-payton/videos/CL5uHQ48o-k/CL5uHQ48o-k.mkv",
+          "thumbnail_path": "data/christine-payton/videos/CL5uHQ48o-k/CL5uHQ48o-k.webp"
+        },
+        {
+          "id": "yeIQ9jKln_I",
+          "title": "How to get File Metadata from SharePoint Libraries with Power BI using OData",
+          "upload_date": "2023-05-02",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "16:03",
+          "duration_seconds": 963,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1080,
+            "vcodec_short": "avc1",
+            "acodec": "opus",
+            "filesize_human": "75 MB",
+            "filesize_bytes": 78307407
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=yeIQ9jKln_I",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wucZfTk_krb0VUNsnJtFmOx",
+              "title": "🪺 Working with File Sources in Power BI",
+              "index": 6
+            },
+            {
+              "id": "PLVWnQj3YS9wtKomJCj5xfL0WoJXv1L0YL",
+              "title": "SharePoint",
+              "index": 1
+            },
+            {
+              "id": "PLVWnQj3YS9wu3xPuOOjQHlHgBW9oD-UbP",
+              "title": "🥪Better Together in Microsoft 365",
+              "index": 6
+            },
+            {
+              "id": "PLVWnQj3YS9wskIjrlmH4Zyzbrbo-WpH99",
+              "title": "SharePoint Online",
+              "index": 6
+            }
+          ],
+          "media_path": "data/christine-payton/videos/yeIQ9jKln_I/yeIQ9jKln_I.mkv",
+          "thumbnail_path": "data/christine-payton/videos/yeIQ9jKln_I/yeIQ9jKln_I.webp"
+        },
+        {
+          "id": "3oXKWOfP3GE",
+          "title": "Embed Power BI Visuals or Pages in SharePoint",
+          "upload_date": "2023-04-26",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "5:24",
+          "duration_seconds": 324,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1080,
+            "vcodec_short": "avc1",
+            "acodec": "opus",
+            "filesize_human": "22 MB",
+            "filesize_bytes": 23117396
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=3oXKWOfP3GE",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wu3xPuOOjQHlHgBW9oD-UbP",
+              "title": "🥪Better Together in Microsoft 365",
+              "index": 2
+            },
+            {
+              "id": "PLVWnQj3YS9wskIjrlmH4Zyzbrbo-WpH99",
+              "title": "SharePoint Online",
+              "index": 4
+            },
+            {
+              "id": "PLVWnQj3YS9wuWCFv7DCBRpRK62Bhy7VQA",
+              "title": "🎨Design in Power BI",
+              "index": 9
+            }
+          ],
+          "media_path": "data/christine-payton/videos/3oXKWOfP3GE/3oXKWOfP3GE.mkv",
+          "thumbnail_path": "data/christine-payton/videos/3oXKWOfP3GE/3oXKWOfP3GE.webp"
+        },
+        {
+          "id": "5SFxHffE2TA",
+          "title": "How to Change Source FOLDER from Local to SharePoint in Power BI",
+          "upload_date": "2023-04-21",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "6:18",
+          "duration_seconds": 378,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1080,
+            "vcodec_short": "avc1",
+            "acodec": "opus",
+            "filesize_human": "63 MB",
+            "filesize_bytes": 65694263
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=5SFxHffE2TA",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wucZfTk_krb0VUNsnJtFmOx",
+              "title": "🪺 Working with File Sources in Power BI",
+              "index": 5
+            },
+            {
+              "id": "PLVWnQj3YS9wu3xPuOOjQHlHgBW9oD-UbP",
+              "title": "🥪Better Together in Microsoft 365",
+              "index": 3
+            },
+            {
+              "id": "PLVWnQj3YS9wskIjrlmH4Zyzbrbo-WpH99",
+              "title": "SharePoint Online",
+              "index": 1
+            }
+          ],
+          "media_path": "data/christine-payton/videos/5SFxHffE2TA/5SFxHffE2TA.mkv",
+          "thumbnail_path": "data/christine-payton/videos/5SFxHffE2TA/5SFxHffE2TA.webp"
+        },
+        {
+          "id": "i51w9hmsIpU",
+          "title": "CUSTOM Dynamic text boxes in Power BI",
+          "upload_date": "2023-04-17",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "10:14",
+          "duration_seconds": 614,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1080,
+            "vcodec_short": "avc1",
+            "acodec": "opus",
+            "filesize_human": "71 MB",
+            "filesize_bytes": 74000997
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=i51w9hmsIpU",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wuWCFv7DCBRpRK62Bhy7VQA",
+              "title": "🎨Design in Power BI",
+              "index": 1
+            }
+          ],
+          "media_path": "data/christine-payton/videos/i51w9hmsIpU/i51w9hmsIpU.mkv",
+          "thumbnail_path": "data/christine-payton/videos/i51w9hmsIpU/i51w9hmsIpU.webp"
+        },
+        {
+          "id": "wHzrBkbUBgM",
+          "title": "[Deprecated] How to change a file source from local computer to SharePoint Online in Power BI",
+          "upload_date": "2023-04-08",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "6:13",
+          "duration_seconds": 373,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1080,
+            "vcodec_short": "avc1",
+            "acodec": "opus",
+            "filesize_human": "32 MB",
+            "filesize_bytes": 34041115
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=wHzrBkbUBgM",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wskIjrlmH4Zyzbrbo-WpH99",
+              "title": "SharePoint Online",
+              "index": 11
+            }
+          ],
+          "media_path": "data/christine-payton/videos/wHzrBkbUBgM/wHzrBkbUBgM.mkv",
+          "thumbnail_path": "data/christine-payton/videos/wHzrBkbUBgM/wHzrBkbUBgM.webp"
+        },
+        {
+          "id": "2LHfDIlJPXo",
+          "title": "Actual vs Target Trick in Power BI",
+          "upload_date": "2023-04-07",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "6:24",
+          "duration_seconds": 384,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1080,
+            "vcodec_short": "avc1",
+            "acodec": "opus",
+            "filesize_human": "29 MB",
+            "filesize_bytes": 30732043
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=2LHfDIlJPXo",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wuWCFv7DCBRpRK62Bhy7VQA",
+              "title": "🎨Design in Power BI",
+              "index": 10
+            }
+          ],
+          "media_path": "data/christine-payton/videos/2LHfDIlJPXo/2LHfDIlJPXo.mkv",
+          "thumbnail_path": "data/christine-payton/videos/2LHfDIlJPXo/2LHfDIlJPXo.webp"
+        },
+        {
+          "id": "iivCskCpsPk",
+          "title": "How to use the HTML visual to set font weights and create SVG icons in Power BI",
+          "upload_date": "2023-03-28",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "16:22",
+          "duration_seconds": 982,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1080,
+            "vcodec_short": "avc1",
+            "acodec": "opus",
+            "filesize_human": "82 MB",
+            "filesize_bytes": 85587633
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=iivCskCpsPk",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wuWCFv7DCBRpRK62Bhy7VQA",
+              "title": "🎨Design in Power BI",
+              "index": 16
+            }
+          ],
+          "media_path": "data/christine-payton/videos/iivCskCpsPk/iivCskCpsPk.mkv",
+          "thumbnail_path": "data/christine-payton/videos/iivCskCpsPk/iivCskCpsPk.webp"
+        },
+        {
+          "id": "QsWab_Kr9yI",
+          "title": "How to Keep a Version History for Power BI",
+          "upload_date": "2023-03-19",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "7:28",
+          "duration_seconds": 448,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1080,
+            "vcodec_short": "avc1",
+            "acodec": "opus",
+            "filesize_human": "35 MB",
+            "filesize_bytes": 36466275
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=QsWab_Kr9yI",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wvrm2_hhAqLAfUa9PGkYpyW",
+              "title": "💡 Work Smarter Not Harder",
+              "index": 6
+            },
+            {
+              "id": "PLVWnQj3YS9wu3xPuOOjQHlHgBW9oD-UbP",
+              "title": "🥪Better Together in Microsoft 365",
+              "index": 4
+            },
+            {
+              "id": "PLVWnQj3YS9wskIjrlmH4Zyzbrbo-WpH99",
+              "title": "SharePoint Online",
+              "index": 2
+            }
+          ],
+          "media_path": "data/christine-payton/videos/QsWab_Kr9yI/QsWab_Kr9yI.mkv",
+          "thumbnail_path": "data/christine-payton/videos/QsWab_Kr9yI/QsWab_Kr9yI.webp"
+        },
+        {
+          "id": "Lnl8jKx1THI",
+          "title": "How to Make a Form in SharePoint",
+          "upload_date": "2023-03-08",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "24:19",
+          "duration_seconds": 1459,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1080,
+            "vcodec_short": "avc1",
+            "acodec": "opus",
+            "filesize_human": "133 MB",
+            "filesize_bytes": 139380148
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=Lnl8jKx1THI",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wtKomJCj5xfL0WoJXv1L0YL",
+              "title": "SharePoint",
+              "index": 6
+            },
+            {
+              "id": "PLVWnQj3YS9wskIjrlmH4Zyzbrbo-WpH99",
+              "title": "SharePoint Online",
+              "index": 7
+            }
+          ],
+          "media_path": "data/christine-payton/videos/Lnl8jKx1THI/Lnl8jKx1THI.mkv",
+          "thumbnail_path": "data/christine-payton/videos/Lnl8jKx1THI/Lnl8jKx1THI.webp"
+        },
+        {
+          "id": "tb3eDmA7CqE",
+          "title": "Dynamic Tables in Power BI - field parameters with conditional formatting!",
+          "upload_date": "2023-02-25",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "14:20",
+          "duration_seconds": 860,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1080,
+            "vcodec_short": "avc1",
+            "acodec": "opus",
+            "filesize_human": "132 MB",
+            "filesize_bytes": 138267894
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=tb3eDmA7CqE",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wtdTCVbKJ3xlLw2p_dlO0-L",
+              "title": "Field Parameter & Boomkark Tricks (Power BI)",
+              "index": 5
+            }
+          ],
+          "media_path": "data/christine-payton/videos/tb3eDmA7CqE/tb3eDmA7CqE.mkv",
+          "thumbnail_path": "data/christine-payton/videos/tb3eDmA7CqE/tb3eDmA7CqE.webp"
+        },
+        {
+          "id": "Blrn53FyJ3o",
+          "title": "Tutorial: Stephen Few-style bullet chart in Power BI using core visuals!",
+          "upload_date": "2023-02-17",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "9:00",
+          "duration_seconds": 540,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1080,
+            "vcodec_short": "avc1",
+            "acodec": "opus",
+            "filesize_human": "34 MB",
+            "filesize_bytes": 35588915
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=Blrn53FyJ3o",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wuWCFv7DCBRpRK62Bhy7VQA",
+              "title": "🎨Design in Power BI",
+              "index": 5
+            }
+          ],
+          "media_path": "data/christine-payton/videos/Blrn53FyJ3o/Blrn53FyJ3o.mkv",
+          "thumbnail_path": "data/christine-payton/videos/Blrn53FyJ3o/Blrn53FyJ3o.webp"
+        },
+        {
+          "id": "-gOGUwZ7_zw",
+          "title": "Use this feature to let your VIEWERS toggle settings when viewing your report in Power BI!",
+          "upload_date": "2023-02-15",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "8:00",
+          "duration_seconds": 480,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1080,
+            "vcodec_short": "avc1",
+            "acodec": "opus",
+            "filesize_human": "37 MB",
+            "filesize_bytes": 38629411
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=-gOGUwZ7_zw",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wtdTCVbKJ3xlLw2p_dlO0-L",
+              "title": "Field Parameter & Boomkark Tricks (Power BI)",
+              "index": 4
+            }
+          ],
+          "media_path": "data/christine-payton/videos/-gOGUwZ7_zw/-gOGUwZ7_zw.mkv",
+          "thumbnail_path": "data/christine-payton/videos/-gOGUwZ7_zw/-gOGUwZ7_zw.webp"
+        },
+        {
+          "id": "e5yWWYboPaU",
+          "title": "Dynamically show/hide dimension values in slicers in Power BI",
+          "upload_date": "2023-02-13",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "5:17",
+          "duration_seconds": 317,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1080,
+            "vcodec_short": "avc1",
+            "acodec": "opus",
+            "filesize_human": "27 MB",
+            "filesize_bytes": 28423589
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=e5yWWYboPaU",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wtdTCVbKJ3xlLw2p_dlO0-L",
+              "title": "Field Parameter & Boomkark Tricks (Power BI)",
+              "index": 3
+            }
+          ],
+          "media_path": "data/christine-payton/videos/e5yWWYboPaU/e5yWWYboPaU.mkv",
+          "thumbnail_path": "data/christine-payton/videos/e5yWWYboPaU/e5yWWYboPaU.webp"
+        },
+        {
+          "id": "0XcGoiTGePM",
+          "title": "Field Parameter Trick: Dynamic Measure Descriptions in Power BI!",
+          "upload_date": "2023-02-10",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "8:27",
+          "duration_seconds": 507,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1080,
+            "vcodec_short": "avc1",
+            "acodec": "opus",
+            "filesize_human": "39 MB",
+            "filesize_bytes": 40858245
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=0XcGoiTGePM",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wtdTCVbKJ3xlLw2p_dlO0-L",
+              "title": "Field Parameter & Boomkark Tricks (Power BI)",
+              "index": 2
+            }
+          ],
+          "media_path": "data/christine-payton/videos/0XcGoiTGePM/0XcGoiTGePM.mkv",
+          "thumbnail_path": "data/christine-payton/videos/0XcGoiTGePM/0XcGoiTGePM.webp"
+        },
+        {
+          "id": "Jtaxg8WsiWY",
+          "title": "Friendly-Name ALL your Power BI columns at once with Power Query!",
+          "upload_date": "2023-02-05",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "5:02",
+          "duration_seconds": 302,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1080,
+            "vcodec_short": "avc1",
+            "acodec": "opus",
+            "filesize_human": "20 MB",
+            "filesize_bytes": 20567343
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=Jtaxg8WsiWY",
+          "playlists": [],
+          "media_path": "data/christine-payton/videos/Jtaxg8WsiWY/Jtaxg8WsiWY.mkv",
+          "thumbnail_path": "data/christine-payton/videos/Jtaxg8WsiWY/Jtaxg8WsiWY.webp"
+        },
+        {
+          "id": "fgCWlXLu-c4",
+          "title": "How to create a Gantt chart in Power BI (with a free visual!)",
+          "upload_date": "2023-02-03",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "13:14",
+          "duration_seconds": 794,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1080,
+            "vcodec_short": "avc1",
+            "acodec": "opus",
+            "filesize_human": "58 MB",
+            "filesize_bytes": 60446123
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=fgCWlXLu-c4",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wvbJves79UWCQLTMNXcviy_",
+              "title": "✔️Get & Visualize Project & Task Data",
+              "index": 9
+            }
+          ],
+          "media_path": "data/christine-payton/videos/fgCWlXLu-c4/fgCWlXLu-c4.mkv",
+          "thumbnail_path": "data/christine-payton/videos/fgCWlXLu-c4/fgCWlXLu-c4.webp"
+        },
+        {
+          "id": "_YKqPhMjn6M",
+          "title": "How to create Stephen Few-style visuals in Power BI using core visuals",
+          "upload_date": "2023-02-03",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "25:25",
+          "duration_seconds": 1525,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1080,
+            "vcodec_short": "avc1",
+            "acodec": "opus",
+            "filesize_human": "113 MB",
+            "filesize_bytes": 118269497
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=_YKqPhMjn6M",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wuWCFv7DCBRpRK62Bhy7VQA",
+              "title": "🎨Design in Power BI",
+              "index": 6
+            }
+          ],
+          "media_path": "data/christine-payton/videos/_YKqPhMjn6M/_YKqPhMjn6M.mkv",
+          "thumbnail_path": "data/christine-payton/videos/_YKqPhMjn6M/_YKqPhMjn6M.webp"
+        },
+        {
+          "id": "Nt3QgZrJXfY",
+          "title": "How to use field parameters in Power BI visuals + how to “dynamically” sort",
+          "upload_date": "2023-01-29",
+          "archived_at": "2026-05-27T14:22:30Z",
+          "duration": "21:18",
+          "duration_seconds": 1278,
+          "availability": "available",
+          "removed_detected_at": null,
+          "upgrade_available": false,
+          "format": {
+            "height": 1080,
+            "vcodec_short": "avc1",
+            "acodec": "opus",
+            "filesize_human": "68 MB",
+            "filesize_bytes": 70924099
+          },
+          "youtube_url": "https://www.youtube.com/watch?v=Nt3QgZrJXfY",
+          "playlists": [
+            {
+              "id": "PLVWnQj3YS9wtdTCVbKJ3xlLw2p_dlO0-L",
+              "title": "Field Parameter & Boomkark Tricks (Power BI)",
+              "index": 1
+            }
+          ],
+          "media_path": "data/christine-payton/videos/Nt3QgZrJXfY/Nt3QgZrJXfY.mkv",
+          "thumbnail_path": "data/christine-payton/videos/Nt3QgZrJXfY/Nt3QgZrJXfY.webp"
+        }
+      ]
+    },
+    {
+      "slug": "data-with-baraa",
+      "name": "Data with Baraa",
+      "channel_url": "https://www.youtube.com/channel/UC8_RSKwbU1OmZWNEoLV1tQg",
+      "avatar_url": "https://yt3.googleusercontent.com/VsxutdFRM36nOq-z8bzQI6he7THHm854JkmMxqXjuYVHtMY2PVNMbWE2YshHRDSwYX02xPqyCxk=w1060-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj",
+      "handle": "@DataWithBaraa",
+      "description": "Hey, I'm Baraa, a Data Engineer with over 17 years experience, Ex-Mercedes Benz, where I led and built one of the biggest data platforms for analytics and AI.\n\nNow I’m here to share it all through visually explained courses, real-world projects, and the skills that will get you hired. I’ve helped millions of students transform their careers.\n\nIf that sounds interesting, consider subscribing! See you in the next video\n",
+      "snapshot_taken_at": "2026-05-27T18:17:53Z",
+      "video_count": 0,
+      "playlist_count": 11,
+      "playlists": [
+        {
+          "id": "PLNcg_FV9n7qZWchr-GE5iPPBmOjiffK6O",
+          "title": "Databricks Ultimate Course",
+          "count": 0
+        },
+        {
+          "id": "PLNcg_FV9n7qZoxVkw-KPhcmgLWjHWVUc9",
+          "title": "Databricks 2 Days Bootcamp",
+          "count": 0
+        },
+        {
+          "id": "PLNcg_FV9n7qZge4KDGqGtqgiuVuhVZWzu",
+          "title": "Power BI Ultimate Course",
+          "count": 0
+        },
+        {
+          "id": "PLNcg_FV9n7qah95jp-aPtysu7kFCbg7hd",
+          "title": "Data Career Roadmaps",
+          "count": 0
+        },
+        {
+          "id": "PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
+          "title": "Python Ultimate Course",
+          "count": 0
+        },
+        {
+          "id": "PLNcg_FV9n7qZ4Ym8ZriYT6WF8TaC2e_R7",
+          "title": "Data Analyst Portfolio Projects",
+          "count": 0
+        },
+        {
+          "id": "PLNcg_FV9n7qaUWeyUkPfiVtMbKlrfMqA8",
+          "title": "SQL Data Warehouse Portfolio Project",
+          "count": 0
+        },
+        {
+          "id": "PLNcg_FV9n7qZY_2eAtUzEUulNjTJREhQe",
+          "title": "SQL Ultimate Course",
+          "count": 0
+        },
+        {
+          "id": "PLNcg_FV9n7qZJqrKcUUCWCWPYCrlcVm9v",
+          "title": "Tableau Ultimate Course",
+          "count": 0
+        },
+        {
+          "id": "PLNcg_FV9n7qZwVMuVhKS8gOqzIHMJPIVj",
+          "title": "ChatGPT Course | Zero to Hero",
+          "count": 0
+        },
+        {
+          "id": "PLNcg_FV9n7qZDdRInCl7wfOO8yZqYX5hO",
+          "title": "SQL Course | For Beginners",
+          "count": 0
+        }
+      ],
+      "videos": []
+    }
+  ]
+}

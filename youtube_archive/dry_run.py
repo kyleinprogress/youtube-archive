@@ -24,7 +24,7 @@ from youtube_archive.upgrade import (
     canonical_media_path,
     read_archive_ids,
 )
-from youtube_archive.utils import DATA_DIR, string_or_empty, utc_timestamp
+from youtube_archive.utils import data_dir, string_or_empty, utc_timestamp
 
 
 @dataclass
@@ -32,6 +32,7 @@ class DryRunTotals:
     would_download: int = 0
     gated: int = 0
     already_archived: int = 0
+    skipped_unavailable: int = 0
     manifest_writes: int = 0
     metadata_touches: int = 0
     checked: int = 0
@@ -118,6 +119,8 @@ def dry_run_default_or_manifests(
         print(f"  {gated.video_id} — {gated_description(gated, creator)}", flush=True)
     counts.already_archived = len(buckets.already_archived)
     print(f"  {counts.already_archived} already archived (skip)", flush=True)
+    counts.skipped_unavailable = len(buckets.skipped_unavailable)
+    print(f"  {counts.skipped_unavailable} flagged unavailable (skip)", flush=True)
 
     metadata_touches = count_metadata_touches(creator)
     counts.metadata_touches = metadata_touches
@@ -128,7 +131,8 @@ def dry_run_default_or_manifests(
     )
     print(
         f"Summary: {counts.would_download} would download, {counts.gated} gated, "
-        f"{counts.already_archived} already archived",
+        f"{counts.already_archived} already archived, "
+        f"{counts.skipped_unavailable} flagged unavailable",
         flush=True,
     )
     return counts
@@ -180,7 +184,7 @@ def count_metadata_touches(creator: dict[str, Any]) -> int:
     video_ids = read_archive_video_ids_for_metadata(slug, null_log)
     touches = 0
     for video_id in video_ids:
-        video_dir = DATA_DIR / slug / "videos" / video_id
+        video_dir = data_dir() / slug / "videos" / video_id
         if not video_dir.exists():
             continue
         media_path = video_dir / f"{video_id}.{creator['merge_output_format']}"
@@ -201,7 +205,7 @@ def dry_run_refresh(creator: dict[str, Any]) -> DryRunTotals:
     no_changes = 0
 
     for video_id in video_ids:
-        metadata_path = DATA_DIR / slug / "videos" / video_id / "metadata.json"
+        metadata_path = data_dir() / slug / "videos" / video_id / "metadata.json"
         if not metadata_path.exists():
             counts.skipped += 1
             continue
@@ -340,7 +344,7 @@ def collect_dry_upgrade_targets(
     recovery_skips: set[str],
 ) -> tuple[list[Any], int, list[str]]:
     slug = creator["slug"]
-    videos_dir = DATA_DIR / slug / "videos"
+    videos_dir = data_dir() / slug / "videos"
     if not videos_dir.exists():
         return [], len(recovery_skips), []
 
@@ -394,7 +398,7 @@ def dry_run_recovery(
     upgrade_log: logging.Logger,
 ) -> set[str]:
     slug = creator["slug"]
-    videos_dir = DATA_DIR / slug / "videos"
+    videos_dir = data_dir() / slug / "videos"
     archive_ids = read_archive_ids(slug, upgrade_log)
     recovery_skips: set[str] = set()
     found = 0
@@ -474,6 +478,7 @@ def print_total(total: DryRunTotals, args: Any, creator_count: int) -> None:
     else:
         print(
             f"Total: {total.would_download} would download, {total.gated} gated, "
-            f"{total.already_archived} already archived across {creator_count} creators",
+            f"{total.already_archived} already archived, "
+            f"{total.skipped_unavailable} flagged unavailable across {creator_count} creators",
             flush=True,
         )

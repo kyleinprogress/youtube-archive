@@ -11,8 +11,8 @@ from youtube_archive.errors import creator_scope, last_five_lines, log_safe_deta
 from youtube_archive.logging_setup import get_creator_loggers
 from youtube_archive.metadata import description_hash, read_archive_video_ids_for_metadata
 from youtube_archive.utils import (
-    DATA_DIR,
     codec_or_none,
+    data_dir,
     optional_int_value,
     string_or_empty,
     utc_timestamp,
@@ -120,7 +120,7 @@ def refresh_one_video(
     errors_log: logging.Logger,
 ) -> RefreshVideoResult:
     slug = creator["slug"]
-    video_dir = DATA_DIR / slug / "videos" / video_id
+    video_dir = data_dir() / slug / "videos" / video_id
     if not video_dir.exists():
         return RefreshVideoResult("skipped")
 
@@ -390,7 +390,7 @@ def count_current_upgrades(
 ) -> int:
     count = 0
     for video_id in video_ids:
-        metadata_path = DATA_DIR / slug / "videos" / video_id / "metadata.json"
+        metadata_path = data_dir() / slug / "videos" / video_id / "metadata.json"
         if not metadata_path.exists():
             continue
         try:

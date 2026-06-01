@@ -10,8 +10,8 @@ from typing import Any
 
 from youtube_archive.logging_setup import get_creator_loggers
 from youtube_archive.utils import (
-    DATA_DIR,
     codec_or_none,
+    data_dir,
     optional_int_value,
     parse_archive_video_ids,
     string_or_empty,
@@ -69,13 +69,18 @@ def run_pass_four(creator: dict[str, Any], candidate_set: dict[str, Any]) -> Non
         playlists_updated,
         skipped,
     )
+    print(
+        f"{slug}: metadata — {created} created, {rebuilt} rebuilt, "
+        f"{playlists_updated} playlists-updated, {skipped} skipped",
+        flush=True,
+    )
 
 
 def read_archive_video_ids_for_metadata(
     slug: str,
     download_log: logging.Logger,
 ) -> list[str]:
-    archive_path = DATA_DIR / slug / "archive.txt"
+    archive_path = data_dir() / slug / "archive.txt"
     if not archive_path.exists():
         return []
 
@@ -96,7 +101,7 @@ def process_metadata_video(
     download_log: logging.Logger,
 ) -> str:
     slug = creator["slug"]
-    video_dir = DATA_DIR / slug / "videos" / video_id
+    video_dir = data_dir() / slug / "videos" / video_id
     if not video_dir.exists():
         return "skipped"
 

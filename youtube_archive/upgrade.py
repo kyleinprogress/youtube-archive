@@ -11,6 +11,7 @@ from youtube_archive.config import setup_creator_environment
 from youtube_archive.downloads import (
     DownloadResult,
     build_download_command,
+    remove_staging_dir,
     resolve_subtitle_choice,
     run_download_subprocess,
 )
@@ -18,8 +19,8 @@ from youtube_archive.errors import creator_scope, log_safe_detail
 from youtube_archive.logging_setup import get_creator_loggers
 from youtube_archive.metadata import metadata_filesize
 from youtube_archive.utils import (
-    DATA_DIR,
     codec_or_none,
+    data_dir,
     optional_int_value,
     parse_archive_video_ids,
     string_or_empty,
@@ -135,7 +136,7 @@ def recover_pre_upgrade_leftovers(
     errors_log: logging.Logger,
 ) -> set[str]:
     slug = creator["slug"]
-    videos_dir = DATA_DIR / slug / "videos"
+    videos_dir = data_dir() / slug / "videos"
     archive_ids = read_archive_ids(slug, upgrade_log)
     skipped_video_ids: set[str] = set()
     if not videos_dir.exists():
@@ -187,7 +188,7 @@ def select_upgrade_targets(
     upgrade_log: logging.Logger,
 ) -> tuple[list[UpgradeTarget], int]:
     slug = creator["slug"]
-    videos_dir = DATA_DIR / slug / "videos"
+    videos_dir = data_dir() / slug / "videos"
     if not videos_dir.exists():
         return [], 0
 
@@ -274,6 +275,7 @@ def upgrade_one_video(
             raise UpgradeFailure("canonical media missing after yt-dlp", result.tail_lines)
         if not fresh_info_path.exists():
             raise UpgradeFailure("fresh info.json missing after yt-dlp", result.tail_lines)
+        remove_staging_dir(creator, video_id)
 
         new_downloaded = build_downloaded_block(fresh_info_path, target.media_path)
         old_format = string_or_empty(from_downloaded.get("format_id"))
@@ -432,13 +434,13 @@ def handle_upgrade_failure(
 
 
 def canonical_media_path(creator: dict[str, Any], video_id: str) -> pathlib.Path:
-    return DATA_DIR / creator["slug"] / "videos" / video_id / (
+    return data_dir() / creator["slug"] / "videos" / video_id / (
         f"{video_id}.{creator['merge_output_format']}"
     )
 
 
 def read_archive_ids(slug: str, upgrade_log: logging.Logger) -> set[str]:
-    archive_path = DATA_DIR / slug / "archive.txt"
+    archive_path = data_dir() / slug / "archive.txt"
     if not archive_path.exists():
         return set()
     try:

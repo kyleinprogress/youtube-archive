@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import pathlib
 from dataclasses import dataclass
 from typing import Any
 
@@ -8,6 +9,8 @@ from youtube_archive.audit import run_audit_mode, validate_audit_args
 from youtube_archive.config import (
     check_ffmpeg,
     load_config,
+    resolve_data_dir,
+    resolve_staging_dir,
     select_creators,
     setup_creator_environment,
     validate_config,
@@ -19,6 +22,8 @@ from youtube_archive.manifests import run_pass_one
 from youtube_archive.metadata import run_pass_four, should_run_metadata_pass
 from youtube_archive.refresh import run_refresh_mode
 from youtube_archive.upgrade import run_upgrade_mode
+from youtube_archive.utils import data_dir, set_data_dir, set_staging_dir
+from youtube_archive.web_ui import DEFAULT_HOST, DEFAULT_PORT, run_serve_mode
 
 
 @dataclass(frozen=True)
@@ -33,6 +38,21 @@ def main() -> None:
 
     raw_config = load_config()
     creators = validate_config(raw_config)
+    set_data_dir(resolve_data_dir(raw_config))
+    set_staging_dir(resolve_staging_dir(raw_config))
+
+    if args.serve:
+        # --serve reads config only to learn where data lives, then builds the
+        # index and serves the data dir (no ffmpeg or creator selection needed).
+        run_serve_mode(
+            repo_root=pathlib.Path(__file__).resolve().parent,
+            data_root=data_dir(),
+            host=args.host,
+            port=args.port,
+            dry_run=args.dry_run,
+        )
+        return
+
     selected_creators = select_creators(creators, args.creator)
     context = RunContext(args=args, creators=selected_creators)
 
@@ -109,6 +129,26 @@ def build_parser() -> argparse.ArgumentParser:
         "--dry-run",
         action="store_true",
         help="Plan work without applying download or repair changes.",
+    )
+    parser.add_argument(
+        "--serve",
+        action="store_true",
+        help="Build index.json from data/ and serve the browse UI on 127.0.0.1.",
+    )
+    parser.add_argument(
+        "--host",
+        type=str,
+        default=DEFAULT_HOST,
+        help=(
+            f"Bind address for --serve (default: {DEFAULT_HOST}, loopback-only). "
+            "Set to 0.0.0.0 to expose on the LAN (e.g. inside a container)."
+        ),
+    )
+    parser.add_argument(
+        "--port",
+        type=int,
+        default=DEFAULT_PORT,
+        help=f"Port for --serve (default: {DEFAULT_PORT}).",
     )
     return parser
 

@@ -4,7 +4,7 @@ import logging
 import pathlib
 import time
 
-from youtube_archive.utils import DATA_DIR
+from youtube_archive.utils import data_dir
 
 
 logging.addLevelName(logging.WARNING, "WARN")
@@ -59,7 +59,7 @@ def _configure_creator_logger(
             logger.addHandler(logging.NullHandler())
         return logger
 
-    log_path = DATA_DIR / slug / "logs" / f"{kind}.log"
+    log_path = data_dir() / slug / "logs" / f"{kind}.log"
     log_path.parent.mkdir(parents=True, exist_ok=True)
     resolved_log_path = log_path.resolve()
 

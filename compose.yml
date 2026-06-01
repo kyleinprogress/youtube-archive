@@ -1,0 +1,30 @@
+services:
+  youtube-archive:
+    image: ghcr.io/kyleinprogress/youtube-archive:latest
+    container_name: youtube-archive
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - PUID=${PUID:-1000}
+      - PGID=${PGID:-1000}
+      # supercronic schedule, e.g. "0 3 * * *" for daily 03:00.
+      - ARCHIVE_CRON=${ARCHIVE_CRON:-0 3 * * *}
+      # --serve binding inside the container; the published port below picks
+      # the host-side address.
+      - SERVE_HOST=${SERVE_HOST:-0.0.0.0}
+      - SERVE_PORT=${SERVE_PORT:-8765}
+    ports:
+      # Web UI for browsing the archive. Change the left side to restrict to
+      # an interface (e.g. "127.0.0.1:8765:8765") if you only want LAN-internal.
+      - "${SERVE_PORT:-8765}:8765"
+    volumes:
+      # Your config.toml (data_dir = "/data", staging_dir = "/staging").
+      - ./config.toml:/app/config.toml:ro
+      # Persistent archive root — point this at your media dataset.
+      - ${DATA_DIR:-./data}:/data
+    tmpfs:
+      # Staging scratch — yt-dlp downloads/merges/embeds here, then moves the
+      # finished file to /data. Sized for one video at a time; bump if you
+      # archive very large videos.
+      - /staging:size=4g,mode=1777

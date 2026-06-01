@@ -4,10 +4,37 @@ import datetime
 import json
 import os
 import pathlib
+import tempfile
 from typing import Any
 
 
-DATA_DIR = pathlib.Path("data")
+_DATA_DIR = pathlib.Path("data")
+_STAGING_DIR = pathlib.Path(tempfile.gettempdir()) / "youtube-archive"
+
+
+def data_dir() -> pathlib.Path:
+    """The archive root. Defaults to ./data; overridden at startup from
+    config.toml's `data_dir` key via set_data_dir()."""
+    return _DATA_DIR
+
+
+def set_data_dir(path: pathlib.Path) -> None:
+    global _DATA_DIR
+    _DATA_DIR = path
+
+
+def staging_dir() -> pathlib.Path:
+    """Local scratch root where yt-dlp downloads, merges, and embeds before the
+    finished file is moved into data_dir. Keeping yt-dlp's long-held write handle
+    off network mounts avoids close()-on-flush failures (EBADF/EINVAL) seen on
+    SMB/NFS shares. Defaults to <system temp>/youtube-archive; overridden at
+    startup from config.toml's `staging_dir` key via set_staging_dir()."""
+    return _STAGING_DIR
+
+
+def set_staging_dir(path: pathlib.Path) -> None:
+    global _STAGING_DIR
+    _STAGING_DIR = path
 
 
 def utc_timestamp() -> str:

@@ -4,15 +4,48 @@ import pathlib
 import re
 import subprocess
 import sys
+import tempfile
 import tomllib
 from typing import Any, NoReturn
 
 from youtube_archive.logging_setup import get_creator_loggers
-from youtube_archive.utils import DATA_DIR
+from youtube_archive.utils import data_dir, staging_dir
 
 
 CONFIG_PATH = pathlib.Path("config.toml")
 SLUG_PATTERN = re.compile(r"^[a-zA-Z0-9][a-zA-Z0-9_-]*$")
+
+
+def resolve_data_dir(config: dict[str, Any]) -> pathlib.Path:
+    """Resolve the archive root from config.toml's top-level `data_dir` key.
+
+    Defaults to ./data. Expands a leading ~ so config can point at e.g.
+    a mounted NAS path. Relative paths stay relative to the cwd, matching
+    the historical ./data behavior.
+    """
+    raw = config.get("data_dir")
+    if raw is None:
+        return pathlib.Path("data")
+    if not isinstance(raw, str) or not raw:
+        print("error: config.toml: data_dir must be a non-empty string", file=sys.stderr)
+        raise SystemExit(2)
+    return pathlib.Path(raw).expanduser()
+
+
+def resolve_staging_dir(config: dict[str, Any]) -> pathlib.Path:
+    """Resolve the local staging root from config.toml's top-level `staging_dir`
+    key. yt-dlp downloads and merges here, then moves the finished file to
+    data_dir — keeping the fragile streamed write off network mounts (SMB/NFS),
+    where close() can fail. Defaults to <system temp>/youtube-archive; should be
+    a local path even when data_dir points at a NAS.
+    """
+    raw = config.get("staging_dir")
+    if raw is None:
+        return pathlib.Path(tempfile.gettempdir()) / "youtube-archive"
+    if not isinstance(raw, str) or not raw:
+        print("error: config.toml: staging_dir must be a non-empty string", file=sys.stderr)
+        raise SystemExit(2)
+    return pathlib.Path(raw).expanduser()
 
 
 class ConfigError(Exception):
@@ -227,12 +260,13 @@ def _ffmpeg_error() -> NoReturn:
 
 
 def setup_creator_environment(slug: str, *, dry_run: bool = False) -> None:
-    base = DATA_DIR / slug
+    base = data_dir() / slug
     for directory in (
         base / "videos",
         base / "manifests" / "playlists",
         base / "manifests" / "channel",
         base / "logs",
+        staging_dir() / slug,
     ):
         directory.mkdir(parents=True, exist_ok=True)
 

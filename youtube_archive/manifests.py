@@ -16,8 +16,8 @@ from youtube_archive.errors import (
 from youtube_archive.logging_setup import get_creator_loggers
 from youtube_archive.process import run_yt_dlp_capture
 from youtube_archive.utils import (
-    DATA_DIR,
     atomic_write_bytes,
+    data_dir,
     utc_date_string,
     utc_timestamp,
     write_json_atomic,
@@ -58,6 +58,8 @@ def _run_pass_one(creator: dict[str, Any], *, dry_run: bool = False) -> dict[str
     slug = creator["slug"]
     _, manifests_log, errors_log, _, _, _ = get_creator_loggers(slug, dry_run=dry_run)
     manifests_log.info("Pass 1 starting")
+    if not dry_run:
+        print(f"{slug}: Pass 1 — discovering manifests …", flush=True)
 
     canonical_url = ""
     candidate_video_ids: list[str] = []
@@ -113,15 +115,20 @@ def _run_pass_one(creator: dict[str, Any], *, dry_run: bool = False) -> dict[str
         summary["manifest_writes"] += 2
         manifests_log.info("playlists discovered: %s", len(discovered_playlist_ids))
     except ChannelLevelFailure as exc:
-        channel_level_failed = True
-        playlists_discovery_failed = True
-        log_channel_level_failure(
-            slug,
-            exc,
-            manifests_log,
-            errors_log,
-            dry_run=dry_run,
-        )
+        if is_missing_playlists_tab(exc):
+            manifests_log.info(
+                "channel has no playlists tab; treating as zero playlists discovered"
+            )
+        else:
+            channel_level_failed = True
+            playlists_discovery_failed = True
+            log_channel_level_failure(
+                slug,
+                exc,
+                manifests_log,
+                errors_log,
+                dry_run=dry_run,
+            )
 
     final_playlist_ids = compute_final_playlist_set(
         creator,
@@ -198,6 +205,12 @@ def _run_pass_one(creator: dict[str, Any], *, dry_run: bool = False) -> dict[str
         len(candidate_video_ids),
     )
     summary["candidate_count"] = len(candidate_video_ids)
+    if not dry_run:
+        print(
+            f"{slug}: Pass 1 — {len(final_playlist_ids)} playlists, "
+            f"{len(candidate_video_ids)} candidates",
+            flush=True,
+        )
     return {
         "slug": slug,
         "canonical_url": canonical_url,
@@ -290,7 +303,7 @@ def write_creator_json(
     dry_run: bool = False,
 ) -> None:
     _, manifests_log, _, _, _, _ = get_creator_loggers(slug, dry_run=dry_run)
-    creator_json_path = DATA_DIR / slug / "creator.json"
+    creator_json_path = data_dir() / slug / "creator.json"
     previous_handle = read_existing_creator_handle(creator_json_path)
 
     handle = required_payload_string(resolution_payload, "uploader_id")
@@ -407,7 +420,7 @@ def fetch_playlists_index(
             result.stderr_text,
         )
 
-    channel_dir = DATA_DIR / slug / "manifests" / "channel"
+    channel_dir = data_dir() / slug / "manifests" / "channel"
     atomic_write_bytes(
         channel_dir / "playlists_index_latest.json",
         result.stdout,
@@ -427,6 +440,14 @@ def fetch_playlists_index(
         if isinstance(playlist_id, str) and playlist_id:
             playlist_ids.append(playlist_id)
     return playlist_ids
+
+
+def is_missing_playlists_tab(exc: ChannelLevelFailure) -> bool:
+    """yt-dlp aborts playlists discovery with "does not have a playlists tab"
+    when a creator simply never made any playlists. That's benign — uploads are
+    discovered separately — so it must not be treated as a channel-level failure
+    that skips Pass 2."""
+    return "does not have a playlists tab" in (exc.stderr or str(exc))
 
 
 def compute_final_playlist_set(
@@ -520,7 +541,7 @@ def fetch_playlist_manifest(
     if not isinstance(entries, list):
         raise PlaylistFetchFailure("missing entries array", result.stderr_text)
 
-    playlists_dir = DATA_DIR / slug / "manifests" / "playlists"
+    playlists_dir = data_dir() / slug / "manifests" / "playlists"
     atomic_write_bytes(
         playlists_dir / f"{playlist_id}_latest.json",
         result.stdout,
@@ -583,7 +604,7 @@ def fetch_uploads_manifest(
     if not isinstance(entries, list):
         raise ChannelLevelFailure("uploads", "missing entries array", result.stderr_text)
 
-    channel_dir = DATA_DIR / slug / "manifests" / "channel"
+    channel_dir = data_dir() / slug / "manifests" / "channel"
     atomic_write_bytes(
         channel_dir / "uploads_latest.json",
         result.stdout,

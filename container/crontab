@@ -1,0 +1,4 @@
+# Placeholder schedule baked into the image; the real schedule is rendered at
+# container start from $ARCHIVE_CRON in entrypoint.sh (see crontab.rendered).
+# This file exists so a Dockerfile COPY for the path is satisfied.
+0 3 * * * /app/run.sh

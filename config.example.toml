@@ -1,3 +1,20 @@
+# Where archived media + metadata are stored. Defaults to ./data (relative to
+# the current directory). Point this at a mounted volume to archive elsewhere,
+# e.g. a NAS share. A leading ~ is expanded; relative paths stay relative to cwd.
+# In the supplied Docker image, this is /data (bind-mounted from the host).
+# data_dir = "/Volumes/NAS/youtube-archive"
+# data_dir = "/data"
+
+# Local scratch directory where yt-dlp downloads, merges, and embeds before the
+# finished file is moved into data_dir. Keep this on a LOCAL disk even when
+# data_dir points at a network mount (SMB/NFS): a network mount's close()-on-
+# flush can fail mid-download (EBADF/EINVAL), so the streamed write is kept local
+# and only the completed file crosses the network. Defaults to a subdirectory of
+# the system temp dir. A leading ~ is expanded. In the supplied Docker image
+# this is /staging (tmpfs).
+# staging_dir = "~/.cache/youtube-archive"
+# staging_dir = "/staging"
+
 [defaults]
 # Note: use `bv+ba/b` (not `bv*+ba/b`) so video-only DASH formats are preferred
 # for the merge step. With `bv*`, HLS combined formats can win the sort and

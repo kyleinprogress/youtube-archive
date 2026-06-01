@@ -12,7 +12,7 @@ from typing import Any
 from youtube_archive.config import setup_creator_environment
 from youtube_archive.errors import creator_scope
 from youtube_archive.logging_setup import get_creator_loggers
-from youtube_archive.utils import DATA_DIR, atomic_write_bytes
+from youtube_archive.utils import atomic_write_bytes, data_dir
 
 
 ARCHIVE_LINE_RE = re.compile(r"^youtube ([a-zA-Z0-9_-]{11})$")
@@ -142,7 +142,7 @@ def run_audit(creator: dict[str, Any], *, dry_run: bool = False) -> AuditResult:
     expected_ids = [line.video_id for line in archive_lines if line.video_id is not None]
     result.expected_ids = expected_ids
     expected_set = set(expected_ids)
-    videos_dir = DATA_DIR / slug / "videos"
+    videos_dir = data_dir() / slug / "videos"
     try:
         disk_dirs = scan_video_dirs(videos_dir, audit_log)
     except OSError as exc:
@@ -191,7 +191,7 @@ def run_audit(creator: dict[str, Any], *, dry_run: bool = False) -> AuditResult:
 
 
 def parse_archive(slug: str) -> list[ArchiveLine]:
-    archive_path = DATA_DIR / slug / "archive.txt"
+    archive_path = data_dir() / slug / "archive.txt"
     if not archive_path.exists():
         return []
 
@@ -330,7 +330,7 @@ def run_repair(
         audit_log.info("repair: 0 orphans to prune")
         return
 
-    archive_path = DATA_DIR / slug / "archive.txt"
+    archive_path = data_dir() / slug / "archive.txt"
     backup_path = next_backup_path(archive_path)
     print("--repair:", flush=True)
     if dry_run:

@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>YouTube Archive</title>
+<style>
+  :root {
+    --bg: #fafaf7;
+    --surface: #ffffff;
+    --surface-2: #f1efe8;
+    --border: rgba(0, 0, 0, 0.12);
+    --border-strong: rgba(0, 0, 0, 0.22);
+    --text: #1c1c1a;
+    --text-2: #5f5e5a;
+    --text-3: #8a8985;
+    --accent: #185fa5;
+    --accent-bg: #e6f1fb;
+    --danger: #a32d2d;
+    --danger-bg: #fcebeb;
+    --warning: #854f0b;
+    --warning-bg: #faeeda;
+    --radius: 8px;
+    --radius-lg: 12px;
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1a18;
+      --surface: #232321;
+      --surface-2: #2c2c2a;
+      --border: rgba(255, 255, 255, 0.12);
+      --border-strong: rgba(255, 255, 255, 0.22);
+      --text: #ececea;
+      --text-2: #b4b2a9;
+      --text-3: #888780;
+      --accent: #85b7eb;
+      --accent-bg: #0c447c;
+      --danger: #f09595;
+      --danger-bg: #501313;
+      --warning: #efb169;
+      --warning-bg: #412402;
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 14px; line-height: 1.5; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  button { font-family: inherit; font-size: 13px; color: var(--text); background: transparent; border: 0.5px solid var(--border-strong); border-radius: var(--radius); padding: 6px 12px; cursor: pointer; }
+  button:hover { background: var(--surface-2); }
+  button:active { transform: scale(0.98); }
+  input[type="text"] { font-family: inherit; font-size: 13px; color: var(--text); background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius); padding: 6px 10px; height: 32px; outline: none; }
+  input[type="text"]:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-bg); }
+
+  .app { max-width: 1800px; margin: 0 auto; padding: 16px; }
+  .chrome { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+  .topbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; border-bottom: 0.5px solid var(--border); flex-wrap: wrap; }
+  .topbar-left { display: flex; align-items: center; gap: 12px; min-width: 0; flex: 1; }
+  .topbar-right { display: flex; align-items: center; gap: 10px; }
+  .crumb { font-size: 13px; color: var(--text-2); display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+  .crumb a { color: var(--text-2); cursor: pointer; }
+  .crumb a:hover { color: var(--text); text-decoration: underline; }
+  .crumb-sep { color: var(--text-3); }
+  .meta-chip { font-size: 12px; color: var(--text-3); }
+
+  .view { padding: 16px; min-height: 520px; }
+
+  /* Home */
+  .section-title { font-size: 16px; font-weight: 500; margin: 0 0 12px 0; }
+  .creators-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
+  .creator-card { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 20px; cursor: pointer; transition: border-color 0.1s; display: flex; flex-direction: column; }
+  .creator-card:hover { border-color: var(--border-strong); }
+  .creator-head { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; min-width: 0; }
+  .avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--accent-bg); color: var(--accent); display: flex; align-items: center; justify-content: center; font-weight: 500; font-size: 13px; flex-shrink: 0; overflow: hidden; }
+  .avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .avatar.lg { width: 56px; height: 56px; font-size: 16px; }
+  .creator-name { font-weight: 500; font-size: 16px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .creator-handle { font-size: 13px; color: var(--text-3); font-family: var(--mono); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .creator-desc {
+    font-size: 13px;
+    color: var(--text-2);
+    line-height: 1.5;
+    margin-bottom: 14px;
+    /* Clamp to 3 lines so verbose channels don't blow up card height.
+       white-space: pre-line preserves the newlines the channel author
+       intended without collapsing every space. */
+    white-space: pre-line;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    word-break: break-word;
+  }
+  .creator-stats { display: flex; gap: 16px; font-size: 13px; color: var(--text-2); margin-top: auto; }
+  .creator-synced { font-size: 12px; color: var(--text-3); margin-top: 10px; }
+
+  /* Creator view */
+  .creator-header { display: flex; align-items: center; gap: 14px; padding-bottom: 16px; margin-bottom: 16px; border-bottom: 0.5px solid var(--border); flex-wrap: wrap; }
+  .creator-layout { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 24px; }
+  @media (max-width: 720px) { .creator-layout { grid-template-columns: 1fr; } }
+  .pl-heading { font-size: 12px; font-weight: 500; color: var(--text-2); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .pl-list { display: flex; flex-direction: column; gap: 2px; }
+  .pl-item { padding: 7px 10px; border-radius: var(--radius); cursor: pointer; font-size: 13px; color: var(--text); border: 0.5px solid transparent; }
+  .pl-item:hover { background: var(--surface-2); }
+  .pl-item.active { background: var(--accent-bg); color: var(--accent); font-weight: 500; }
+  .pl-row { display: flex; justify-content: space-between; gap: 8px; align-items: center; }
+  .pl-row > span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+  .pl-count { color: var(--text-3); font-size: 12px; flex-shrink: 0; }
+  .pl-item.active .pl-count { color: var(--accent); }
+
+  .videos-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 10px; flex-wrap: wrap; }
+  .video-list { display: flex; flex-direction: column; }
+  .vid-row { display: grid; grid-template-columns: 140px minmax(0, 1fr); gap: 14px; padding: 12px 0; border-bottom: 0.5px solid var(--border); cursor: pointer; }
+  .vid-row:hover { background: var(--surface-2); }
+  .thumb { background: var(--surface-2); border-radius: var(--radius); aspect-ratio: 16/9; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; color: var(--text-3); }
+  .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .thumb-dur { position: absolute; bottom: 4px; right: 4px; background: rgba(0, 0, 0, 0.75); color: #fff; font-size: 11px; padding: 1px 5px; border-radius: 3px; font-variant-numeric: tabular-nums; }
+  .vid-meta { min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+  .vid-title { font-size: 14px; font-weight: 500; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; white-space: normal; }
+  .vid-stats { font-size: 12px; color: var(--text-2); display: flex; gap: 12px; flex-wrap: wrap; }
+  .vid-badges { display: flex; gap: 6px; margin-top: 2px; flex-wrap: wrap; }
+  .badge { font-size: 11px; padding: 2px 8px; border-radius: var(--radius); white-space: nowrap; }
+  .badge-id { background: var(--surface-2); color: var(--text-3); font-family: var(--mono); }
+  .badge-danger { background: var(--danger-bg); color: var(--danger); }
+  .badge-warning { background: var(--warning-bg); color: var(--warning); }
+  .empty { font-size: 13px; color: var(--text-3); padding: 32px 0; text-align: center; }
+
+  /* Video view */
+  .video-layout { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr); gap: 20px; }
+  @media (max-width: 820px) { .video-layout { grid-template-columns: 1fr; } }
+  .player-wrap { background: #000; border-radius: var(--radius); aspect-ratio: 16/9; overflow: hidden; position: relative; }
+  .player-wrap video { width: 100%; height: 100%; display: block; }
+  .player-fallback { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; color: #ccc; padding: 16px; text-align: center; }
+  .player-fallback code { background: rgba(255, 255, 255, 0.1); padding: 2px 6px; border-radius: 3px; font-size: 12px; color: #eee; }
+  .video-title { font-size: 18px; font-weight: 500; margin: 14px 0 6px; }
+  .video-subtitle { font-size: 13px; color: var(--text-2); margin-bottom: 14px; }
+  .video-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+  .video-actions a button { width: 100%; }
+
+  .sidebar { background: var(--surface-2); border-radius: var(--radius); padding: 14px; font-size: 13px; min-width: 0; }
+  .sidebar-title { font-weight: 500; margin: 0 0 10px 0; font-size: 13px; }
+  .sidebar-title:not(:first-child) { margin-top: 18px; }
+  .kv-grid { display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; }
+  .kv-grid dt { color: var(--text-2); font-size: 12px; }
+  .kv-grid dd { margin: 0; color: var(--text); font-size: 12px; text-align: right; word-break: break-word; }
+  .kv-grid dd.mono { font-family: var(--mono); font-size: 11px; }
+  .kv-grid dd.danger { color: var(--danger); }
+  .kv-grid dd.warning { color: var(--warning); }
+  .pl-pill-list { display: flex; flex-direction: column; gap: 4px; }
+  .pl-pill { display: flex; justify-content: space-between; padding: 6px 10px; background: var(--surface); border-radius: var(--radius); font-size: 12px; gap: 8px; }
+  .pl-pill > span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+  .pl-pill-idx { color: var(--text-3); flex-shrink: 0; font-variant-numeric: tabular-nums; }
+
+  .error-banner { padding: 16px; background: var(--danger-bg); color: var(--danger); border-radius: var(--radius); margin: 16px 0; }
+  .error-banner code { font-family: var(--mono); font-size: 12px; }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <div class="chrome">
+    <div class="topbar">
+      <div class="topbar-left">
+        <button id="back-btn" style="display: none;" aria-label="Back">← Back</button>
+        <div class="crumb" id="breadcrumb">Archive</div>
+      </div>
+      <div class="topbar-right">
+        <input id="search" type="text" placeholder="Search videos…" style="width: 220px;">
+        <span class="meta-chip" id="counter"></span>
+      </div>
+    </div>
+    <div class="view" id="view"></div>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  // ---- State ---------------------------------------------------------------
+  // The whole app is driven off `state`. `render()` rebuilds the view from it.
+  // Routes:
+  //   home               → grid of creators
+  //   creator/<slug>     → playlist sidebar + video list, with optional ?pl=...
+  //   video/<slug>/<id>  → player + metadata sidebar
+  const state = {
+    archive: null,          // contents of index.json
+    route: "home",          // "home" | "creator" | "video"
+    creatorSlug: null,
+    videoId: null,
+    playlistFilter: null,   // playlist id, or null for "all videos"
+    search: "",
+  };
+
+  const viewEl = document.getElementById("view");
+  const breadcrumbEl = document.getElementById("breadcrumb");
+  const backBtn = document.getElementById("back-btn");
+  const searchInput = document.getElementById("search");
+  const counterEl = document.getElementById("counter");
+
+  // ---- Loading -------------------------------------------------------------
+  // We attempt fetch() first (works when served via http://), then fall back to
+  // a script-tag hack for file:// where fetch() is blocked. The script tag
+  // expects an embedded `window.__ARCHIVE_INDEX__` assignment in `index.json.js`
+  // — we generate that on demand below as a friendly error if needed.
+  async function loadIndex() {
+    try {
+      const res = await fetch("index.json", { cache: "no-store" });
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      return await res.json();
+    } catch (err) {
+      // file:// often fails with "Cross origin requests are not supported".
+      // Surface a clear, actionable error instead of a generic failure.
+      throw err;
+    }
+  }
+
+  function showLoadError(err) {
+    viewEl.innerHTML = `
+      <div class="error-banner">
+        <strong>Couldn't load <code>index.json</code>.</strong><br>
+        ${escapeHtml(String(err && err.message || err))}<br><br>
+        If you opened this file directly via <code>file://</code>, your browser may block
+        loading the JSON. Either:
+        <ul>
+          <li>Serve the directory with any local web server, e.g.<br>
+              <code>python3 -m http.server</code> in this folder, then open
+              <code>http://localhost:8000</code>.</li>
+          <li>Or use Firefox, which permits same-folder <code>file://</code> reads.</li>
+        </ul>
+        Also make sure you've run <code>python3 build_index.py</code> to generate
+        <code>index.json</code> first.
+      </div>
+    `;
+  }
+
+  // ---- Hash routing --------------------------------------------------------
+  // We use URL hash routing so the browser back button and bookmarks work,
+  // without needing a server to handle paths.
+  function parseHash() {
+    const h = (location.hash || "").replace(/^#\/?/, "");
+    if (!h) return { route: "home" };
+    const parts = h.split("/").map(decodeURIComponent);
+    if (parts[0] === "creator" && parts[1]) {
+      const queryIdx = parts[1].indexOf("?");
+      let slug = parts[1];
+      let pl = null;
+      if (queryIdx >= 0) {
+        const qs = new URLSearchParams(parts[1].slice(queryIdx + 1));
+        slug = parts[1].slice(0, queryIdx);
+        pl = qs.get("pl");
+      }
+      return { route: "creator", creatorSlug: slug, playlistFilter: pl };
+    }
+    if (parts[0] === "video" && parts[1] && parts[2]) {
+      return { route: "video", creatorSlug: parts[1], videoId: parts[2] };
+    }
+    return { route: "home" };
+  }
+
+  function buildHash(target) {
+    if (target.route === "home") return "#/";
+    if (target.route === "creator") {
+      let h = "#/creator/" + encodeURIComponent(target.creatorSlug);
+      if (target.playlistFilter) h += "?pl=" + encodeURIComponent(target.playlistFilter);
+      return h;
+    }
+    if (target.route === "video") {
+      return "#/video/" + encodeURIComponent(target.creatorSlug) + "/" + encodeURIComponent(target.videoId);
+    }
+    return "#/";
+  }
+
+  function navigate(target) {
+    location.hash = buildHash(target);
+  }
+
+  window.addEventListener("hashchange", () => {
+    applyHash();
+    render();
+  });
+
+  function applyHash() {
+    const parsed = parseHash();
+    state.route = parsed.route;
+    state.creatorSlug = parsed.creatorSlug || null;
+    state.videoId = parsed.videoId || null;
+    state.playlistFilter = parsed.playlistFilter || null;
+  }
+
+  // ---- Utilities -----------------------------------------------------------
+  function escapeHtml(s) {
+    if (s === null || s === undefined) return "";
+    return String(s).replace(/[&<>"']/g, c => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+    }[c]));
+  }
+
+  function getCreator(slug) {
+    return state.archive.creators.find(c => c.slug === slug) || null;
+  }
+  function getVideo(creator, id) {
+    return creator ? (creator.videos.find(v => v.id === id) || null) : null;
+  }
+
+  function initials(name) {
+    return name.split(/\s+/).filter(Boolean).slice(0, 2).map(w => w[0]).join("").toUpperCase() || "?";
+  }
+
+  // ISO timestamps are noisy on a card. Show the calendar date, which is
+  // what people scan for. If the field is missing or malformed, render
+  // nothing rather than "Invalid Date".
+  function formatSyncedDate(iso) {
+    if (!iso || typeof iso !== "string") return null;
+    const m = iso.match(/^(\d{4}-\d{2}-\d{2})/);
+    return m ? m[1] : null;
+  }
+
+  // Avatar: use the channel's image if we have one, falling back to initials.
+  // `onerror` is wired up so a broken/expired image URL gracefully degrades to
+  // the same initials block instead of leaving a broken-image icon.
+  function renderAvatar(creator, sizeClass) {
+    const cls = `avatar${sizeClass ? " " + sizeClass : ""}`;
+    if (creator.avatar_url) {
+      // Stash initials in a data attribute so the onerror handler can restore
+      // them without needing another lookup.
+      const fallback = escapeHtml(initials(creator.name));
+      return `<div class="${cls}"><img src="${escapeHtml(creator.avatar_url)}" alt="" referrerpolicy="no-referrer" loading="lazy" onerror="this.parentNode.textContent='${fallback}'"></div>`;
+    }
+    return `<div class="${cls}">${escapeHtml(initials(creator.name))}</div>`;
+  }
+
+  // ---- Rendering -----------------------------------------------------------
+  function render() {
+    if (!state.archive) return;
+
+    // Topbar adornments. The back button is hidden on the home screen; the
+    // search box is only relevant inside a creator (filtering happens locally).
+    backBtn.style.display = state.route === "home" ? "none" : "inline-block";
+    searchInput.style.display = state.route === "creator" ? "inline-block" : "none";
+    searchInput.value = state.route === "creator" ? state.search : "";
+
+    if (state.route === "home") {
+      renderHome();
+    } else if (state.route === "creator") {
+      renderCreator();
+    } else if (state.route === "video") {
+      renderVideo();
+    } else {
+      renderHome();
+    }
+  }
+
+  function renderHome() {
+    const creators = state.archive.creators;
+    breadcrumbEl.innerHTML = "Archive";
+    const totalVideos = creators.reduce((sum, c) => sum + c.video_count, 0);
+    counterEl.textContent = `${creators.length} creator${creators.length === 1 ? "" : "s"} · ${totalVideos} videos`;
+
+    if (creators.length === 0) {
+      viewEl.innerHTML = `<div class="empty">No creators found. Run <code>python3 build_index.py</code> after archiving some channels.</div>`;
+      return;
+    }
+
+    viewEl.innerHTML = `
+      <h2 class="section-title">Creators</h2>
+      <div class="creators-grid">
+        ${creators.map(c => {
+          const synced = formatSyncedDate(c.snapshot_taken_at);
+          // Prefer the channel's @handle as secondary text — it's recognizable
+          // and matches what people search for on YouTube. Fall back to slug
+          // for any creator missing handle metadata.
+          const secondary = c.handle || c.slug;
+          // Trim leading/trailing whitespace on the description, but preserve
+          // internal newlines so paragraph breaks render. The CSS clamp limits
+          // the visible height regardless of length.
+          const desc = (c.description || "").trim();
+          return `
+          <div class="creator-card" data-slug="${escapeHtml(c.slug)}">
+            <div class="creator-head">
+              ${renderAvatar(c, "lg")}
+              <div style="min-width: 0;">
+                <div class="creator-name">${escapeHtml(c.name)}</div>
+                <div class="creator-handle">${escapeHtml(secondary)}</div>
+              </div>
+            </div>
+            ${desc ? `<div class="creator-desc">${escapeHtml(desc)}</div>` : ""}
+            <div class="creator-stats">
+              <span>${c.video_count} video${c.video_count === 1 ? "" : "s"}</span>
+              <span>${c.playlist_count} playlist${c.playlist_count === 1 ? "" : "s"}</span>
+            </div>
+            ${synced ? `<div class="creator-synced">Last synced ${escapeHtml(synced)}</div>` : ""}
+          </div>
+        `;}).join("")}
+      </div>
+    `;
+
+    viewEl.querySelectorAll(".creator-card").forEach(el => {
+      el.addEventListener("click", () => {
+        navigate({ route: "creator", creatorSlug: el.dataset.slug });
+      });
+    });
+  }
+
+  function renderCreator() {
+    const creator = getCreator(state.creatorSlug);
+    if (!creator) {
+      breadcrumbEl.innerHTML = `<a data-nav="home">Archive</a> <span class="crumb-sep">/</span> <span style="color: var(--danger);">unknown creator</span>`;
+      viewEl.innerHTML = `<div class="empty">Creator <code>${escapeHtml(state.creatorSlug)}</code> not found in index.json.</div>`;
+      wireBreadcrumb();
+      return;
+    }
+    breadcrumbEl.innerHTML = `<a data-nav="home">Archive</a> <span class="crumb-sep">/</span> ${escapeHtml(creator.name)}`;
+    wireBreadcrumb();
+
+    // Filter videos by playlist (if set) and by search query (case-insensitive
+    // substring on title or video id).
+    let videos = creator.videos;
+    if (state.playlistFilter) {
+      videos = videos.filter(v => (v.playlists || []).some(p => p.id === state.playlistFilter));
+    }
+    const q = state.search.trim().toLowerCase();
+    if (q) {
+      videos = videos.filter(v =>
+        v.title.toLowerCase().includes(q) ||
+        v.id.toLowerCase().includes(q)
+      );
+    }
+
+    counterEl.textContent = `${videos.length} of ${creator.video_count} videos`;
+
+    const activePlaylist = state.playlistFilter
+      ? creator.playlists.find(p => p.id === state.playlistFilter)
+      : null;
+    const heading = activePlaylist ? activePlaylist.title : "All videos";
+    const syncedDate = formatSyncedDate(creator.snapshot_taken_at);
+
+    viewEl.innerHTML = `
+      <div class="creator-header">
+        ${renderAvatar(creator, "lg")}
+        <div style="min-width: 0; flex: 1;">
+          <h1 style="font-size: 18px; font-weight: 500; margin: 0;">${escapeHtml(creator.name)}</h1>
+          <div style="font-size: 12px; color: var(--text-3); margin-top: 2px;">
+            ${creator.handle ? `<span>${escapeHtml(creator.handle)}</span>` : ""}
+            ${creator.handle && syncedDate ? `<span style="margin: 0 6px;">·</span>` : ""}
+            ${syncedDate ? `<span>last synced ${escapeHtml(syncedDate)}</span>` : ""}
+          </div>
+        </div>
+        ${creator.channel_url ? `<a href="${escapeHtml(creator.channel_url)}" target="_blank" rel="noopener"><button>Open channel ↗</button></a>` : ""}
+      </div>
+      <div class="creator-layout">
+        <div>
+          <div class="pl-heading">Playlists</div>
+          <div class="pl-list">
+            <div class="pl-item ${!state.playlistFilter ? "active" : ""}" data-pl="">
+              <div class="pl-row"><span>All videos</span><span class="pl-count">${creator.video_count}</span></div>
+            </div>
+            ${creator.playlists.map(p => `
+              <div class="pl-item ${state.playlistFilter === p.id ? "active" : ""}" data-pl="${escapeHtml(p.id)}">
+                <div class="pl-row"><span title="${escapeHtml(p.title)}">${escapeHtml(p.title)}</span><span class="pl-count">${p.count}</span></div>
+              </div>
+            `).join("")}
+          </div>
+        </div>
+        <div style="min-width: 0;">
+          <div class="videos-head">
+            <h2 class="section-title">${escapeHtml(heading)}</h2>
+            <span class="meta-chip">sorted: newest first</span>
+          </div>
+          ${videos.length === 0
+            ? `<div class="empty">${q || activePlaylist ? "No videos match the current filter." : "No videos archived yet."}</div>`
+            : `<div class="video-list">${videos.map(v => renderVideoRow(v)).join("")}</div>`}
+        </div>
+      </div>
+    `;
+
+    viewEl.querySelectorAll(".pl-item").forEach(el => {
+      el.addEventListener("click", () => {
+        const pl = el.dataset.pl || null;
+        navigate({ route: "creator", creatorSlug: creator.slug, playlistFilter: pl });
+      });
+    });
+    viewEl.querySelectorAll(".vid-row").forEach(el => {
+      el.addEventListener("click", () => {
+        navigate({ route: "video", creatorSlug: creator.slug, videoId: el.dataset.id });
+      });
+    });
+  }
+
+  function renderVideoRow(v) {
+    const fmt = v.format || {};
+    const fmtParts = [];
+    if (fmt.height) fmtParts.push(fmt.height + "p");
+    if (fmt.vcodec_short) fmtParts.push(fmt.vcodec_short);
+    const badges = [];
+    if (v.availability && v.availability !== "available") {
+      badges.push(`<span class="badge badge-danger">${escapeHtml(v.availability)} on YT</span>`);
+    }
+    if (v.upgrade_available) {
+      badges.push(`<span class="badge badge-warning">upgrade available</span>`);
+    }
+    badges.push(`<span class="badge badge-id">${escapeHtml(v.id)}</span>`);
+
+    const playlistCount = (v.playlists || []).length;
+
+    return `
+      <div class="vid-row" data-id="${escapeHtml(v.id)}">
+        <div class="thumb">
+          ${v.thumbnail_path
+            ? `<img src="${escapeHtml(v.thumbnail_path)}" alt="" loading="lazy">`
+            : `<span>no thumb</span>`}
+          ${v.duration ? `<span class="thumb-dur">${escapeHtml(v.duration)}</span>` : ""}
+        </div>
+        <div class="vid-meta">
+          <div class="vid-title">${escapeHtml(v.title)}</div>
+          <div class="vid-stats">
+            ${v.upload_date ? `<span>${escapeHtml(v.upload_date)}</span>` : ""}
+            ${fmtParts.length ? `<span>${escapeHtml(fmtParts.join(" · "))}</span>` : ""}
+            ${fmt.filesize_human ? `<span>${escapeHtml(fmt.filesize_human)}</span>` : ""}
+            ${playlistCount ? `<span>in ${playlistCount} playlist${playlistCount === 1 ? "" : "s"}</span>` : ""}
+          </div>
+          <div class="vid-badges">${badges.join("")}</div>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderVideo() {
+    const creator = getCreator(state.creatorSlug);
+    const video = getVideo(creator, state.videoId);
+    if (!creator || !video) {
+      breadcrumbEl.innerHTML = `<a data-nav="home">Archive</a> <span class="crumb-sep">/</span> <span style="color: var(--danger);">not found</span>`;
+      viewEl.innerHTML = `<div class="empty">Video <code>${escapeHtml(state.videoId)}</code> not found under <code>${escapeHtml(state.creatorSlug)}</code>.</div>`;
+      wireBreadcrumb();
+      counterEl.textContent = "";
+      return;
+    }
+
+    breadcrumbEl.innerHTML = `
+      <a data-nav="home">Archive</a>
+      <span class="crumb-sep">/</span>
+      <a data-nav="creator" data-slug="${escapeHtml(creator.slug)}">${escapeHtml(creator.name)}</a>
+      <span class="crumb-sep">/</span>
+      <span>Video</span>
+    `;
+    wireBreadcrumb();
+    counterEl.textContent = "";
+
+    const fmt = video.format || {};
+    const fmtParts = [];
+    if (fmt.height) fmtParts.push(fmt.height + "p");
+    if (fmt.vcodec_short) fmtParts.push(fmt.vcodec_short);
+    if (fmt.acodec) fmtParts.push(fmt.acodec);
+
+    // The <video> element will try the file. If the codec is incompatible
+    // (mainly: AV1 in Safari), the `error` event swaps in a fallback panel
+    // with a copy-pasteable path and the "open on YouTube" button.
+    viewEl.innerHTML = `
+      <div class="video-layout">
+        <div style="min-width: 0;">
+          <div class="player-wrap" id="player-wrap">
+            <video controls preload="metadata" src="${escapeHtml(video.media_path)}"
+                   ${video.thumbnail_path ? `poster="${escapeHtml(video.thumbnail_path)}"` : ""}>
+            </video>
+          </div>
+          <h1 class="video-title">${escapeHtml(video.title)}</h1>
+          <div class="video-subtitle">
+            ${escapeHtml(creator.name)}
+            ${video.upload_date ? ` · uploaded ${escapeHtml(video.upload_date)}` : ""}
+            ${video.duration ? ` · ${escapeHtml(video.duration)}` : ""}
+          </div>
+          <div class="video-actions">
+            <a href="${escapeHtml(video.youtube_url)}" target="_blank" rel="noopener">
+              <button>Watch on YouTube ↗</button>
+            </a>
+          </div>
+        </div>
+
+        <aside>
+          <div class="sidebar">
+            <div class="sidebar-title">Archive metadata</div>
+            <dl class="kv-grid">
+              <dt>Video ID</dt><dd class="mono">${escapeHtml(video.id)}</dd>
+              ${video.archived_at ? `<dt>Archived</dt><dd>${escapeHtml(video.archived_at)}</dd>` : ""}
+              <dt>Availability</dt><dd class="${video.availability !== "available" ? "danger" : ""}">${escapeHtml(video.availability || "unknown")}</dd>
+              ${video.removed_detected_at ? `<dt>Removed at</dt><dd class="danger">${escapeHtml(video.removed_detected_at)}</dd>` : ""}
+              ${fmtParts.length ? `<dt>Format</dt><dd>${escapeHtml(fmtParts.join(" · "))}</dd>` : ""}
+              ${fmt.filesize_human ? `<dt>Filesize</dt><dd>${escapeHtml(fmt.filesize_human)}</dd>` : ""}
+              ${video.upgrade_available ? `<dt>Upgrade</dt><dd class="warning">available</dd>` : ""}
+            </dl>
+
+            <div class="sidebar-title">In playlists (${(video.playlists || []).length})</div>
+            ${(video.playlists || []).length === 0
+              ? `<div style="font-size: 12px; color: var(--text-3);">Not in any playlist.</div>`
+              : `<div class="pl-pill-list">${
+                  video.playlists.map(p => `
+                    <div class="pl-pill" data-pl="${escapeHtml(p.id)}" style="cursor: pointer;" title="View this playlist">
+                      <span>${escapeHtml(p.title || p.id)}</span>
+                      ${typeof p.index === "number" ? `<span class="pl-pill-idx">#${p.index}</span>` : ""}
+                    </div>
+                  `).join("")
+                }</div>`}
+
+            <div class="sidebar-title">File on disk</div>
+            <div style="font-family: var(--mono); font-size: 11px; color: var(--text-2); word-break: break-all; line-height: 1.6;">
+              ${escapeHtml(video.media_path)}
+            </div>
+          </div>
+        </aside>
+      </div>
+    `;
+
+    // Wire playlist pills in the sidebar to navigate back to the creator view
+    // with that playlist preselected.
+    viewEl.querySelectorAll(".pl-pill").forEach(el => {
+      el.addEventListener("click", () => {
+        navigate({ route: "creator", creatorSlug: creator.slug, playlistFilter: el.dataset.pl });
+      });
+    });
+
+    // Codec/playback fallback: if the browser refuses the file, swap in a
+    // panel with the on-disk path so the user can open it externally.
+    const videoEl = viewEl.querySelector("video");
+    if (videoEl) {
+      videoEl.addEventListener("error", () => {
+        const wrap = document.getElementById("player-wrap");
+        if (!wrap) return;
+        wrap.innerHTML = `
+          <div class="player-fallback">
+            <div style="font-size: 14px;">Browser can't play this file inline.</div>
+            <div style="font-size: 12px;">Most likely an AV1 / Opus codec issue in Safari. Try Chrome or Firefox, or open the file directly:</div>
+            <code>${escapeHtml(video.media_path)}</code>
+          </div>
+        `;
+      });
+    }
+  }
+
+  function wireBreadcrumb() {
+    breadcrumbEl.querySelectorAll("[data-nav]").forEach(el => {
+      el.addEventListener("click", () => {
+        const nav = el.dataset.nav;
+        if (nav === "home") navigate({ route: "home" });
+        else if (nav === "creator") navigate({ route: "creator", creatorSlug: el.dataset.slug });
+      });
+    });
+  }
+
+  // ---- Wire global controls ------------------------------------------------
+  backBtn.addEventListener("click", () => {
+    // The back button does what the user expects regardless of how they got
+    // here: video → creator → home.
+    if (state.route === "video") {
+      navigate({ route: "creator", creatorSlug: state.creatorSlug, playlistFilter: state.playlistFilter });
+    } else if (state.route === "creator") {
+      navigate({ route: "home" });
+    }
+  });
+
+  // Debounced search so we don't re-render on every keystroke in big lists.
+  let searchTimer = null;
+  searchInput.addEventListener("input", () => {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(() => {
+      state.search = searchInput.value || "";
+      if (state.route === "creator") render();
+    }, 100);
+  });
+
+  // ---- Boot ----------------------------------------------------------------
+  applyHash();
+  loadIndex().then(data => {
+    state.archive = data;
+    render();
+  }).catch(err => {
+    showLoadError(err);
+  });
+})();
+</script>
+
+</body>
+</html>

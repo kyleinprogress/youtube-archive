@@ -31,6 +31,16 @@ The script itself uses only the Python standard library — no `pip install` req
 3. Edit `config.toml`. The minimal shape is:
 
    ```toml
+   # Optional. Where archived media + metadata live. Defaults to ./data.
+   # Point it at a mounted volume (e.g. a NAS) to archive elsewhere; a leading
+   # ~ is expanded, relative paths stay relative to the current directory.
+   # data_dir = "/Volumes/NAS/youtube-archive"
+
+   # Optional. Local scratch dir for downloads before the finished file is moved
+   # into data_dir. Defaults to a system-temp subdir. Keep it local when data_dir
+   # is a network mount (see "Local staging" under Design notes).
+   # staging_dir = "~/.cache/youtube-archive"
+
    [defaults]
    format = "bv*+ba/b"
    format_sort = ["res:1080", "codec:av01", "acodec:opus"]
@@ -43,9 +53,51 @@ The script itself uses only the Python standard library — no `pip install` req
    channel_url = "https://www.youtube.com/@theirhandle"
    ```
 
-   See `config.example.toml` for the full schema, including per-creator overrides, `extra_playlists`, and `exclude_playlists`.
+   See `config.example.toml` for the full schema, including the optional top-level `data_dir` and `staging_dir`, per-creator overrides, `extra_playlists`, and `exclude_playlists`.
 
 `config.toml` is gitignored. Only `config.example.toml` is checked in.
+
+## Deploy on TrueNAS (Docker)
+
+A `Dockerfile` + `compose.yml` + GitHub Actions workflow are checked in to publish an image to GHCR (`ghcr.io/kyleinprogress/youtube-archive`) and run it as a TrueNAS custom App via the compose-include pattern.
+
+The container runs **supercronic** for the daily sync and a long-running **`--serve`** for the web UI. Downloads stage to a tmpfs `/staging` (in-RAM scratch), then only the finished file is moved to the bind-mounted `/data` dataset — see [Local staging](#design-notes).
+
+1. **Tag a release** so the GitHub Actions workflow publishes an image. Tags matching `v*` push `latest`, `{{version}}`, `{{major}}.{{minor}}`, and `sha-…` to GHCR. A weekly scheduled rebuild picks up new `yt-dlp` releases.
+
+   ```sh
+   git tag v0.1.0 && git push --tags
+   ```
+
+2. **On the NAS**, create an app directory matching your include pattern (e.g. `/mnt/Hellcat/NVMe/Docker/youtube-archive/`) and drop in the three files you need:
+
+   ```sh
+   cd /mnt/Hellcat/NVMe/Docker/youtube-archive
+   curl -fsSL https://raw.githubusercontent.com/kyleinprogress/Youtube-Archive/main/compose.yml -o compose.yml
+   curl -fsSL https://raw.githubusercontent.com/kyleinprogress/Youtube-Archive/main/.env.example -o .env
+   curl -fsSL https://raw.githubusercontent.com/kyleinprogress/Youtube-Archive/main/config.example.toml -o config.toml
+   ```
+
+3. **Edit `.env`** — set `PUID`/`PGID` to the uid/gid that owns your media dataset (`id <your-user>` on TrueNAS), `DATA_DIR` to the host path of that dataset, `ARCHIVE_CRON` if you want a non-default schedule.
+
+4. **Edit `config.toml`** — set `data_dir = "/data"` and `staging_dir = "/staging"` (these match the container's bind mounts), then add your `[[creator]]` entries.
+
+5. **Include the compose file** from your parent Apps compose:
+
+   ```yaml
+   include:
+     - /mnt/Hellcat/NVMe/Docker/youtube-archive/compose.yml
+   ```
+
+6. **Bring it up.** TrueNAS Apps will pull the image and start the container. `docker logs youtube-archive` shows the supercronic heartbeat and each run's progress. Per-creator file logs continue to land under `<DATA_DIR>/<slug>/logs/`. The web UI is at `http://<truenas-ip>:8765/`.
+
+To run an ad-hoc command (dry-run, audit, one creator):
+
+```sh
+docker exec youtube-archive python archive.py --dry-run
+docker exec youtube-archive python archive.py --audit
+docker exec youtube-archive python archive.py --creator the-stock-pot
+```
 
 ## Usage
 
@@ -140,13 +192,29 @@ Read-only health check that cross-references `archive.txt` against on-disk state
 
 `--audit --repair` is the only writable action: for each Class A entry, it copies `archive.txt` to `data/<slug>/archive.txt.pre-repair-<YYYYMMDDTHHMMSSZ>` (preserving mtime), then atomically rewrites `archive.txt` excluding the orphan IDs. Class B/C/D/E are never auto-fixed. `--repair` without `--audit` exits 2 with `error: --repair requires --audit`.
 
+### `--serve` — build the browse index and serve the local web UI
+
+```sh
+uv run archive.py --serve                  # http://127.0.0.1:8765
+uv run archive.py --serve --port 9000      # custom port
+uv run archive.py --serve --dry-run        # print build summary; skip the write + server
+```
+
+Walks the configured data dir (see `data_dir` below) to regenerate `index.json` (the per-video / per-creator manifest that `index.html` reads), then serves the **data dir** over HTTP on `127.0.0.1` so the browser can fetch `index.json` and the media files. Runs until `Ctrl-C`.
+
+- **Self-contained under the data dir.** `index.json` is written into the data dir and `index.html` is copied in beside it, so the served site works whether data lives in `./data` or on a mounted NAS path outside the repo. Media paths in `index.json` are relative to the data dir.
+- **Bound to `127.0.0.1` only.** No `--host` knob; the server is unreachable from the LAN by design. The data dir contains channel descriptions and other state that shouldn't be served publicly.
+- **Reads `config.toml`.** `--serve` loads config only to learn where the data dir is; it doesn't need `ffmpeg` or a `--creator`.
+- **Always rebuilds.** `--serve` regenerates `index.json` first so the UI never shows stale data. To only rebuild (e.g. from a cron job), use `uv run build_index.py --data-dir <path>` — a thin shim around the same code that builds and exits.
+- **Stdlib only.** Uses `http.server.ThreadingHTTPServer` with `SimpleHTTPRequestHandler`. Enough for one-person local browsing.
+
 ### `--help`
 
 ```sh
 uv run archive.py --help
 ```
 
-Lists all supported flags. The full set is `--creator`, `--manifests-only`, `--refresh-metadata`, `--upgrade`, `--audit`, `--repair`, `--dry-run` — all wired up.
+Lists all supported flags. The full set is `--creator`, `--manifests-only`, `--refresh-metadata`, `--upgrade`, `--audit`, `--repair`, `--dry-run`, `--serve`, `--port` — all wired up.
 
 ## Output layout
 
@@ -157,6 +225,7 @@ data/<slug>/
 ├── creator.json                            # curated channel-level snapshot
 ├── archive.txt                             # yt-dlp's "already downloaded" log (one line per video)
 ├── archive.txt.pre-repair-YYYYMMDDTHHMMSSZ # backup written by --audit --repair (one per repair run; not auto-pruned)
+├── unavailable.txt                         # permanently-gone videos, skipped on future runs (video_id<TAB>reason<TAB>flagged_at; delete a line to re-enable)
 ├── manifests/
 │   ├── channel/
 │   │   ├── playlists_index_latest.json     # raw yt-dlp output: channel /playlists
@@ -231,6 +300,7 @@ Every archived video has a `metadata.json` with this shape:
 ## Failure model
 
 - **Single video fails to download** → `ERROR download failed: <id> — <tail>` in `errors.log`; the next video proceeds. The failed ID is *not* added to `archive.txt`, so it's naturally retried on the next run.
+- **Video permanently unavailable** (removed by uploader, channel terminated, policy takedown, or "no longer available") → recorded to `unavailable.txt` and reported as `unavailable` rather than `failed`; skipped on all future runs so it stops re-failing each time. Delete its line in `unavailable.txt` to retry. Private videos and bare "Video unavailable" are treated as ordinary failures (retried), since they can be transient or reversible.
 - **Single playlist manifest fails** → `WARN playlist fetch failed: <id>` in `manifests.log`; the other playlists still get fetched; the prior `_latest.json` file (if any) is preserved.
 - **Channel-level failure** (canonical URL resolution, channel `/playlists`, channel `/videos`) → that creator is marked failed for this run; Pass 2 is skipped; an error line is printed; the next creator processes normally.
 - **Unexpected exception inside one creator** → caught by the per-creator error boundary; full traceback to `errors.log`; one-line summary to stderr; the run continues with the next creator.
@@ -259,12 +329,13 @@ All PRDs from the original roadmap are implemented.
 
 ## Design notes
 
-- **Stdlib-only package.** `archive.py` is the CLI entrypoint; per-PRD logic lives in the `youtube_archive/` package (`config.py`, `logging_setup.py`, `process.py`, `errors.py`, `utils.py`, `manifests.py`, `downloads.py`, `metadata.py`, `refresh.py`, `upgrade.py`, `dry_run.py`, `audit.py`). Stdlib only — `tomllib`, `argparse`, `logging`, `subprocess`, `pathlib`, `hashlib`, `json`, `urllib.parse`. No `pip install` step. The project started as a single file and grew into a package once it crossed five PRDs of complexity.
+- **Stdlib-only package.** `archive.py` is the CLI entrypoint; per-PRD logic lives in the `youtube_archive/` package (`config.py`, `logging_setup.py`, `process.py`, `errors.py`, `utils.py`, `manifests.py`, `downloads.py`, `metadata.py`, `refresh.py`, `upgrade.py`, `dry_run.py`, `audit.py`, `web_ui.py`). Stdlib only — `tomllib`, `argparse`, `logging`, `subprocess`, `pathlib`, `hashlib`, `json`, `urllib.parse`, `http.server`. No `pip install` step. The project started as a single file and grew into a package once it crossed five PRDs of complexity.
 - **yt-dlp via subprocess.** The script invokes the `yt-dlp` CLI rather than `import yt_dlp` — the CLI surface is more stable across releases.
 - **Serial downloads.** One yt-dlp invocation completes before the next starts. Slower than parallel but produces linear logs and avoids hitting YouTube rate limits.
-- **`archive.txt` is the source of truth.** Only yt-dlp writes to it (via `--download-archive`). The script reads it for filtering but never mutates it directly — that's what guarantees a failed download is naturally re-attempted on the next run.
+- **Local staging, then move.** yt-dlp downloads, merges, and embeds in a local scratch dir (`staging_dir`, default a system-temp subdir) and only the finished file is moved into `data_dir` (via yt-dlp `-P temp:`/`-P home:` with a relative output template). When `data_dir` is a network mount (SMB/NFS), the OS can fail `close()` on flush *after* a complete transfer (`[Errno 9] Bad file descriptor`, `[Errno 22] Invalid argument`) — staging keeps yt-dlp's long-held write handle on local disk so only a single sequential file move crosses the network, which is far more reliable and trivially retryable.
+- **`archive.txt` is the source of truth for completed downloads.** Only yt-dlp writes to it (via `--download-archive`). The script reads it for filtering but never mutates it directly — so an ordinary failed download is naturally re-attempted on the next run. The one exception is a *permanently* unavailable video, which the script records in `unavailable.txt` (a separate file it does own) so it stops re-failing every run.
 - **Atomic JSON writes.** Every curated file (`creator.json`, `metadata.json`) is written via tempfile + `os.replace()` so a partial write is never observable on disk.
-- **No retries on top of yt-dlp.** yt-dlp's built-in `--retries 10` handles transient network errors. The script doesn't layer a second retry loop.
+- **No generic retry loop on top of yt-dlp.** yt-dlp's built-in `--retries 10` handles transient network errors. The script only layers targeted one-shot re-invocations for two specific recoverable cases: a stale resume (HTTP 416 → clear partials, restart) and a transient destination-volume I/O error (yt-dlp's `Unable to download video: [Errno N] …`, e.g. `Bad file descriptor`, `Invalid argument`, `Input/output error` → retry).
 
 ## Project structure
 
@@ -283,7 +354,10 @@ All PRDs from the original roadmap are implemented.
 │   ├── refresh.py          # PRD-05: --refresh-metadata + upgrade detection
 │   ├── upgrade.py          # PRD-06: --upgrade execution + .pre-upgrade rollback
 │   ├── dry_run.py          # PRD-07: --dry-run preview orchestration
-│   └── audit.py            # PRD-08: --audit consistency check + --repair
+│   ├── audit.py            # PRD-08: --audit consistency check + --repair
+│   └── web_ui.py           # --serve: build index.json + local browse UI
+├── build_index.py          # thin shim around web_ui.cli_build_main (for cron / scripts)
+├── index.html              # browse UI served by --serve
 ├── config.example.toml     # documented sample config (committed)
 ├── config.toml             # your config (gitignored)
 ├── pyproject.toml          # uv project metadata (stdlib only; no dependencies)
