@@ -4,3 +4,18 @@ __pycache__/
 *.pyc
 config.toml
 .idea/
+
+# MacOS Files
+# ---------------
+
+# General
+.DS_Store
+.localized
+__MACOSX/
+.AppleDouble
+.LSOverride
+Icon[
+]
+
+# Resource forks
+._*
