@@ -23,7 +23,7 @@ from youtube_archive.metadata import run_pass_four, should_run_metadata_pass
 from youtube_archive.refresh import run_refresh_mode
 from youtube_archive.upgrade import run_upgrade_mode
 from youtube_archive.utils import data_dir, set_data_dir, set_staging_dir
-from youtube_archive.web_ui import DEFAULT_HOST, DEFAULT_PORT, run_serve_mode
+from youtube_archive.web_ui import DEFAULT_HOST, DEFAULT_PORT, build_index, run_serve_mode
 
 
 @dataclass(frozen=True)
@@ -73,10 +73,12 @@ def main() -> None:
 
     if context.args.refresh_metadata:
         run_refresh_mode(context.creators)
+        rebuild_index()
         return
 
     if context.args.upgrade:
         run_upgrade_mode(context.creators)
+        rebuild_index()
         return
 
     for creator in context.creators:
@@ -89,6 +91,16 @@ def main() -> None:
                 run_pass_two(creator, candidate_set)
             if should_run_metadata_pass(context.args, candidate_set):
                 run_pass_four(creator, candidate_set)
+
+    rebuild_index()
+
+
+def rebuild_index() -> None:
+    # Keep index.json fresh for the long-running --serve process, which only
+    # rebuilds at startup. Called after any run that may have changed the
+    # archive contents (sync, refresh, upgrade).
+    root = data_dir()
+    build_index(data_dir=root, output_path=root / "index.json", serve_root=root)
 
 
 def build_parser() -> argparse.ArgumentParser:
