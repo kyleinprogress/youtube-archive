@@ -4,6 +4,7 @@ import datetime
 import json
 import os
 import pathlib
+import shutil
 import tempfile
 from typing import Any
 
@@ -58,6 +59,23 @@ def cookies_args() -> list[str]:
     if _COOKIES_FILE is None:
         return []
     return ["--cookies", str(_COOKIES_FILE)]
+
+
+def stage_cookies_file(source: pathlib.Path | None) -> pathlib.Path | None:
+    """Copy a (possibly read-only) cookies.txt into the writable staging dir and
+    return the copy's path. yt-dlp always writes the cookie jar back to its
+    --cookies path on close (save_cookies), so pointing it at a read-only bind
+    mount raises OSError(Errno 30). Handing it a writable copy lets it re-save
+    refreshed session cookies without mutating the user's original file. Returns
+    None when unset, and the source unchanged if it doesn't exist (the caller
+    has already warned)."""
+    if source is None or not source.exists():
+        return source
+    staging = staging_dir()
+    staging.mkdir(parents=True, exist_ok=True)
+    dest = staging / "cookies.txt"
+    shutil.copyfile(source, dest)
+    return dest
 
 
 def utc_timestamp() -> str:

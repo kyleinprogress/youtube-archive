@@ -25,8 +25,9 @@ services:
       - ${DATA_DIR:-./data}:/data
       # Optional: age-restricted / members-only support. Uncomment and point at
       # your exported Netscape cookies.txt, then set cookies_file = "/config/cookies.txt"
-      # in config.toml. Left commented because bind-mounting a missing file
-      # would break container startup.
+      # in config.toml. Read-only is intentional — the app copies it into writable
+      # staging before use (yt-dlp rewrites its --cookies file on exit). Left
+      # commented because bind-mounting a missing file would break container startup.
       # - ${COOKIES_FILE:-./cookies.txt}:/config/cookies.txt:ro
     tmpfs:
       # Staging scratch — yt-dlp downloads/merges/embeds here, then moves the

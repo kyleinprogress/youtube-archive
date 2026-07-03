@@ -24,7 +24,13 @@ from youtube_archive.manifests import run_pass_one
 from youtube_archive.metadata import run_pass_four, should_run_metadata_pass
 from youtube_archive.refresh import run_refresh_mode
 from youtube_archive.upgrade import run_upgrade_mode
-from youtube_archive.utils import data_dir, set_cookies_file, set_data_dir, set_staging_dir
+from youtube_archive.utils import (
+    data_dir,
+    set_cookies_file,
+    set_data_dir,
+    set_staging_dir,
+    stage_cookies_file,
+)
 from youtube_archive.web_ui import DEFAULT_HOST, DEFAULT_PORT, build_index, run_serve_mode
 
 
@@ -61,7 +67,7 @@ def main() -> None:
     creators = validate_config(raw_config)
     set_data_dir(resolve_data_dir(raw_config))
     set_staging_dir(resolve_staging_dir(raw_config))
-    set_cookies_file(resolve_cookies_file(raw_config))
+    set_cookies_file(stage_cookies_file(resolve_cookies_file(raw_config)))
 
     if args.serve:
         # --serve reads config only to learn where data lives, then builds the

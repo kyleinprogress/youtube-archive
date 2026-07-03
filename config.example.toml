@@ -20,7 +20,10 @@
 # "Sign in to confirm your age"). Export cookies from a logged-in browser
 # session; see https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp
 # Leave unset to skip gated videos. A leading ~ is expanded. In the supplied
-# Docker image, mount your cookies.txt and point this at it (e.g. /config/cookies.txt).
+# Docker image, mount your cookies.txt (read-only is fine) and point this at it,
+# e.g. /config/cookies.txt. The file is copied into the writable staging dir
+# before use, because yt-dlp rewrites its --cookies file on exit; your original
+# is never modified.
 # cookies_file = "/config/cookies.txt"
 
 [defaults]
