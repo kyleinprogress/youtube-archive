@@ -18,6 +18,7 @@ from youtube_archive.errors import log_safe_detail
 from youtube_archive.logging_setup import get_creator_loggers
 from youtube_archive.process import run_yt_dlp_capture
 from youtube_archive.utils import (
+    cookies_args,
     data_dir,
     iso_timestamp,
     optional_int_value,
@@ -326,6 +327,7 @@ def fetch_eligibility_metadata(video_id: str) -> dict[str, Any] | None:
     result = run_yt_dlp_capture(
         [
             "yt-dlp",
+            *cookies_args(),
             "--skip-download",
             "--no-warnings",
             "--print",
@@ -418,6 +420,7 @@ def probe_subtitles(
     result = run_yt_dlp_capture(
         [
             "yt-dlp",
+            *cookies_args(),
             "--skip-download",
             "--no-warnings",
             "--print",
@@ -508,6 +511,7 @@ def build_download_command(
 ) -> list[str]:
     command = [
         "yt-dlp",
+        *cookies_args(),
         "-f",
         creator["format"],
     ]

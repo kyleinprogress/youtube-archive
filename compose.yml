@@ -23,8 +23,13 @@ services:
       - ./config.toml:/app/config.toml:ro
       # Persistent archive root — point this at your media dataset.
       - ${DATA_DIR:-./data}:/data
+      # Optional: age-restricted / members-only support. Uncomment and point at
+      # your exported Netscape cookies.txt, then set cookies_file = "/config/cookies.txt"
+      # in config.toml. Left commented because bind-mounting a missing file
+      # would break container startup.
+      # - ${COOKIES_FILE:-./cookies.txt}:/config/cookies.txt:ro
     tmpfs:
       # Staging scratch — yt-dlp downloads/merges/embeds here, then moves the
-      # finished file to /data. Sized for one video at a time; bump if you
-      # archive very large videos.
-      - /staging:size=4g,mode=1777
+      # finished file to /data. Sized to hold one video (incl. 4K + mux
+      # headroom); bump further if you archive even larger videos.
+      - /staging:size=16g,mode=1777

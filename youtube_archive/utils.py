@@ -37,6 +37,29 @@ def set_staging_dir(path: pathlib.Path) -> None:
     _STAGING_DIR = path
 
 
+_COOKIES_FILE: pathlib.Path | None = None
+
+
+def cookies_file() -> pathlib.Path | None:
+    """Optional Netscape-format cookies.txt passed to every yt-dlp call, or
+    None. Lets the archiver fetch age-restricted / members-only videos.
+    Set at startup from config.toml's `cookies_file` key via set_cookies_file()."""
+    return _COOKIES_FILE
+
+
+def set_cookies_file(path: pathlib.Path | None) -> None:
+    global _COOKIES_FILE
+    _COOKIES_FILE = path
+
+
+def cookies_args() -> list[str]:
+    """yt-dlp args for the configured cookies file, or [] when unset. Splice
+    into any yt-dlp command literal with `["yt-dlp", *cookies_args(), ...]`."""
+    if _COOKIES_FILE is None:
+        return []
+    return ["--cookies", str(_COOKIES_FILE)]
+
+
 def utc_timestamp() -> str:
     return datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 

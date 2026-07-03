@@ -12,6 +12,7 @@ from youtube_archive.logging_setup import get_creator_loggers
 from youtube_archive.metadata import description_hash, read_archive_video_ids_for_metadata
 from youtube_archive.utils import (
     codec_or_none,
+    cookies_args,
     data_dir,
     optional_int_value,
     string_or_empty,
@@ -195,6 +196,7 @@ def refresh_one_video(
 def refresh_video_metadata(creator: dict[str, Any], video_id: str) -> RefreshInvocationResult:
     command = [
         "yt-dlp",
+        *cookies_args(),
         "--skip-download",
         "--no-warnings",
         "-f",

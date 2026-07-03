@@ -48,6 +48,29 @@ def resolve_staging_dir(config: dict[str, Any]) -> pathlib.Path:
     return pathlib.Path(raw).expanduser()
 
 
+def resolve_cookies_file(config: dict[str, Any]) -> pathlib.Path | None:
+    """Resolve an optional Netscape-format cookies.txt from config.toml's
+    top-level `cookies_file` key. Passed to every yt-dlp call so age-restricted
+    and members-only videos can be fetched. Returns None when unset. Warns (but
+    does not fail) if the path is missing, so a normal run still proceeds for
+    non-gated videos.
+    """
+    raw = config.get("cookies_file")
+    if raw is None:
+        return None
+    if not isinstance(raw, str) or not raw:
+        print("error: config.toml: cookies_file must be a non-empty string", file=sys.stderr)
+        raise SystemExit(2)
+    path = pathlib.Path(raw).expanduser()
+    if not path.exists():
+        print(
+            f"warn: config.toml: cookies_file {path} does not exist; "
+            "age-restricted videos will be skipped",
+            file=sys.stderr,
+        )
+    return path
+
+
 class ConfigError(Exception):
     pass
 

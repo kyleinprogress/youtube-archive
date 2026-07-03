@@ -17,6 +17,7 @@ from youtube_archive.logging_setup import get_creator_loggers
 from youtube_archive.process import run_yt_dlp_capture
 from youtube_archive.utils import (
     atomic_write_bytes,
+    cookies_args,
     data_dir,
     utc_date_string,
     utc_timestamp,
@@ -242,6 +243,7 @@ def resolve_canonical_channel(config_channel_url: str) -> dict[str, Any]:
     result = run_yt_dlp_capture(
         [
             "yt-dlp",
+            *cookies_args(),
             "--skip-download",
             "--no-warnings",
             "--playlist-items",
@@ -395,6 +397,7 @@ def fetch_playlists_index(
     result = run_yt_dlp_capture(
         [
             "yt-dlp",
+            *cookies_args(),
             "--flat-playlist",
             "--dump-single-json",
             f"{canonical_url}/playlists",
@@ -524,6 +527,7 @@ def fetch_playlist_manifest(
     result = run_yt_dlp_capture(
         [
             "yt-dlp",
+            *cookies_args(),
             "--flat-playlist",
             "--dump-single-json",
             f"https://www.youtube.com/playlist?list={playlist_id}",
@@ -587,6 +591,7 @@ def fetch_uploads_manifest(
     result = run_yt_dlp_capture(
         [
             "yt-dlp",
+            *cookies_args(),
             "--flat-playlist",
             "--dump-single-json",
             f"{canonical_url}/videos",

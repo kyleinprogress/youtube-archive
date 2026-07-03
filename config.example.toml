@@ -15,6 +15,14 @@
 # staging_dir = "~/.cache/youtube-archive"
 # staging_dir = "/staging"
 
+# Optional Netscape-format cookies.txt, passed to every yt-dlp call. Required to
+# archive age-restricted or members-only videos (yt-dlp otherwise fails with
+# "Sign in to confirm your age"). Export cookies from a logged-in browser
+# session; see https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp
+# Leave unset to skip gated videos. A leading ~ is expanded. In the supplied
+# Docker image, mount your cookies.txt and point this at it (e.g. /config/cookies.txt).
+# cookies_file = "/config/cookies.txt"
+
 [defaults]
 # Note: use `bv+ba/b` (not `bv*+ba/b`) so video-only DASH formats are preferred
 # for the merge step. With `bv*`, HLS combined formats can win the sort and
