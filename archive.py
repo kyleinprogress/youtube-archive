@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import os
 import pathlib
 from dataclasses import dataclass
 from typing import Any
@@ -32,7 +33,26 @@ class RunContext:
     creators: list[dict[str, Any]]
 
 
+def drop_privileges() -> None:
+    # A manual `docker exec` bypasses the entrypoint's gosu drop and runs as
+    # root, so any files this process writes (e.g. metadata.json) would be
+    # root-owned and unreadable by the scheduled PUID:PGID run. If we're root
+    # and the container told us who to be, become that user before doing work.
+    if os.geteuid() != 0:
+        return
+    puid = int(os.environ.get("PUID", "0") or "0")
+    pgid = int(os.environ.get("PGID", str(puid)) or "0")
+    if puid == 0:
+        return
+    os.setgroups([pgid])
+    os.setgid(pgid)
+    os.setuid(puid)
+    print(f"Dropped root; running as UID={puid} GID={pgid}", flush=True)
+
+
 def main() -> None:
+    drop_privileges()
+
     parser = build_parser()
     args = parser.parse_args()
 
