@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import logging
 import pathlib
-import time
 
 from youtube_archive.utils import data_dir
 
@@ -10,13 +9,9 @@ from youtube_archive.utils import data_dir
 logging.addLevelName(logging.WARNING, "WARN")
 
 
-class UTCFormatter(logging.Formatter):
-    converter = time.gmtime
-
-
-LOG_FORMATTER = UTCFormatter(
+LOG_FORMATTER = logging.Formatter(
     fmt="%(asctime)s %(levelname)s %(message)s",
-    datefmt="%Y-%m-%dT%H:%M:%SZ",
+    datefmt="%Y-%m-%dT%H:%M:%S%z",
 )
 
 
